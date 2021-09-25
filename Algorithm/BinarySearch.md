@@ -24,7 +24,7 @@ Constraints:
 All the integers in nums are unique.
 nums is sorted in ascending order
 
-### Answer
+### Answer 1
 
 ```javascript
 var search = function (nums, target) {
@@ -44,10 +44,10 @@ var search = function (nums, target) {
     return -1;
 };
 
-Your input => [-1,0,3,5,9,12]
-9
-Output => 4
-Expected => 4
+// Your input => [-1,0,3,5,9,12]
+// 9
+// Output => 4
+// Expected => 4
 ```
 
 ### Approach 1: Binary Search
@@ -71,3 +71,132 @@ Binary search is a textbook algorithm based on the idea to compare the target va
 * If target < nums[pivot], continue the search on the left right = pivot - 1.
 
 * Else continue the search on the right left = pivot + 1.
+
+## 278. First Bad Version
+
+You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+Example 1:
+
+Input: n = 5, bad = 4
+Output: 4
+Explanation:
+call isBadVersion(3) -> false
+call isBadVersion(5) -> true
+call isBadVersion(4) -> true
+Then 4 is the first bad version.
+Example 2:
+
+Input: n = 1, bad = 1
+Output: 1
+
+Constraints:
+
+1 <= bad <= n <= 2^31 - 1
+
+### Answer 2
+
+```javascript
+var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    // [bad, bad]
+    // 1,2,3,4,5
+    return function(n) {
+    // Initialize two pointers, pointer 1 at begining of versions (0), pointer 2 at end of version (n)
+        let start = 0;
+        let end = n;
+        // Loop while the start position is less or equal to the end position
+        while (start <= end) {
+    // Find the middle point (We will use this to check which half of the list we will focus on next)
+            let mid = Math.floor((start + end)/2)
+    // If the bad version is at the mid point of the list, that means the first bad version is on the left, reduce `end` to before mid point
+            if (isBadVersion(mid)) {
+                end = mid - 1;
+            }else {
+    // If the bad version is after the mid point of the list, that means the first bad version is on the right, increase `start` to after mid point
+                start = mid + 1
+            }
+        }
+    // start will ways hold the first bad version
+        return start;
+    };
+};
+
+var solution = function(isBadVersion) {
+    var searchInsert = function(nums, target) {
+    // o(n)
+   for(let [i,num] of nums.entries()){
+       if(num>=target) return i;
+   }
+   return nums.length   
+  }
+
+// Your input => 5
+//               4
+// Output => 4
+// Expected => 4
+```
+
+## 35. Search Insert Position
+
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+Example 1:
+
+Input: nums = [1,3,5,6], target = 5
+Output: 2
+Example 2:
+
+Input: nums = [1,3,5,6], target = 2
+Output: 1
+Example 3:
+
+Input: nums = [1,3,5,6], target = 7
+Output: 4
+Example 4:
+
+Input: nums = [1,3,5,6], target = 0
+Output: 0
+Example 5:
+
+Input: nums = [1], target = 0
+Output: 0
+
+Constraints:
+
+1 <= nums.length <= 10^4
+-10^4 <= nums[i] <= 10^4
+nums contains distinct values sorted in ascending order.
+-10^4 <= target <= 10^4
+
+### Answer 3
+
+```javascript
+  var searchInsert = function(nums, target) {
+    //o(log(n))
+    let i=0,j=nums.length-1;
+    let m=Math.floor((i+j)/2);
+    while(nums[m]!==target && i<=j){
+        if(nums[m]<target) i=m+1;
+        else j=m-1;
+        m=Math.floor((i+j)/2);
+    }
+    //if target is not in nums, after the loop, m=j=i-1; nums[j]<=target<=num[i]
+    if (nums[m]===target) return m;
+    return i;
+};
+
+// Your input => [1,3,5,6]
+//               5
+// Output => 2
+// Expected => 2
+```

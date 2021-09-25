@@ -19,8 +19,8 @@ Explanation: 2 does not exist in nums so return -1
 
 Constraints:
 
-1 <= nums.length <= 104
--104 < nums[i], target < 104
+1 <= nums.length <= 10^4
+-10^4 < nums[i], target < 10^4
 All the integers in nums are unique.
 nums is sorted in ascending order
 
@@ -43,4 +43,9 @@ var search = function (nums, target) {
     }
     return -1;
 };
+
+Your input => [-1,0,3,5,9,12]
+9
+Output => 4
+Expected => 4
 ```

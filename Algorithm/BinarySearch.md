@@ -617,3 +617,48 @@ Constraints:
 
 * The number of nodes in the list is in the range [1, 100].
 * 1 <= Node.val <= 100
+
+```javascript
+var middleNode = function(head) {
+
+    let len = 0;
+    let current = head;
+    
+    while(current) {
+        len++;
+        current = current.next;
+    }
+    
+    let mid = Math.floor(len/2);
+    
+    while(mid){
+        head = head.next;
+        mid--;
+    }
+    
+    return head;
+};
+
+Your input
+[1,2,3,4,5]
+Output
+[3,4,5]
+Expected
+[3,4,5]
+
+var middleNode = function(head) {
+    slow = fast = head;
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+};
+
+var middleNode = function(head) {
+    let A = [head];
+    while (A[A.length - 1].next != null)
+        A.push(A[A.length - 1].next);
+    return A[Math.trunc(A.length / 2)];
+};
+```

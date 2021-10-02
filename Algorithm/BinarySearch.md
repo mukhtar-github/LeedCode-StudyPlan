@@ -697,3 +697,41 @@ Constraints:
 * 1 <= n <= sz
 
 **Follow up**: Could you do this in one pass?
+
+```javascript
+var removeNthFromEnd = function(head, n) { 
+    let dummy = new ListNode(0, head);
+    let prev = dummy;
+    let node = head;
+    let count = 1;
+    while (node.next) {
+        if (count === n) {
+            prev = prev.next;
+        } else {
+            count++;
+        }
+        node = node.next;
+    }
+    prev.next = prev.next.next;
+    return dummy.next;
+};
+
+Your input
+[1,2,3,4,5]
+2
+Output
+[1,2,3,5]
+Expected
+[1,2,3,5]
+
+var removeNthFromEnd = function(head, n) {
+    let fast = head, slow = head
+    for (let i = 0; i < n; i++) fast = fast.next
+    if (!fast) return head.next
+    while (fast.next) fast = fast.next, slow = slow.next
+    slow.next = slow.next.next
+    return head
+};
+
+
+```

@@ -93,6 +93,7 @@ Input: n = 5, bad = 4
 Output: 4
 
 Explanation:
+
 call isBadVersion(3) -> false
 
 call isBadVersion(5) -> true

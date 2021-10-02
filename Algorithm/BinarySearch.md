@@ -476,3 +476,24 @@ numbers is sorted in non-decreasing order.
 -1000 <= target <= 1000
 
 The tests are generated such that there is exactly one solution.
+
+```javascript
+var twoSum = function(numbers, target) {
+    let comp = {};
+
+    for (let i = 0; i < numbers.length; ++i) {
+        if (comp[numbers[i]] > 0) {
+          return [comp[numbers[i]], i + 1];
+        }
+        comp[target - numbers[i]] = i + 1;
+    }
+};
+
+Your input
+[2,7,11,15]
+9
+Output
+[1,2]
+Expected
+[1,2]
+```

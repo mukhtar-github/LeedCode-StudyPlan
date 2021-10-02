@@ -130,11 +130,13 @@ var solution = function(isBadVersion) {
         while (start <= end) {
     // Find the middle point (We will use this to check which half of the list we will focus on next)
             let mid = Math.floor((start + end)/2)
-    // If the bad version is at the mid point of the list, that means the first bad version is on the left, reduce `end` to before mid point
+    // If the bad version is at the mid point of the list, that means the first bad version is on the left,
+    // reduce `end` to before mid point
             if (isBadVersion(mid)) {
                 end = mid - 1;
             }else {
-    // If the bad version is after the mid point of the list, that means the first bad version is on the right, increase `start` to after mid point
+    // If the bad version is after the mid point of the list, that means the first bad version is on the right,
+    // increase `start` to after mid point
                 start = mid + 1
             }
         }

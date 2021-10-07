@@ -965,3 +965,32 @@ Return the maximum **area** of an island in *grid*. If there is no island, retur
 * n == grid[i].length
 * 1 <= m, n <= 50
 * grid[i][j] is either 0 or 1.
+
+```javascript
+var maxAreaOfIsland = function(grid) {
+  const dfs = (x, y) => {
+    if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] === 0) return 0;
+    grid[x][y] = 0;
+    return 1 + dfs(x-1, y) + dfs(x , y+1) + dfs(x+1, y) + dfs(x, y-1);
+  }
+  
+  let max = 0;
+  for (let x = 0; x < grid.length; x++) {
+    for (let y = 0; y < grid[0].length; y++) {
+      max = Math.max(max, dfs(x, y));
+    }
+  }
+  
+  return max;
+};
+
+Your input
+[[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],
+[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],
+[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],
+[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]
+Output
+6
+Expected
+6
+```

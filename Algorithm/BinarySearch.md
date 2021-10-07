@@ -874,24 +874,32 @@ To perform a **flood fill**, consider the starting pixel, plus any pixels connec
 
 Return the modified image after performing the flood fill.
 
-Example 1:
+### Example 1
 
 ![flood1-grid.jpg](https://assets.leetcode.com/uploads/2021/06/01/flood1-grid.jpg)
 
-Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
-Output: [[2,2,2],[2,2,0],[2,0,1]]
-Explanation: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
+**Input**: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
+
+**Output**: [[2,2,2],[2,2,0],[2,0,1]]
+
+**Explanation**: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
+
 Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.
-Example 2:
 
-Input: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2
-Output: [[2,2,2],[2,2,2]]
+### Example 2
 
-Constraints:
+**Input**: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2
 
-m == image.length
-n == image[i].length
-1 <= m, n <= 50
-0 <= image[i][j], newColor < 216
-0 <= sr < m
-0 <= sc < n
+**Output**: [[2,2,2],[2,2,2]]
+
+### Constraints
+
+* m == image.length
+* n == image[i].length
+* 1 <= m, n <= 50
+* 0 <= image[i][j], newColor < 216
+* 0 <= sr < m
+* 0 <= sc < n
+
+### Answer
+

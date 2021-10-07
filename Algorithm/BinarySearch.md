@@ -477,6 +477,8 @@ numbers is sorted in non-decreasing order.
 
 The tests are generated such that there is exactly one solution.
 
+### Answer 7
+
 ```javascript
 var twoSum = function(numbers, target) {
     let comp = {};
@@ -521,6 +523,8 @@ Constraints:
 s[i] is a printable ascii character.
 
 **Follow up**: Do not allocate extra space for another array. You must do this by modifying the input array *in-place* with *O(1)* extra memory.
+
+### Answer 8
 
 ```javascript
 var reverseString = function(s) {    
@@ -576,6 +580,8 @@ There is at least one word in s.
 
 All the words in s are separated by a single space.
 
+### Answer 9
+
 ```javascript
 var reverseWords = function(s) {
     return s.split(" ").map(word=> word.split("").reverse().join("")).join(" ")
@@ -617,6 +623,8 @@ Constraints:
 
 * The number of nodes in the list is in the range [1, 100].
 * 1 <= Node.val <= 100
+
+### Answer 10
 
 ```javascript
 var middleNode = function(head) {
@@ -698,6 +706,8 @@ Constraints:
 
 **Follow up**: Could you do this in one pass?
 
+### Answer 11
+
 ```javascript
 var removeNthFromEnd = function(head, n) { 
     let dummy = new ListNode(0, head);
@@ -774,6 +784,8 @@ Constraints:
 
 s consists of English letters, digits, symbols and spaces.
 
+### Answer 12
+
 ```javascript
 var lengthOfLongestSubstring = function (s) {
     const hashMap = new Map();
@@ -822,6 +834,8 @@ Constraints:
 1 <= s1.length, s2.length <= 10^4
 
 s1 and s2 consist of lowercase English letters.
+
+### Answer 13
 
 ```javascript
 var checkInclusion = function(s1, s2) {
@@ -874,7 +888,7 @@ To perform a **flood fill**, consider the starting pixel, plus any pixels connec
 
 Return the modified image after performing the flood fill.
 
-### Example 1
+Example 1
 
 ![flood1-grid.jpg](https://assets.leetcode.com/uploads/2021/06/01/flood1-grid.jpg)
 
@@ -886,13 +900,13 @@ Return the modified image after performing the flood fill.
 
 Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.
 
-### Example 2
+Example 2
 
 **Input**: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2
 
 **Output**: [[2,2,2],[2,2,2]]
 
-### Constraints
+Constraints
 
 * m == image.length
 * n == image[i].length
@@ -901,7 +915,7 @@ Note the bottom corner is not colored 2, because it is not 4-directionally conne
 * 0 <= sr < m
 * 0 <= sc < n
 
-### Answer
+### Answer 14
 
 ```javascript
 var floodFill = function(image, sr, sc, newColor) {
@@ -939,7 +953,7 @@ The **area** of an island is the number of cells with a value *1* in the island.
 
 Return the maximum **area** of an island in *grid*. If there is no island, return *0*.
 
-### Example
+Example 1:
 
 ![maxarea1-grid](https://assets.leetcode.com/uploads/2021/05/01/maxarea1-grid.jpg)
 
@@ -953,7 +967,7 @@ Return the maximum **area** of an island in *grid*. If there is no island, retur
 
 **Explanation**: The answer is not 11, because the island must be connected 4-directionally.
 
-**Example 2**:
+Example 2:
 
 **Input**: grid = [[0,0,0,0,0,0,0,0]]
 
@@ -965,6 +979,8 @@ Return the maximum **area** of an island in *grid*. If there is no island, retur
 * n == grid[i].length
 * 1 <= m, n <= 50
 * grid[i][j] is either 0 or 1.
+
+### Answer 15
 
 ```javascript
 var maxAreaOfIsland = function(grid) {
@@ -1004,3 +1020,23 @@ Imagine that when you put one of them to cover the other, some nodes of the two 
 *Return the merged tree*.
 
 **Note**: The merging process must start from the root nodes of both trees.
+
+Example 1:
+
+![merge](https://assets.leetcode.com/uploads/2021/02/05/merge.jpg)
+
+Input: root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
+
+Output: [3,4,5,5,4,null,7]
+
+Example 2:
+
+Input: root1 = [1], root2 = [1,2]
+
+Output: [2,2]
+
+Constraints:
+
+The number of nodes in both trees is in the range [0, 2000].
+
+-10^4 <= Node.val <= 10^4

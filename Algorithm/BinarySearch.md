@@ -1040,3 +1040,100 @@ Constraints:
 The number of nodes in both trees is in the range [0, 2000].
 
 -10^4 <= Node.val <= 10^4
+
+### Answer 16
+
+```javascript
+const mergeTrees = (t1, t2) => {
+    if (!t1 && !t2) return null;
+    
+    const left = mergeTrees(t1 && t1.left, t2 && t2.left);
+    const right = mergeTrees(t1 && t1.right, t2 && t2.right);
+        
+    return new TreeNode(
+        (t1 && t1.val) + (t2 && t2.val),
+        left,
+        right,
+    );
+};
+
+Your input
+[1,3,2,5]
+[2,1,3,null,4,null,7]
+Output
+[3,4,5,5,4,null,7]
+Expected
+[3,4,5,5,4,null,7]
+```
+
+## 116. Populating Next Right Pointers in Each Node
+
+You are given a **perfect binary tree** where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+```javascript
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+```
+
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to *NULL*.
+
+Initially, all next pointers are set to *NULL*.
+
+Example 1:
+
+![116_sample](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
+
+Input: root = [1,2,3,4,5,6,7]
+
+Output: [1,#,2,3,#,4,5,6,7,#]
+
+Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.
+
+Example 2:
+
+Input: root = []
+
+Output: []
+
+Constraints:
+
+* The number of nodes in the tree is in the range *[0, 212 - 1]*.
+* -1000 <= Node.val <= 1000
+
+Follow-up:
+
+* You may only use constant extra space.
+* The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.
+
+### Answer 17
+
+```javascript
+var connect = function(curr) {
+    if (curr == null)
+        return curr;
+    var root = curr;
+    var temp = null;
+    while (root.left != null) {
+        temp = root;
+        while (temp != null) {
+            temp.left.next = temp.right;
+            if (temp.next != null)
+                temp.right.next = temp.next.left;
+            temp = temp.next;
+        }
+        root = root.left;
+    }
+    return curr;
+};
+
+Your input
+[1,2,3,4,5,6,7]
+Output
+[1,#,2,3,#,4,5,6,7,#]
+Expected
+[1,#,2,3,#,4,5,6,7,#]
+```

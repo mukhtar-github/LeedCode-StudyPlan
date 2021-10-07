@@ -952,3 +952,16 @@ Return the maximum **area** of an island in *grid*. If there is no island, retur
 **Output**: 6
 
 **Explanation**: The answer is not 11, because the island must be connected 4-directionally.
+
+**Example 2**:
+
+**Input**: grid = [[0,0,0,0,0,0,0,0]]
+
+**Output**: 0
+
+**Constraints**:
+
+* m == grid.length
+* n == grid[i].length
+* 1 <= m, n <= 50
+* grid[i][j] is either 0 or 1.

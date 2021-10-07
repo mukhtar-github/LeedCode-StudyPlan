@@ -897,9 +897,36 @@ Note the bottom corner is not colored 2, because it is not 4-directionally conne
 * m == image.length
 * n == image[i].length
 * 1 <= m, n <= 50
-* 0 <= image[i][j], newColor < 216
+* 0 <= image[i][j], newColor < 2^16
 * 0 <= sr < m
 * 0 <= sc < n
 
 ### Answer
 
+```javascript
+var floodFill = function(image, sr, sc, newColor) {
+    let startingPixel = image[sr][sc]
+    const dfs = (image, sr, sc, newColor) => {
+        if (sr < 0 || sc < 0 ||  sr >= image.length || sc >= image[0].length || image[sr][sc] !== startingPixel || image[sr][sc] === newColor) return;
+        image[sr][sc] = newColor
+
+        dfs(image, sr - 1, sc, newColor);
+        dfs(image, sr + 1, sc, newColor);
+        dfs(image, sr, sc - 1, newColor);
+        dfs(image, sr, sc + 1, newColor);
+    }
+    dfs(image, sr, sc, newColor);
+    return image
+};
+
+
+Your input
+[[1,1,1],[1,1,0],[1,0,1]]
+1
+1
+2
+Output
+[[2,2,2],[2,2,0],[2,0,1]]
+Expected
+[[2,2,2],[2,2,0],[2,0,1]]
+```

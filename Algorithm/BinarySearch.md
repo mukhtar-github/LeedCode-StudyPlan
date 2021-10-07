@@ -1137,3 +1137,91 @@ Output
 Expected
 [1,#,2,3,#,4,5,6,7,#]
 ```
+
+## 542. 01 Matrix
+
+Given an *m x n* binary matrix *mat*, return the distance of the nearest *0* for each cell.
+
+The distance between two adjacent cells is *1*.
+
+Example 1:
+
+![01-1-grid](https://assets.leetcode.com/uploads/2021/04/24/01-1-grid.jpg)
+
+Input: mat = [[0,0,0],[0,1,0],[0,0,0]]
+
+Output: [[0,0,0],[0,1,0],[0,0,0]]
+
+Example 2:
+
+![01-2-grid](https://assets.leetcode.com/uploads/2021/04/24/01-2-grid.jpg)
+
+Input: mat = [[0,0,0],[0,1,0],[1,1,1]]
+
+Output: [[0,0,0],[0,1,0],[1,2,1]]
+
+Constraints:
+
+* m == mat.length
+* n == mat[i].length
+* 1 <= m, n <= 104
+* 1 <= m * n <= 104
+* mat[i][j] is either 0 or 1.
+* There is at least one 0 in mat.
+
+### Answer 18
+
+```javascript
+var updateMatrix = function(mat) {
+    let rows = mat.length;
+    let columns = mat[0].length;
+    // console.log("rows", rows, "columns", columns)
+    // scan from top left to bottom right
+    const scanMatrixFromTopLeft = (mat) => {
+        for(let g=0; g<rows; g++){
+             for(let k=0; k<columns; k++){
+                 if( mat[g][k] > 0 ) {
+                     mat[g][k] = Infinity; // becasue at this time we do not know what is the minimum dist so a maximum value
+                    if( g > 0 )
+                        mat[g][k] = Math.min( 
+                                        mat[g][k], mat[g-1][k] + 1);
+                     if( k > 0 )
+                        mat[g][k] = Math.min( 
+                                        mat[g][k], mat[g][k-1] + 1
+                                       ) 
+                                    ;   
+                    // console.log("g, k", g, k, "&&&&", mat[g][k])             
+                 }
+             }
+        }
+    }
+    
+    const scanMatrixFromBottomRight = (mat) => {
+        for(let g=(rows-1); g>=0; g--){
+             for(let k=(columns-1); k>=0; k--){
+                 if( mat[g][k] > 0 ) {
+                    if( (g+1) < rows )
+                        mat[g][k] = Math.min( 
+                                        mat[g][k], mat[g+1][k] + 1);
+                     if( (k+1) < columns )
+                        mat[g][k] = Math.min( 
+                                        mat[g][k], mat[g][k+1] + 1
+                                       ) 
+                                      
+                 }
+             }
+        }
+    }
+    
+    scanMatrixFromTopLeft(mat);
+    scanMatrixFromBottomRight(mat);
+    return mat; 
+};
+
+Your input
+[[0,0,0],[0,1,0],[0,0,0]]
+Output
+[[0,0,0],[0,1,0],[0,0,0]]
+Expected
+[[0,0,0],[0,1,0],[0,0,0]]
+```

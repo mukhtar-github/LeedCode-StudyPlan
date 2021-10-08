@@ -1769,3 +1769,22 @@ Constraints:
 
 #### Answer 26
 
+```javascript
+var rob = function(nums) {
+    let prev1 = prev2 = 0;
+    for(let i=0;i<nums.length;i++) {
+        let tmp = prev1;
+        prev1 = Math.max(prev2 + nums[i], prev1);
+        prev2 = tmp;
+    }
+    return prev1;
+
+};
+
+Your input
+[1,2,3,1]
+Output
+4
+Expected
+4
+```

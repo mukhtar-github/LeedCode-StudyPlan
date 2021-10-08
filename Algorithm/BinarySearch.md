@@ -1704,3 +1704,34 @@ Explanation: There are three ways to climb to the top.
 Constraints:
 
 * 1 <= n <= 45
+
+#### Answer 25
+
+#### Dynamic programming O(n) time and O(n) space
+
+* O(n) time and space
+* faster than memoization because we pre-allocate the array upfront
+
+```javascript
+var climbStairs = function(n) {
+    const dp = new Array(n).fill(0);
+    // Base Cases
+    dp[0] = 0;
+    dp[1] = 1;
+    dp[2] = 2;
+
+    // Sum the last 2 results behind me to get the current result.
+    // dp[i] = dp[i-1] + dp[i-2]
+    for(let i=3; i <= n; i++){
+        dp[i] = dp[i-1] + dp[i-2]
+    }
+    return dp[n];
+};
+
+Your input
+2
+Output
+2
+Expected
+2
+```

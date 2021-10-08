@@ -1,6 +1,8 @@
 # Algorithm
 
-## 704. Binary Search
+## Binary Search
+
+### 704. Binary Search
 
 Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
 
@@ -30,7 +32,7 @@ Constraints:
 
 All the integers in nums are unique. nums is sorted in ascending order
 
-### Answer 1
+#### Answer 1
 
 ```javascript
 var search = function (nums, target) {
@@ -78,7 +80,7 @@ Binary search is a textbook algorithm based on the idea to compare the target va
 
 * Else continue the search on the right left = pivot + 1.
 
-## 278. First Bad Version
+### 278. First Bad Version
 
 You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad. Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad. You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
 
@@ -108,7 +110,7 @@ Constraints:
 
 1 <= bad <= n <= 2^31 - 1
 
-### Answer 2
+#### Answer 2
 
 ```javascript
 var solution = function(isBadVersion) {
@@ -168,13 +170,16 @@ var solution = function(isBadVersion) {
    return nums.length   
   }
 
-// Your input => 5
-//               4
-// Output => 4
-// Expected => 4
+Your input
+5
+4
+Output
+4
+Expected
+4
 ```
 
-## 35. Search Insert Position
+### 35. Search Insert Position
 
 Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order. You must write an algorithm with O(log n) runtime complexity.
 
@@ -218,7 +223,7 @@ nums contains distinct values sorted in ascending order.
 
 -10^4 <= target <= 10^4
 
-### Answer 3
+#### Answer 3
 
 ```javascript
   var searchInsert = function(nums, target) {
@@ -235,13 +240,18 @@ nums contains distinct values sorted in ascending order.
     return i;
 };
 
-// Your input => [1,3,5,6]
-//               5
-// Output => 2
-// Expected => 2
+Your input
+[1,3,5,6]
+5
+Output
+2
+Expected
+2
 ```
 
-## 977. Squares of a Sorted Array
+## Two Pointers
+
+### 977. Squares of a Sorted Array
 
 Given an integer array nums sorted in *non-decreasing* order, return an array of the *squares of each number* sorted in non-decreasing order.
 
@@ -267,7 +277,7 @@ Output: [4,9,9,49,121]
 
 *Follow up*: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
 
-### Answer 4
+#### Answer 4
 
 ```javascript
 var sortedSquares = function(nums) {
@@ -290,7 +300,7 @@ Expected
 [0,1,9,16,100]
 ```
 
-## 189. Rotate Array
+### 189. Rotate Array
 
 Given an array, rotate the array to the right by k steps, where k is non-negative.
 
@@ -326,7 +336,7 @@ Constraints:
 -2^31 <= nums[i] <= 2^31 - 1
 0 <= k <= 10^5
 
-### Answer 5
+#### Answer 5
 
 ```javascript
 /**
@@ -374,7 +384,7 @@ Expected
 [5,6,7,1,2,3,4]
 ```
 
-## 283. Move Zeroes
+### 283. Move Zeroes
 
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 Note that you must do this in-place without making a copy of the array.
@@ -397,7 +407,7 @@ Constraints:
 
 -231 <= nums[i] <= 231 - 1
 
-### Answer 6
+#### Answer 6
 
 ```javascript
 var moveZeroes = function(nums) {
@@ -433,7 +443,7 @@ The 2 requirements of the question are:
 
 It's good to realize here that both the requirements are mutually exclusive, i.e., you can solve the individual sub-problems and then combine them for the final solution.
 
-## 167. Two Sum II - Input array is sorted
+### 167. Two Sum II - Input array is sorted
 
 Given a **1-indexed** array of integers *numbers* that is already **sorted in non-decreasing order**, find two numbers such that they add up to a specific *target* number. Let these two numbers be *numbers[index1]* and *numbers[index2]* where *1 <= first < second <= numbers.length*.
 
@@ -477,7 +487,7 @@ numbers is sorted in non-decreasing order.
 
 The tests are generated such that there is exactly one solution.
 
-### Answer 7
+#### Answer 7
 
 ```javascript
 var twoSum = function(numbers, target) {
@@ -500,7 +510,7 @@ Expected
 [1,2]
 ```
 
-## 344. Reverse String
+### 344. Reverse String
 
 Write a function that reverses a string. The input string is given as an array of characters *s*.
 
@@ -524,7 +534,7 @@ s[i] is a printable ascii character.
 
 **Follow up**: Do not allocate extra space for another array. You must do this by modifying the input array *in-place* with *O(1)* extra memory.
 
-### Answer 8
+#### Answer 8
 
 ```javascript
 var reverseString = function(s) {    
@@ -552,7 +562,7 @@ Expected
 ["o","l","l","e","h"]
 ```
 
-## 557. Reverse Words in a String III
+### 557. Reverse Words in a String III
 
 Given a string *s*, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
 
@@ -580,7 +590,7 @@ There is at least one word in s.
 
 All the words in s are separated by a single space.
 
-### Answer 9
+#### Answer 9
 
 ```javascript
 var reverseWords = function(s) {
@@ -595,7 +605,7 @@ Expected
 "s'teL ekat edoCteeL tsetnoc"
 ```
 
-## 876. Middle of the Linked List
+### 876. Middle of the Linked List
 
 Given the *head* of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return **the second middle** node.
 
@@ -624,7 +634,7 @@ Constraints:
 * The number of nodes in the list is in the range [1, 100].
 * 1 <= Node.val <= 100
 
-### Answer 10
+#### Answer 10
 
 ```javascript
 var middleNode = function(head) {
@@ -671,7 +681,7 @@ var middleNode = function(head) {
 };
 ```
 
-## 19. Remove Nth Node From End of List
+### 19. Remove Nth Node From End of List
 
 Given the *head* of a linked list, remove the *nth* node from the end of the list and return its head.
 
@@ -706,7 +716,7 @@ Constraints:
 
 **Follow up**: Could you do this in one pass?
 
-### Answer 11
+#### Answer 11
 
 ```javascript
 var removeNthFromEnd = function(head, n) { 
@@ -744,7 +754,9 @@ var removeNthFromEnd = function(head, n) {
 };
 ```
 
-## 3. Longest Substring Without Repeating Characters
+## Sliding WindowS
+
+### 3. Longest Substring Without Repeating Characters
 
 Given a string *s*, find the length of the longest substring without repeating characters.
 
@@ -1436,7 +1448,8 @@ Expected
 [5,4,3,2,1]
 ```
 
-## 77. Combinations
+## Recursion / Backtracking
+### 77. Combinations
 
 Given two integers *n* and *k*, return all possible combinations of *k* numbers out of the range *[1, n]*.
 
@@ -1467,7 +1480,7 @@ Constraints:
 * 1 <= n <= 20
 * 1 <= k <= n
 
-### Answer 22
+#### Answer 22
 
 ```javascript
 /**
@@ -1523,7 +1536,7 @@ Expected
 [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 ```
 
-## 46. Permutations
+### 46. Permutations
 
 Given an array *nums* of distinct integers, return all the possible permutations. You can return the answer in **any order**.
 
@@ -1551,7 +1564,7 @@ Constraints:
 * -10 <= nums[i] <= 10
 * All the integers of nums are *unique*.
 
-### Answer 23
+#### Answer 23
 
 ```javascript
 var permute = function(nums) {
@@ -1581,4 +1594,77 @@ Output
 [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
 Expected
 [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+```
+
+### 784. Letter Case Permutation
+
+Given a string *s*, we can transform every letter individually to be lowercase or uppercase to create another string.
+
+Return a list of all possible strings we could create. You can return the output in **any order**.
+
+Example 1:
+
+Input: s = "a1b2"
+
+Output: ["a1b2","a1B2","A1b2","A1B2"]
+
+Example 2:
+
+Input: s = "3z4"
+
+Output: ["3z4","3Z4"]
+
+Example 3:
+
+Input: s = "12345"
+
+Output: ["12345"]
+
+Example 4:
+
+Input: s = "0"
+
+Output: ["0"]
+
+Constraints:
+
+* s will be a string with length between 1 and 12.
+* s will consist only of letters or digits.
+
+#### Answer 24
+
+```javascript
+var letterCasePermutation = function(S) {
+    let n = S.length;
+    let res = []
+    let char = /[a-zA-Z]/
+    let arr = []
+    
+    function backtrack(i){
+        if(i == n){
+            res.push(arr.join(''))
+            return
+        }
+        
+        if(char.test(S[i])){
+            arr[i] = S[i].toLowerCase()
+            backtrack(i+1)
+            arr[i] = S[i].toUpperCase()
+            backtrack(i+1)
+        } else {
+            arr[i] = S[i]
+            backtrack(i+1)
+        }
+    }
+    
+    backtrack(0)
+    return res
+};
+
+Your input
+"a1b2"
+Output
+["a1b2","a1B2","A1b2","A1B2"]
+Expected
+["a1b2","a1B2","A1b2","A1B2"]
 ```

@@ -752,7 +752,7 @@ var removeNthFromEnd = function(head, n) {
 };
 ```
 
-## Sliding WindowS
+## Sliding Window
 
 ### 3. Longest Substring Without Repeating Characters
 
@@ -794,7 +794,7 @@ Constraints:
 
 s consists of English letters, digits, symbols and spaces.
 
-### Answer 12
+#### Answer 12
 
 ```javascript
 var lengthOfLongestSubstring = function (s) {
@@ -819,7 +819,7 @@ Expected
 3
 ```
 
-## 567. Permutation in String
+### 567. Permutation in String
 
 Given two strings *s1* and *s2*, return *true* if *s2* contains a permutation of *s1*, or *false* otherwise.
 
@@ -845,7 +845,7 @@ Constraints:
 
 s1 and s2 consist of lowercase English letters.
 
-### Answer 13
+#### Answer 13
 
 ```javascript
 var checkInclusion = function(s1, s2) {
@@ -888,7 +888,9 @@ Expected
 true
 ```
 
-## 733. Flood Fill
+## Breadth-First Search / Depth-First Search
+
+### 733. Flood Fill
 
 An image is represented by an *m x n* integer grid *image* where *image[i][j]* represents the pixel value of the image.
 
@@ -925,7 +927,7 @@ Constraints
 * 0 <= sr < m
 * 0 <= sc < n
 
-### Answer 14
+#### Answer 14
 
 ```javascript
 var floodFill = function(image, sr, sc, newColor) {
@@ -955,7 +957,7 @@ Expected
 [[2,2,2],[2,2,0],[2,0,1]]
 ```
 
-## 695. Max Area of Island
+### 695. Max Area of Island
 
 You are given an *m x n* binary matrix *grid*. An island is a group of *1*'s (representing land) connected **4-directionally** (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.
 
@@ -990,7 +992,7 @@ Example 2:
 * 1 <= m, n <= 50
 * grid[i][j] is either 0 or 1.
 
-### Answer 15
+#### Answer 15
 
 ```javascript
 var maxAreaOfIsland = function(grid) {
@@ -1021,7 +1023,7 @@ Expected
 6
 ```
 
-## 617. Merge Two Binary Trees
+### 617. Merge Two Binary Trees
 
 You are given two binary trees *root1* and *root2*.
 
@@ -1051,7 +1053,7 @@ The number of nodes in both trees is in the range [0, 2000].
 
 -10^4 <= Node.val <= 10^4
 
-### Answer 16
+#### Answer 16
 
 ```javascript
 const mergeTrees = (t1, t2) => {
@@ -1076,7 +1078,7 @@ Expected
 [3,4,5,5,4,null,7]
 ```
 
-## 116. Populating Next Right Pointers in Each Node
+### 116. Populating Next Right Pointers in Each Node
 
 You are given a **perfect binary tree** where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
 
@@ -1119,7 +1121,7 @@ Follow-up:
 * You may only use constant extra space.
 * The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.
 
-### Answer 17
+#### Answer 17
 
 ```javascript
 var connect = function(curr) {
@@ -1148,7 +1150,7 @@ Expected
 [1,#,2,3,#,4,5,6,7,#]
 ```
 
-## 542. 01 Matrix
+### 542. 01 Matrix
 
 Given an *m x n* binary matrix *mat*, return the distance of the nearest *0* for each cell.
 
@@ -1179,7 +1181,7 @@ Constraints:
 * mat[i][j] is either 0 or 1.
 * There is at least one 0 in mat.
 
-### Answer 18
+#### Answer 18
 
 ```javascript
 var updateMatrix = function(mat) {
@@ -1236,7 +1238,7 @@ Expected
 [[0,0,0],[0,1,0],[0,0,0]]
 ```
 
-## 994. Rotting Oranges
+### 994. Rotting Oranges
 
 You are given an *m x n* grid where each cell can have one of three values:
 
@@ -1279,7 +1281,7 @@ Constraints:
 * 1 <= m, n <= 10
 * grid[i][j] is 0, 1, or 2.
 
-### Answer 19
+#### Answer 19
 
 ```javascript
 /**
@@ -1321,7 +1323,9 @@ Expected
 4
 ```
 
-## 21. Merge Two Sorted Lists
+## Recursion / Backtracking
+
+### 21. Merge Two Sorted Lists
 
 Merge two sorted linked lists and return it as a **sorted** list. The list should be made by splicing together the nodes of the first two lists.
 
@@ -1351,7 +1355,7 @@ Constraints:
 * -100 <= Node.val <= 100
 * Both l1 and l2 are sorted in non-decreasing order.
 
-### Answer 20
+#### Answer 20
 
 ```javascript
 /**
@@ -1394,7 +1398,7 @@ Expected
 [1,1,2,3,4,4]
 ```
 
-## 206. Reverse Linked List
+### 206. Reverse Linked List
 
 Given the *head* of a singly linked list, reverse the list, and return the *reversed list*.
 
@@ -1427,7 +1431,7 @@ Constraints:
 
 Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
 
-### Answer 21
+#### Answer 21
 
 ```javascript
 var reverseList = function(head) {
@@ -1446,7 +1450,6 @@ Expected
 [5,4,3,2,1]
 ```
 
-## Recursion / Backtracking
 ### 77. Combinations
 
 Given two integers *n* and *k*, return all possible combinations of *k* numbers out of the range *[1, n]*.
@@ -1666,3 +1669,8 @@ Output
 Expected
 ["a1b2","a1B2","A1b2","A1B2"]
 ```
+
+## Dynamic Programming
+
+### 70. Climbing Stairs
+

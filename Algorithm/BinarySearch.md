@@ -1836,6 +1836,21 @@ var minimumTotal = function(triangle) {
     return triangle[0][0]
 };
 
+var minimumTotal = function(triangle) {
+    for (var i = triangle.length-2;i>=0;i--){
+        var prev_floor = triangle[i];
+        var next_floor = triangle[i+1];
+        for (var j = 0;j<prev_floor.length;j++){
+            if (next_floor[j] > next_floor[j+1]){
+                prev_floor[j] = prev_floor[j]+next_floor[j+1];
+            }else{
+                prev_floor[j] = prev_floor[j]+next_floor[j];
+            }
+        }
+    }
+    return triangle[0][0];
+};
+
 Your input
 [[2],[3,4],[6,5,7],[4,1,8,3]]
 Output

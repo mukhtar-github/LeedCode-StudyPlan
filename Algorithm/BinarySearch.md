@@ -1858,3 +1858,7 @@ Output
 Expected
 11
 ```
+
+## Bit Manipulation
+
+### 231. Power of Two

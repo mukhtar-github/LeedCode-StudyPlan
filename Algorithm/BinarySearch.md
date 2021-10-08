@@ -1803,13 +1803,7 @@ Output: 11
 
 Explanation: The triangle looks like:
 
-    2
-
-   3 4
-
-  6 5 7
-
- 4 1 8 3
+![triangle](https://leetcode.com/problems/triangle/#:~:text=2%0A%20%203%204%0A%206%205%207%0A4%201%208%203)
 
 The minimum path sum from top to bottom is 2 + 3 + 5 + 1 = 11 (underlined above).
 

@@ -1906,3 +1906,25 @@ Constraints:
 * -2^31 <= n <= 2^31 - 1
 
 Follow up: Could you solve it without loops/recursion?
+
+#### Answer 28
+
+```javascript
+var isPowerOfTwo = function(n) {
+    if(n===0) return false
+    while(n!==1)
+        {
+            if(n%2!==0)
+                return false
+            n = n/2
+        }
+    return true
+};
+
+Your input
+1
+Output
+true
+Expected
+true
+```

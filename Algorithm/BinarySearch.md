@@ -611,7 +611,7 @@ Given the *head* of a singly linked list, return the middle node of the linked l
 
 Example 1:
 
-(1) ---> (2) ---> **(3)** ---> (4) ---> (5)
+![lc-midlist1](https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg)
 
 Input: head = [1,2,3,4,5]
 
@@ -621,7 +621,7 @@ Explanation: The middle node of the list is node 3.
 
 Example 2:
 
-(1) ---> (2) ---> (3) ---> **(4)** ---> (5) ---> (6)
+![lc-midlist2](https://assets.leetcode.com/uploads/2021/07/23/lc-midlist2.jpg)
 
 Input: head = [1,2,3,4,5,6]
 
@@ -687,9 +687,7 @@ Given the *head* of a linked list, remove the *nth* node from the end of the lis
 
 Example 1:
 
-(1) ---> (2) ---> (3) ---> **(4)** ---> (5)
-
-(1) ---> (2) ---> (3) ----------------> (5)
+![remove_ex1](https://assets.leetcode.com/uploads/2020/10/03/remove_ex1.jpg)
 
 Input: head = [1,2,3,4,5], n = 2
 

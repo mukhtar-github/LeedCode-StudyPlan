@@ -1470,5 +1470,55 @@ Constraints:
 ### Answer 22
 
 ```javascript
+/**
+ * @param {number} n
+ * @param {number} k
+ * @return {number[][]}
+ */
 
+var combine = function(n, k) {
+    let ans = []
+    backtracking(ans,[],1,n,k)
+    return ans
+};
+var backtracking = function(ans,tmp,start,n,k) {
+    if(tmp.length == k){
+      ans.push(Array.from(tmp))
+      return
+    }
+    for(let i=start;i<=n;++i){
+      tmp.push(i)
+      backtracking(ans,tmp,i+1,n,k)
+      tmp.pop()
+    }
+};
+
+var combine = function(n, k) {
+    if (n === 1) {
+        return [[1]];
+    }
+    let result = [];
+    combineHelper(n, k, 1, [], result);
+    return result;
+};
+
+var combineHelper = function(n, k, startIdx, currentCombo, result) {
+    if (currentCombo.length && currentCombo.length === k) {
+        result.push(currentCombo.slice());
+        return;
+    }
+    for (let i = startIdx; i <= n; i++) {
+        currentCombo.push(i);
+        combineHelper(n, k, i + 1, currentCombo, result);
+        currentCombo.pop();
+    } 
+};
+
+Your input
+4
+2
+Output
+[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+Expected
+[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 ```

@@ -1383,3 +1383,92 @@ Output
 Expected
 [1,1,2,3,4,4]
 ```
+
+## 206. Reverse Linked List
+
+Given the *head* of a singly linked list, reverse the list, and return the *reversed list*.
+
+Example 1:
+
+![rev1ex1](https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg)
+
+Input: head = [1,2,3,4,5]
+
+Output: [5,4,3,2,1]
+
+Example 2:
+
+![rev1ex2](https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg)
+
+Input: head = [1,2]
+
+Output: [2,1]
+
+Example 3:
+
+Input: head = []
+
+Output: []
+
+Constraints:
+
+* The number of nodes in the list is the range [0, 5000].
+* -5000 <= Node.val <= 5000
+
+Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+### Answer 21
+
+```javascript
+var reverseList = function(head) {
+    let [prev, cur] = [null, head]
+    while(cur) {
+        [cur.next, prev, cur] = [prev, cur, cur.next]
+    }
+    return prev
+}
+
+Your input
+[1,2,3,4,5]
+Output
+[[5,4,3,2,1]
+Expected
+[5,4,3,2,1]
+```
+
+## 77. Combinations
+
+Given two integers *n* and *k*, return all possible combinations of *k* numbers out of the range *[1, n]*.
+
+You may return the answer in **any order**.
+
+Example 1:
+
+Input: n = 4, k = 2
+
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+Example 2:
+
+Input: n = 1, k = 1
+
+Output: [[1]]
+
+Constraints:
+
+* 1 <= n <= 20
+* 1 <= k <= n
+
+### Answer 22
+
+```javascript
+
+```

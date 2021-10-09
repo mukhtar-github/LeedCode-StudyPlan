@@ -1929,7 +1929,7 @@ Expected
 true
 ```
 
-## 191. Number of 1 Bits
+### 191. Number of 1 Bits
 
 Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
 
@@ -2002,7 +2002,7 @@ Expected
 3
 ```
 
-## 190. Reverse Bits
+### 190. Reverse Bits
 
 Reverse bits of a given 32 bits unsigned integer.
 
@@ -2060,7 +2060,7 @@ Expected
    964176192 (00111001011110000010100101000000)
 ```
 
-## 136. Single Number
+### 136. Single Number
 
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 
@@ -2088,11 +2088,11 @@ Constraints:
 
 * 1 <= nums.length <= 3 * 10^4
 
-* -3 * 10^4 <= nums[i] <= 3 * 10^4
+* -3 *10^4 <= nums[i] <= 3* 10^4
 
 Each element in the array appears twice except for one element which appears only once.
 
-#### Answer 30
+#### Answer 31
 
 ```javascript
 var Sum = function(nums) {

@@ -288,7 +288,7 @@ var findMin = function(nums) {
 
 peak element is an element that is strictly greater than its neighbors.
 
-Given an integer array *nums*, find a peak element, and return its index. If the array contains multiple peaks, return the index to any of the peaks.
+Given an integer array *nums*, find a peak element, and return its index. If the array contains multiple peaks, return the index to **any of the peaks**.
 
 You may imagine that *nums[-1] = nums[n] = -∞*.
 
@@ -315,3 +315,25 @@ Constraints:
 * 1 <= nums.length <= 1000
 * -231 <= nums[i] <= 231 - 1
 * nums[i] != nums[i + 1] for all valid i.
+
+#### Answer 5
+
+```javascript
+var findPeakElement = function(nums) {
+    let left = 0, right = nums.length-1, mid;
+    
+    while(left < right) {
+        mid = Math.floor((right+left)/2);
+        if(nums[mid] > nums[mid+1]) right = mid;
+        else left = mid+1;
+    }
+    return left;
+};
+
+//Your input
+[1,2,3,1]
+//Output
+2
+//Expected
+2
+```

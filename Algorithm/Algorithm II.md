@@ -363,3 +363,57 @@ Constraints:
 * The number of nodes in the list is in the range [0, 300].
 * -100 <= Node.val <= 100
 * The list is guaranteed to be *sorted* in ascending order.
+
+#### Answer 6
+
+```javascript
+var deleteDuplicates = function(head) {
+    if (!head || !head.next) return head
+    let previous = null
+    const newNode = new ListNode()
+    let dummy = newNode
+    while (head) {
+        const next = head.next ? head.next.val : null
+        if (head.val !== previous && head.val !== next) {
+            dummy.next = new ListNode(head.val)
+            dummy = dummy.next
+        }
+        previous = head.val
+        head = head.next 
+    }
+    return newNode.next
+};
+
+const deleteDuplicates = (head) => {
+    const res = new ListNode(-1)
+    let last = res
+    let dupe = null
+    let curr = head
+    while (curr) {
+        const next = curr.next
+        if (!next) {
+            if (curr.val !== dupe) {
+                last.next = curr
+            }
+            break
+        }
+        if (curr.val === next.val || curr.val === dupe) {
+            dupe = curr.val
+            curr = curr.next
+        } else {
+            last.next = curr
+            last = curr
+            curr = curr.next
+            last.next = null
+        }
+    }
+    return res.next
+};
+
+//Your input
+[1,2,3,3,4,4,5]
+//Output
+[1,2,5]
+//Expected
+[1,2,5]
+```

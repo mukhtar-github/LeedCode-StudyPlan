@@ -248,6 +248,8 @@ Constraints:
 * All the integers of nums are unique.
 * nums is sorted and rotated between 1 and n times.
 
+#### Answer 4
+
 ```javascript
 var findMin = function(nums) {
     let start=0, end= nums.length-1, mid= Math.floor((start+end)/2);

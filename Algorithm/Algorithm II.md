@@ -91,7 +91,7 @@ var searchRange = function(nums, target) {
 
 ### 33. Search in Rotated Sorted Array
 
-There is an integer array nums sorted in ascending order (with **distinct** values).
+There is an integer array *nums* sorted in ascending order (with **distinct** values).
 
 Prior to being passed to your function, *nums* is possibly rotated at an unknown pivot index *k (1 <= k < nums.length)* such that the resulting array is *[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]* (**0-indexed**). For example, *[0,1,2,4,5,6,7]* might be rotated at pivot index *3* and become *[4,5,6,7,0,1,2]*.
 
@@ -141,3 +141,18 @@ var search = function(nums, target) {
 //Expected
 4
 ```
+
+### 74. Search a 2D Matrix
+
+Write an efficient algorithm that searches for a value in an *m x n* matrix. This matrix has the following properties:
+
+* Integers in each row are sorted from left to right.
+* The first integer of each row is greater than the last integer of the previous row.
+
+Example 1:
+
+![mat](https://assets.leetcode.com/uploads/2020/10/05/mat.jpg)
+
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+
+Output: true

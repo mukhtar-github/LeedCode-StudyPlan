@@ -448,3 +448,42 @@ Constraints:
 
 * 0 <= nums.length <= 3000
 * -10^5 <= nums[i] <= 10^5
+
+#### Answer 7
+
+```javascript
+var threeSum = function(nums) {
+    var res = [];
+    if(!nums || !nums.length) return res;
+
+    nums = nums.sort((a, b) => a - b);
+
+    for(let i=0; i<nums.length - 2; i++){
+        while(nums[i-1] === nums[i]) i++;
+        
+        let j=i+1, k=nums.length-1;
+        while(j<k){
+            let sum = nums[i] + nums[j] + nums[k];
+            if(sum === 0){
+                res.push([nums[i],nums[j],nums[k]]);
+                while (nums[j] === nums[j + 1]) j++;
+                while (nums[k] === nums[k-1]) k--;
+            }
+            //searching for -nums[i]
+            if(sum > 0){
+                k--;
+            }else{
+                j++;
+            }            
+        }
+    }
+    return res;
+};
+
+//Your input
+[-1,0,1,2,-1,-4]
+//Output
+[[-1,-1,2],[-1,0,1]]
+//Expected
+[[-1,-1,2],[-1,0,1]]
+```

@@ -124,3 +124,20 @@ Constraints:
 * All values of nums are unique.
 * nums is an ascending array that is possibly rotated.
 * -10^4 <= target <= 10^4
+
+```javascript
+var search = function(nums, target) {
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] === target) return i
+    }
+    return -1
+};
+
+//Your input
+[4,5,6,7,0,1,2]
+0
+//Output
+4
+//Expected
+4
+```

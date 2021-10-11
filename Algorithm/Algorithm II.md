@@ -247,3 +247,37 @@ Constraints:
 * -5000 <= nums[i] <= 5000
 * All the integers of nums are unique.
 * nums is sorted and rotated between 1 and n times.
+
+```javascript
+var findMin = function(nums) {
+    let start=0, end= nums.length-1, mid= Math.floor((start+end)/2);
+    
+    while( start <= end ){
+        //If nums is not rotated
+        if (nums[end] >= nums[start]){
+            return nums[start];
+        }
+        
+        //With this, we will return something for sure before exiting the while loop
+        if (end-start == 1){
+            return nums[end];
+        }
+        
+        if (nums[mid] <= nums[start]){
+            end = mid;
+        }
+        else {
+            start = mid;
+        }
+        
+        mid = Math.floor((start+end)/2);
+    }
+};
+
+//Your input
+[3,4,5,1,2]
+//Output
+1
+//Expected
+1
+```

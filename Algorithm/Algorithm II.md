@@ -710,6 +710,36 @@ Output: 2
 
 Constraints:
 
-n == height.length
-2 <= n <= 10^5
-0 <= height[i] <= 10^4
+* n == height.length
+* 2 <= n <= 10^5
+* 0 <= height[i] <= 10^4
+
+#### Answer 9
+
+```javascript
+const maxArea = (H) => {
+  let left = 0, right = H.length - 1, max = 0;
+  while (left < right) {
+    max = Math.max(max, Math.min(H[left], H[right]) * (right - left));
+    if (H[left] < H[right]) left++; // Left is smaller, try a new left line
+    else right--; // Right is smaller, try a new right line
+  }
+  return max;
+};
+
+//Your input
+[1,8,6,2,5,4,8,3,7]
+//Output
+49
+//Expected
+49
+
+var maxArea = function(H) {
+    let ans = 0, i = 0, j = H.length-1
+    while (i < j) {
+        ans = Math.max(ans, Math.min(H[i], H[j]) * (j - i))
+        H[i] <= H[j] ? i++ : j--
+    }
+    return ans
+};
+```

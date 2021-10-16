@@ -613,3 +613,60 @@ Constraints:
 * endi < starti+1
 * 0 <= startj < endj <= 10^9
 * endj < startj+1
+
+```javascript
+var intervalIntersection = function(firstList, secondList) {
+    const intersect = [];
+    let itr1 = 0, itr2 = 0;
+    while(itr1 < firstList.length && itr2 < secondList.length) {
+        const interval1 = firstList[itr1],
+              interval2 = secondList[itr2];
+
+// if interval1 and interval2 overlap, add the intersected interval
+        if((interval1[0] >= interval2[0] && interval1[0] <= interval2[1]) ||
+          (interval2[0] >= interval1[0] && interval2[0] <= interval1[1])) {
+            intersect.push([Math.max(interval1[0], interval2[0]), Math.min(interval1[1], interval2[1])]);
+        }
+        
+// if the interval1 is ended before interval2, move to the next interval in the first list (means that interval is completely processed)
+        if(interval1[1] < interval2[1]) {
+            ++itr1;
+        } else {  // if the interval2 is ended before interval1, move to the next interval in the second list
+            ++itr2;
+        }
+    }
+    return intersect;
+};
+
+var intervalIntersection = function(A, B) {
+    const result = []
+    let currA = 0;
+    let currB = 0;
+    
+    while(currA < A.length && currB < B.length) {
+        const [startA, endA] = A[currA];
+        const [startB, endB] = B[currB];
+        
+        const overlapStart = Math.max(startA, startB);
+        const overlapEnd = Math.min(endA, endB);
+        
+        if(overlapStart <= overlapEnd) result.push([overlapStart, overlapEnd])
+        
+        if(endA < endB) currA++;
+        else if (endB < endA) currB++;
+        else {
+            currA++;
+            currB++;
+        }
+    }
+    return result;    
+};
+
+//Your input
+[[0,2],[5,10],[13,23],[24,25]]
+[[1,5],[8,12],[15,24],[25,26]]
+//Output
+[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+//Expected
+[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+```

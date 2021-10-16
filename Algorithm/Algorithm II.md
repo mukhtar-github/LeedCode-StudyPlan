@@ -782,3 +782,99 @@ Constraints:
 
 * 1 <= s.length, p.length <= 3 * 10^4
 * s and p consist of lowercase English letters.
+
+#### Answer 10
+
+```javascript
+var findAnagrams = function(s, p) {
+    let sChars = new Array(26).fill(0);
+    let pChars = new Array(26).fill(0);
+    let left = 0, ch;
+    let pLength = p.length;
+    
+    for (let i = 0; i < p.length; i++) {
+        let index = p[i].charCodeAt(0) - 97;
+        pChars[index] += 1;
+    }
+    
+    let result = [];
+    
+    for (let i=0; i< s.length; i++) {
+        let index = s[i].charCodeAt(0) - 97;
+        sChars[index] += 1;
+        
+        if((i-left) >= pLength) {
+            ch = s.charAt(left).charCodeAt(0) - 97;
+             if(sChars[ch] === 1) {
+                 sChars[ch] = 0;
+             } else {
+                 sChars[ch] -= 1;
+             }
+            left++;
+        }
+        
+        if(areArrayEqual(sChars, pChars)) {
+            result.push(i - pLength + 1);
+        }
+    }
+    
+    return result;
+};
+
+//Your input
+"cbaebabacd"
+"abc"
+//Output
+[0,6]
+//Expected
+[0,6]
+
+function areArrayEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) return false;
+    let j = 0;
+    let bool = true;
+    for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[j]) {
+                bool = false;
+            }
+        j++;
+    }
+    return bool;
+};
+
+
+var findAnagrams = function(s2, s1) {
+  let map = {},
+        start = 0,
+        matched = 0,
+        res = [];
+
+    for (let i = 0; i < s1.length; i ++) {
+        let char = s1[i];
+        if(!(char in map)) map[char] = 0;
+        map[char] ++;
+    }
+
+    for (let end = 0; end < s2.length; end ++) {
+
+        let right = s2[end];
+
+        if (right in map) {
+            map[right] --;
+            if (map[right] === 0) matched ++;
+        }
+
+        if (matched === Object.keys(map).length) res.push(start);
+
+        if (end >= s1.length - 1) {
+            let left = s2[start];
+            start ++;
+            if(left in map) {
+                if (map[left] === 0) matched --;
+                map[left] ++;
+            }
+        }
+    }
+    return res;
+};
+```

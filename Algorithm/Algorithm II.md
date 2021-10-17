@@ -941,7 +941,7 @@ var numSubarrayProductLessThanK = function(nums, k) {
 
 ### 209. Minimum Size Subarray Sum
 
-Given an array of positive integers *nums* and a positive integer *target*, return the minimal length of a contiguous subarray *[numsl, numsl+1, ..., numsr-1, numsr]* of which the sum is greater than or equal to *target*. If there is no such subarray, return *0* instead.
+Given an array of positive integers *nums* and a positive integer *target*, return the minimal length of a **contiguous subarray** *[numsl, numsl+1, ..., numsr-1, numsr]* of which the sum is greater than or equal to *target*. If there is no such subarray, return *0* instead.
 
 Example 1:
 
@@ -970,3 +970,41 @@ Constraints:
 * 1 <= nums[i] <= 10^5
 
 Follow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).
+
+#### Answer 12
+
+```javascript
+var minSubArrayLen = function(target, nums) {
+    let start = 0
+    let end = 0
+    let sum = nums[0];
+    let flag = false
+    let length = nums.length;
+    while(end < nums.length){
+        if(sum >= target){
+            if(length > end - start+1) {
+                length = end - start+1;
+               }
+            sum -= nums[start]
+            flag = true
+            start++
+        }else {
+            end++
+            sum += nums[end]  
+        }
+       
+   }
+    if(!flag){
+        return 0
+       }
+   return length
+};
+
+//Your input
+7
+[2,3,1,2,4,3]
+//Output
+2
+//Expected
+2
+```

@@ -1048,6 +1048,38 @@ Constraints:
 
 #### Answer 13
 
-```javascrpt
+```javascript
+var numIslands = function(grid) {
+    var num_islands = 0
+    for(var i=0;i<grid.length;i++) {
+        for(var j=0;j<grid[i].length;j++) {
+           if(grid[i][j] == "1") {
+                //found land
+                num_islands++
+                dfs(grid,i,j)
+            }
+        }
+    }
+    return num_islands
+};
+var dfs = function(grid,row,col) {
+    var numOfRows = grid.length;
+    var numOfCols = grid[0].length;
+    if (row < 0 || col < 0 || row >= numOfRows || col >= numOfCols || grid[row][col] == '0') {
+      return;
+    }
 
+    grid[row][col] = '0';
+    dfs(grid, row - 1, col);
+    dfs(grid, row + 1, col);
+    dfs(grid, row, col - 1);
+    dfs(grid, row, col + 1);
+}
+
+//Your input
+[["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]
+//Output
+1
+//Expected
+1
 ```

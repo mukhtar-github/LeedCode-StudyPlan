@@ -1274,3 +1274,30 @@ Constraints:
 * The number of nodes in the subRoot tree is in the range [1, 1000].
 * -10^4 <= root.val <= 10^4
 * -10^4 <= subRoot.val <= 10^4
+
+#### Answer 16
+
+```javascript
+// DFS Version:
+const isSubtree = (root, subRoot) => {
+  const areEqual = (node1, node2) => {
+    if (!node1 || !node2) return !node1 && !node2;
+    if (node1.val !== node2.val) return false;
+    return areEqual(node1.left, node2.left) && areEqual(node1.right, node2.right);
+  }
+  const dfs = (node) => {
+    if (!node) return false;
+    if (areEqual(node, subRoot)) return true;
+    return dfs(node.left) || dfs(node.right);
+  }
+  return dfs(root);
+};
+
+//Your input
+[3,4,5,1,2]
+[4,1,2]
+//Output
+true
+//Expected
+true
+```

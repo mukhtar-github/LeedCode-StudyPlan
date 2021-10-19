@@ -1200,3 +1200,48 @@ Follow-up:
 
 * You may only use constant extra space.
 * The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.
+
+#### Answer 15
+
+```javascript
+var connect = function(root) {
+    //  JavaScript equivalent of a queue
+    //      peek    --> fringe[0]
+    //      deque   --> fringe[0] + fringe.shift()
+    //      enque   --> fringe.push()
+    //      isEmpty --> fringe.length == 0
+    let fringe = [];
+    fringe.push(root);
+    fringe.push(null);
+    
+    while(fringe.length != 0) {
+        let curr = fringe[0];
+        fringe.shift();
+        if(curr != null) {
+            // get left child
+            if(curr.left != null) fringe.push(curr.left);
+                
+            // get right child
+            if(curr.right != null) fringe.push(curr.right);
+            
+            // set the pointer
+            let peek = fringe[0];
+            curr.next = peek;
+            
+            // we have ended the level and added all possible children on that level
+            if(peek == null) {
+                fringe.push(null);
+            }
+        }
+    }
+    
+    return root;
+};
+
+//Your input
+[1,2,3,4,5,null,7]
+//Output
+[1,#,2,3,#,4,5,7,#]
+//Expected
+[1,#,2,3,#,4,5,7,#]
+```

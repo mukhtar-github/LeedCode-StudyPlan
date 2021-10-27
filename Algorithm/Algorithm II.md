@@ -1341,3 +1341,131 @@ Constraints:
 * n == grid[i].length
 * 1 <= n <= 100
 * grid[i][j] is 0 or 1
+
+```javascript
+var shortestPathBinaryMatrix = function(grid) {
+    
+    /*
+       Classic BFS with level traversal.
+       Time:  O(m*n)
+       Space: O(m*n)
+    */
+    
+    
+    // Edge cases
+    //   empty grid
+    if(grid.length == 0){
+        return -1;
+    }
+    //   blocked starting point
+    if(grid[0][0] == 1){
+        return -1;
+    }
+    
+    // 
+    const m = grid.length;
+    const n = grid[0].length;
+
+    // moving directions
+    const DIR = [
+        // 
+        [0,1],
+        [0,-1],
+        [1,0],
+        [-1,0],
+        // diagonals
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1],
+    ];
+    
+    // define target
+    const target = {row: m-1, col: n-1};
+        
+    // preventing double visits
+    // could be replaced with changing original grid
+    // by changing visited 0 cells to 1
+    const _seen = new Set();
+    const seen$ = (r, c) => _seen.has(r*n+c);
+    const visit$ = (r, c) => {
+        _seen.add(r*n+c);
+        return {row: r, col: c};
+    }
+    
+    const q = [visit$(0,0)];
+    
+    let path  = 0
+    
+    while(q.length>0){
+        path++;    
+        // level traversal: in our case level it is steps in the grid
+        for(let i=q.length;i>0;i--){
+            let {row, col} = q.shift();
+            
+            // if target found - return current step
+            // since it is BFS the very first occurences will be
+            // at the shortest path
+            if(row == target.row && col == target.col){
+                return path;
+            }
+            
+            for(let d of DIR){
+                
+                let nr = row + d[0];
+                let nc = col + d[1];
+                
+                // bounds check
+                if(nr < 0 || nc < 0 || nr >=m || nc >= n){
+                    continue;
+                }
+                
+                // ignore visited
+                if(seen$(nr, nc)){
+                    continue;
+                }
+                
+                // visit only empty cells
+                if(grid[nr][nc] == 0){
+                    q.push(visit$(nr, nc));
+                }
+            }
+        }
+    }
+    
+    // all possible ways have been checked and no target achieved
+    return -1;
+  
+};
+
+// Runtime: 108 ms, faster than 90.57% of JavaScript online submissions for Shortest Path in Binary Matrix.
+var shortestPathBinaryMatrix = function(grid) {
+    const n = grid.length
+    if(grid[0][0] || grid[n-1][n-1]) return -1
+    const queue = []
+    const dist = 0
+    queue.push([0, 0, dist+1])
+    const directions = [[-1,-1],[-1,0],[-1,1],
+                        [0,-1],[0,1],
+                        [1,-1],[1,0],[1,1]]
+        for(const [i, j, d] of queue){
+            if(i === n-1 && j === n-1) return d
+            for(const [x, y] of directions){
+                const newI = i + x
+                const newJ = j + y
+                 if(0 <= newI && newI < n && 0 <= newJ && newJ < n && !grid[newI][newJ]){
+                     queue.push([newI, newJ, d+1])
+                     grid[newI][newJ] = 1
+                 }
+            }
+        }
+    return -1
+};
+
+//Your input
+[[0,1],[1,0]]
+//Output
+2
+//Expected
+2
+```

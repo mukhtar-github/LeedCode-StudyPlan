@@ -1591,3 +1591,30 @@ Constraints:
 * graph[i][j] != i (i.e., there will be no self-loops).
 * All the elements of graph[i] are *unique*.
 * The input graph is *guaranteed* to be a *DAG*.
+
+#### Answer 19
+
+```javascript
+var allPathsSourceTarget = function(graph) {
+    const paths = []
+    const dfs = (index, path) => {
+// only if the path a target path
+        if(path[path.length - 1] == graph.length - 1) {
+            paths.push(path);
+            return;
+        }
+        for(let i = 0; i < graph[index].length; i++) {
+            dfs(graph[index][i], [...path, graph[index][i]])
+        }
+    }
+    dfs(0, [0])
+    return paths
+};
+
+//Your input
+[[1,2],[3],[3],[]]
+//Output
+[[0,1,3],[0,2,3]]
+//Expected
+[[0,1,3],[0,2,3]]
+```

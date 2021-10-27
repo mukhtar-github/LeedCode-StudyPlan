@@ -1618,3 +1618,62 @@ var allPathsSourceTarget = function(graph) {
 //Expected
 [[0,1,3],[0,2,3]]
 ```
+
+## Recursion / Backtracking
+
+### 78. Subsets
+
+Given an integer array *nums* of *unique* elements, return all possible subsets (the power set).
+
+The solution set *must not* contain duplicate subsets. Return the solution in *any order*.
+
+Example 1:
+
+Input: nums = [1,2,3]
+
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+Example 2:
+
+Input: nums = [0]
+
+Output: [[],[0]]
+
+Constraints:
+
+* 1 <= nums.length <= 10
+* -10 <= nums[i] <= 10
+* All the numbers of nums are unique.
+
+#### Answer 20
+
+```javascript
+var subsets = function(nums) {
+    let answer =[];
+    let ip = [nums];
+    let op=[]
+    FindSunsets(nums,op)
+    function FindSunsets(ip,op){
+        ip=[...ip]
+      if(ip.length==0){
+          answer.push(op)
+          return
+      }  
+       let op1 = [...op];
+       let op2 = [...op];
+        op2.push(ip[0])
+        ip.shift();
+        FindSunsets(ip,op1)
+        FindSunsets(ip,op2);
+        return
+    }
+    return answer
+};
+
+//Your input
+[1,2,3]
+//Output
+[[],[3],[2],[2,3],[1],[1,3],[1,2],[1,2,3]]
+//Expected
+[[],[3],[2],[2,3],[1],[1,3],[1,2],[1,2,3]]
+```

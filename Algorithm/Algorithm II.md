@@ -1677,3 +1677,60 @@ var subsets = function(nums) {
 //Expected
 [[],[3],[2],[2,3],[1],[1,3],[1,2],[1,2,3]]
 ```
+
+### 90. Subsets II
+
+Given an integer array *nums* that may contain duplicates, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in *any order*.
+
+Example 1:
+
+Input: nums = [1,2,2]
+
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+Example 2:
+
+Input: nums = [0]
+
+Output: [[],[0]]
+
+Constraints:
+
+* 1 <= nums.length <= 10
+* -10 <= nums[i] <= 10
+
+#### Answer 21
+
+```javascript
+const subsetsWithDup = function(nums) {
+    //sort the array so that duplicates will be next to each other
+    nums.sort();
+    const result = [];
+    result.push([]);
+    let pointer1 = 0,
+        pointer2 = 0;
+    for (let i = 0; i < nums.length; i++) {
+        pointer1 = 0;
+        
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            pointer1 = pointer2 + 1;
+        }
+        pointer2 = result.length - 1;
+        for (let j = pointer1; j < pointer2 + 1; j++) {
+            const set = result[j].slice(0);
+            set.push(nums[i]);
+            result.push(set);
+        }
+    }
+    return result;
+};
+
+//Your input
+[1,2,2]
+//Output
+[[],[1],[2],[1,2],[2,2],[1,2,2]]
+//Expected
+[[],[1],[2],[1,2],[2,2],[1,2,2]]
+```

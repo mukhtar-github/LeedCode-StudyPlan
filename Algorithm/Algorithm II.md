@@ -2035,3 +2035,101 @@ Constraints:
 
 * 0 <= digits.length <= 4
 * digits[i] is a digit in the range ['2', '9'].
+
+#### Answer 25
+
+```javascript
+var letterCombinations = function(digits) {
+    let res = [];
+    let arr = [
+        ['a','b','c'], ['d','e','f'], ['g','h','i'],['j','k','l'],['m','n','o'],['p','q','r','s'],['t','u','v'],['w','x','y','z']
+    ];
+    if(digits.length === 0) return [];
+    for(let i = 0 ;i < arr[digits[0]-2].length; i++){
+        let word = arr[digits[0]-2][i];
+        dfs(digits, arr, word, 1, res);
+    }
+    return res;
+};
+
+function dfs(digits, arr, word, loc, res){
+        if(digits.length -1 < loc) {
+            res.push(word);
+            return;
+        }
+        for(let i = 0; i < arr[digits[loc]-2].length; i++){
+            dfs(digits,arr, word + arr[digits[loc]-2][i], loc+1, res);
+        }
+};
+
+//Your input
+"23"
+//Output
+["ad","ae","af","bd","be","bf","cd","ce","cf"]
+//Expected
+["ad","ae","af","bd","be","bf","cd","ce","cf"]
+```
+
+### 22. Generate Parentheses
+
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+Example 1:
+
+Input: n = 3
+
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+Example 2:
+
+Input: n = 1
+
+Output: ["()"]
+
+Constraints:
+
+* 1 <= n <= 8
+
+#### Answer 26
+
+```javascript
+const generateParenthesis = (n, current = '(', open = 1, close = 0, res = []) => {
+  if (close === n) return res.push(current);
+  open > close && generateParenthesis(n, current + ')', open, close + 1, res);
+  open < n && generateParenthesis(n, current + '(', open + 1, close, res);
+  return res
+};
+
+var generateParenthesis = function(n) {
+    
+    var res = [];
+    
+    var generateString = function(open, close, string){
+    
+    if(open > close) return;
+    
+    if(open == 0 && close == 0) {
+        res.push(string);
+    };
+    
+    if(open != 0){
+        generateString(open - 1, close, string + '(');
+    }
+    
+    if(close != 0){
+        generateString(open, close - 1, string + ')');   
+    }
+   }
+    
+    generateString(n,n, '');
+    
+    return res;
+};
+
+//Your input
+3
+//Output
+["((()))","(()())","(())()","()(())","()()()"]
+//Expected
+["((()))","(()())","(())()","()(())","()()()"]
+```

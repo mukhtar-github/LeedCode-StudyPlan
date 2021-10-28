@@ -2133,3 +2133,157 @@ var generateParenthesis = function(n) {
 //Expected
 ["((()))","(()())","(())()","()(())","()()()"]
 ```
+
+### 79. Word Search
+
+Given an *m x n* grid of characters *board* and a string *word*, return *true* if *word* exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+Example 1:
+
+![word2](https://assets.leetcode.com/uploads/2020/11/04/word2.jpg)
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+
+Output: true
+
+Example 2:
+
+![word-1](https://assets.leetcode.com/uploads/2020/11/04/word-1.jpg)
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+
+Output: true
+
+Example 3:
+
+![word3](https://assets.leetcode.com/uploads/2020/10/15/word3.jpg)
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+
+Output: false
+
+Constraints:
+
+* m == board.length
+* n = board[i].length
+* 1 <= m, n <= 6
+* 1 <= word.length <= 15
+* board and word consists of only lowercase and uppercase English letters.
+
+Follow up: Could you use search pruning to make your solution faster with a larger board?
+
+#### Answer 27
+
+```javascript
+var exist = function(board, word) {
+    if(board == null || word == null || board.length == 0) //edge case
+        return false;
+    
+    
+    for(let row = 0; row < board.length; row++){
+        for(let col = 0; col < board[0].length; col++){
+            if(helper(board, word, row, col, 0))  //recursive check
+                return true;
+        }
+    }
+    
+    
+    function helper(board, word, row, col, wordIndex){
+        
+        if(wordIndex == word.length) 
+            return true;
+        
+        //out of bounds check
+        if(row < 0 || row >= board.length || col < 0  || col >= board[0].length)
+            return false;
+        
+        //letter check in the box (if the letter at the board is not equal to the letter of the given word return false)
+        if(board[row][col] != word[wordIndex])
+            return false;
+        
+        //choose
+        let temp = board[row][col];
+        board[row][col] = '*';          //marking the visited box
+        
+        //explore
+        let bool = helper(board, word, row-1, col, wordIndex+1) ||
+            helper(board, word, row+1, col, wordIndex+1) ||
+            helper(board, word, row, col-1, wordIndex+1) ||
+            helper(board, word, row, col+1, wordIndex+1);
+    
+        //unchoose
+        board[row][col] = temp;        //setting back the value from '*' to the letter
+        
+        return bool;
+    }
+    
+    
+    return false;
+};
+
+//approach: backtracking(dfs)
+//basic template of backtracking would be to loop, choose, explore and unchoose
+//loop: you want to iterate over all the numbers so that you can find it's possible values
+//choose: you start with the index value(the 0th index number), so that you can find the next combined possible values for the 0th value
+//explore: basically recursion to add all the next values to the 0th value
+//unchoose: you pop the value (Oth value), so then you can now start with other value to make that other value 0th value
+//in this case: 
+//since its a 2D array, instead of looping once, we will loop twice, over the row and column of the board
+//then to choose, we will just mark the visited index with '*'
+//to explore, we will be exploring left, right, up, down of the board from the current spot/box
+//then to unchoose, we will just replace the '*' with the letter we had replaced
+//
+//so basically, 
+//we will start from the [0][0] of the board, and start checking if the letter in that spot is equal to the letter in the given word
+//if it is equal, we recurse to find possible matching letter from the board
+//we increment the wordIndex by 1, we also replace the spot with '*' 
+//and then backtrack check to see if the neighbors(left, right, up, down) have the new letter from the given word
+//if somehow the boundary check fails or the letter check fails, we return false, 
+//if all of the check fails while backtracking we start replacing the '*' with the actual letters we stored in our temp variable
+//then return the result back.
+
+var exist = function(board, word) {
+    let height = board.length;
+    let width = board[0].length;
+    let found = false;
+    
+    const dfs = (i, j, index = 0) => {
+        if(i < 0 || i > height - 1 || j < 0 || j > width - 1) return
+        if(board[i][j] !== word[index]) return;
+        if(index == word.length - 1) {
+            found = true
+            return;
+        }
+// mark during this DFS call
+        board[i][j] = '#';
+// only dfs if not found
+        if(!found) {
+            dfs(i,   j+1, index+1)
+            dfs(i+1, j,   index+1)
+            dfs(i,   j-1, index+1)
+            dfs(i-1, j,   index+1)
+        }
+// reset afterwards
+        board[i][j] = word[index];
+    }
+    
+    for(let i = 0; i < height && !found; i++) {
+        for(let j = 0; j < width && !found; j++) {
+            if(board[i][j] == word[0]) {
+                dfs(i, j)
+            }
+        }
+    }
+    return found
+};
+
+//Your input
+[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
+"ABCCED"
+//Output
+true
+//Expected
+true
+```

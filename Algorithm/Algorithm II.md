@@ -2359,7 +2359,7 @@ var rob = function(nums) {
 
 ### 55. Jump Game
 
-You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+You are given an integer array *nums*. You are initially positioned at the array's *first index*, and each element in the array represents your maximum jump length at that position.
 
 Return true if you can reach the last index, or false otherwise.
 
@@ -2384,9 +2384,23 @@ Constraints:
 * 1 <= nums.length <= 104
 * 0 <= nums[i] <= 105
 
-#### Answer 28
+#### Answer 29
 
 ```javascript
+var canJump = function(nums) {
+    for (let i = nums.length - 1; i-- !== 0;) {
+        if (nums[i] === 0) {
+            let ii = i;
+            while (ii-- !== 0) {
+                if (nums[ii] > i - ii) break;
+            }
+            if (ii === -1) return false;
+            else i = ii + 1;
+        }
+    }
+    return true;
+};
+
 var rob = function(nums) {
     let n = nums.length;
     if(n===0) return 0;
@@ -2411,9 +2425,9 @@ var rob = function(nums) {
 };
 
 //Your input
-[2,3,2]
+[2,3,1,1,4]
 //Output
-3
+true
 //Expected
-3
+true
 ```

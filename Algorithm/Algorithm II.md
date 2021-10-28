@@ -2326,13 +2326,33 @@ Constraints:
 #### Answer 28
 
 ```javascript
-
+var rob = function(nums) {
+    let n = nums.length;
+    if(n===0) return 0;
+    if(n===1) return nums[0];
+    if(n===2) return Math.max(nums[0],nums[1])
+    
+    let dp1 = new Array(n);
+    let dp2 = new Array(n);
+    
+    computeResult(0,n-2,dp1,nums);
+    computeResult(1,n-1,dp2,nums);
+    
+    function computeResult(i,n,dp,nums){
+        dp[i] = nums[i]
+        dp[i+1] = Math.max(dp[i],nums[i+1])
+        
+        for(let j=i+2; j<=n; j++){
+            dp[j] = Math.max(dp[j-1],dp[j-2]+nums[j])
+        }
+    }
+    return Math.max(dp1[n-2],dp2[n-1])
+};
 
 //Your input
-[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-"ABCCED"
+[2,3,2]
 //Output
-true
+3
 //Expected
-true
+3
 ```

@@ -1853,3 +1853,51 @@ Constraints:
 * 1 <= candidates[i] <= 200
 * All elements of candidates are distinct.
 * 1 <= target <= 500
+
+#### Answer 23
+
+```javascript
+var permuteUnique = function(nums) {
+// Iterating through the array and checking the occurences of each number in the array
+    const counts = {};
+    for(num of nums){
+        counts[num] ? counts[num]++ : counts[num] = 1;
+    }
+    
+    const result = [];
+    const temp = [];
+    const set = [...new Set(nums)]
+    
+    dfs();
+    
+    function dfs(){
+        //Base case
+        if(temp.length === nums.length){
+            result.push([...temp]);
+            return;
+        }
+        
+        for(let i = 0; i < set.length; i++){
+            const num = set[i];
+// Checking if the occurences of num in the original array is more than in temp array
+            if(counts[num] > temp.filter(x => x === num).length){
+                //Add the number
+                temp.push(num);
+                //Recurse - the first number stays in the temp arr for the ceratin function
+                dfs();
+                //Removing the current num so we can complete the loop with the rest numbers as first numbers and so on
+                temp.pop()
+            }
+        }
+    }
+    return result;
+   
+};
+
+//Your input
+[1,1,2]
+//Output
+[[1,1,2],[1,2,1],[2,1,1]]
+//Expected
+[[1,1,2],[1,2,1],[2,1,1]]
+```

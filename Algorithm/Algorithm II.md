@@ -1912,3 +1912,126 @@ In general we can say this question is alll about selecting and not-selecting an
 We remove element from temp DS or don't select an element if we go beyond our target
 */
 ```
+
+### 40. Combination Sum II
+
+Given a collection of candidate numbers (*candidates*) and a target number (*target*), find all unique combinations in candidates where the candidate numbers sum to *target*.
+
+Each number in *candidates* may only be used *once* in the combination.
+
+Note: The solution set must not contain duplicate combinations.
+
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+
+Output:
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+
+Example 2:
+
+Input: candidates = [2,5,2,1,2], target = 5
+
+Output:
+[
+[1,2,2],
+[5]
+]
+
+Constraints:
+
+* 1 <= candidates.length <= 100
+* 1 <= candidates[i] <= 50
+* 1 <= target <= 30
+
+#### Answer 24
+
+```javascript
+var combinationSum2 = function(candidates, target) {
+    candidates.sort((a,b)=>a-b);
+    
+    let res = [];
+    let dfs = function(id, n, comb) {
+        if (n == 0) {
+            res.push(comb);
+            return;
+        }
+        
+        for (let i=id;i<candidates.length;i++) {
+            if (candidates[i] <= n) {
+                dfs(i+1, n - candidates[i], [...comb, candidates[i]]);
+            }
+            while(candidates[i+1]==candidates[i])i++;
+        }
+        return res;
+    }
+    
+    dfs(0, target, []);
+    return res;
+};
+
+var combinationSum2 = function(candidates, target) {
+    if (!candidates || candidates.length == 0) return [];
+    let res = [];
+    candidates.sort((a,b) => a-b);
+    var helper = function(curSum, cur, index){
+        if (curSum == target){
+            res.push([...cur]);
+            return;
+        }
+        for(let i = index; i < candidates.length; i++){
+            if (i != index && candidates[i] == candidates[i-1]) continue; //already return, go next loop(not recursion)
+            if (curSum > target) return;
+            cur.push(candidates[i]);
+            helper(curSum+candidates[i], cur, i+1);
+            cur.pop();
+        }
+    }
+    helper(0, [], 0);
+    return res;
+};
+
+//Your input
+[10,1,2,7,6,1,5]
+8
+//Output
+[[1,1,6],[1,2,5],[1,7],[2,6]]
+//Expected
+[[1,1,6],[1,2,5],[1,7],[2,6]]
+```
+
+### 17. Letter Combinations of a Phone Number
+
+Given a string containing digits from *2-9* inclusive, return all possible letter combinations that the number could represent. Return the answer in *any order*.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+![200px-Telephone-keypad2.svg](https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
+
+Example 1:
+
+Input: digits = "23"
+
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+Example 2:
+
+Input: digits = ""
+
+Output: []
+
+Example 3:
+
+Input: digits = "2"
+
+Output: ["a","b","c"]
+
+Constraints:
+
+* 0 <= digits.length <= 4
+* digits[i] is a digit in the range ['2', '9'].

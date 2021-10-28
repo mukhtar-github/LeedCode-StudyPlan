@@ -2460,3 +2460,30 @@ Constraints:
 
 * 1 <= nums.length <= 10^4
 * 0 <= nums[i] <= 1000
+
+#### Answer 30
+
+```javascript
+var jump = function(nums) {
+    var len = nums.length;
+    if (!len) return -1;
+    var dp = new Array(len).fill(len);
+    dp[0] = 0;
+    var end = 0;
+    for (var i = 0; i < len; i++) {
+        if (dp[i] >= dp[len - 1]) continue;
+        for (var jump = end - i; jump <= nums[i] && jump + i < len; jump++) {
+            dp[i + jump] = Math.min(dp[i + jump], dp[i] + 1);
+            end = i + jump;
+        }
+    }
+    return dp[len - 1];
+};
+
+//Your input
+[2,3,1,1,4]
+//Output
+2
+//Expected
+2
+```

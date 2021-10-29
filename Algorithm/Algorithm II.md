@@ -2900,3 +2900,74 @@ function numDecodings(s) {
 // [1, 1, 2, 0]
 // [1, 1, 2, 1]
 ```
+
+### 139. Word Break
+
+Given a string *s* and a dictionary of strings *wordDict*, return *true* if *s* can be segmented into a space-separated sequence of one or more dictionary words.
+
+*Note* that the same word in the dictionary may be reused multiple times in the segmentation.
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+
+Output: true
+
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+Example 2:
+
+Input: s = "applepenapple", wordDict = ["apple","pen"]
+
+Output: true
+
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+Note that you are allowed to reuse a dictionary word.
+
+Example 3:
+
+Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+
+Output: false
+
+Constraints:
+
+* 1 <= s.length <= 300
+* 1 <= wordDict.length <= 1000
+* 1 <= wordDict[i].length <= 20
+* s and wordDict[i] consist of only lowercase English letters.
+* All the strings of wordDict are unique.
+
+#### Answer 35
+
+```javascript
+var wordBreak = function(s, wordDict) {
+    const sLength = s.length;
+    const dictLength = wordDict.length;
+    const dp = new Array(sLength).fill(false);
+    
+    for (let i = 0; i < sLength; i += 1) {
+        for (let j = 0; j < dictLength; j += 1) {
+            const word = wordDict[j];
+            const wordLength = word.length;
+            if (wordLength <= i + 1) {
+                const breakPoint = i + 1 - wordLength;
+                const tail = s.substring(breakPoint, i + 1);
+                if (tail === word && (breakPoint === 0 || dp[breakPoint - 1] === true)) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+    }
+    return dp[sLength - 1];
+};
+
+//Your input
+"leetcode"
+["leet","code"]
+//Output
+true
+//Expected
+true
+```

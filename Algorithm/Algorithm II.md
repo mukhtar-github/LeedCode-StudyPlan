@@ -2970,4 +2970,12 @@ var wordBreak = function(s, wordDict) {
 true
 //Expected
 true
+
+/*
+Basic idea
+Use dynamic programing to calculate whether a substring of s (from index 0 to index i) is breakable using words from the dictionary.
+dp[i] will be true if :
+(1) The substring ended at i has its tail matching any word from the dictionary.
+(2) dp[i - L] === true, where L is the length of the matching word from (1)
+*/
 ```

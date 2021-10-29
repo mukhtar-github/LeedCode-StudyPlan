@@ -3472,3 +3472,57 @@ const coinChange = (coins, amount) => {
 //Expected
 3
 ```
+
+### 343. Integer Break
+
+Given an integer *n*, break it into the sum of *k positive integers*, where *k >= 2*, and maximize the product of those integers.
+
+Return the maximum product you can get.
+
+Example 1:
+
+Input: n = 2
+
+Output: 1
+
+Explanation: 2 = 1 + 1, 1 × 1 = 1.
+
+Example 2:
+
+Input: n = 10
+
+Output: 36
+
+Explanation: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36.
+
+Constraints:
+
+* 2 <= n <= 58
+
+#### Answer 42
+
+```javascript
+var integerBreak = function(n) {
+    let memo = new Map()
+    
+    function dp(n){
+        if(n == 1 || n == 2) return 1
+        if(memo.has(n)) return memo.get(n)
+        
+        let q = 0
+        for(let i=1; i<=n/2; i++){
+            q = Math.max(q, i * Math.max((n-i),dp(n-i)))
+        }
+        memo.set(n, q)
+        return q
+    }
+    return dp(n)
+};
+
+//Your input
+2
+//Output
+1
+//Expected
+1
+```

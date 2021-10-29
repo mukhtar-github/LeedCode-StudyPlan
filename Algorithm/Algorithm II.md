@@ -3525,4 +3525,12 @@ var integerBreak = function(n) {
 1
 //Expected
 1
+
+/*
+The time complexity is O(n^2).
+There are n/2 loops for the 1st recursive call, (n-1)/2 for the 2nd call, and so on.
+Therefore the total number of loops is: n/2 + (n-1)/2 + (n-2)/2 + (n-3)/2 + (n-4)/2 + ... + (n-(n-3))/2
+This sum evaluates to an upper bound of: (n*2 - n(n+1)/2)/2
+which simplifies to (n^2-n)/4. Which is O(n^2)
+*/
 ```

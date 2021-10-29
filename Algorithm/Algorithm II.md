@@ -3199,35 +3199,97 @@ Constraints:
 #### Answer 38
 
 ```javascript
-var findNumberOfLIS = function(nums) {
-    let dp = Array(nums.length).fill(1);
-    let count = Array(nums.length).fill(1);
-    
-    let maxLen = 0;
-    for(let i = 0; i < nums.length; i++) { // current one
-        for(let j = 0; j < i; j++) { // compare to previous ones
-            if(nums[j] < nums[i] && dp[j]+1 > dp[i]) {
-                dp[i] = dp[j]+1;
-                count[i] = count[j];
-            } else if(nums[j] < nums[i] && dp[j]+1 === dp[i]) {
-                count[i] += count[j];
-            } 
+var longestCommonSubsequence = function(text1, text2) {
+    let temp = [];
+    let max = 0;
+    for(let i = 0; i <= text1.length; i++) {
+        temp.push(new Array(text2.length + 1).fill(0));
+    }
+    for(let i = 1; i < temp.length; i++) {
+        for(let j = 1; j < temp[0].length; j++) {
+            if(text1[i-1] === text2[j-1]) {
+                temp[i][j] = temp[i-1][j-1] + 1
+            } else {
+                temp[i][j] = Math.max(temp[i-1][j], temp[i][j-1]);
+            }
+            max = Math.max(max, temp[i][j]);
         }
-        maxLen = Math.max(dp[i], maxLen);
     }
-    
-    let res = 0;
-    for(let i = 0; i < count.length; i++) {
-        if(dp[i] === maxLen) res += count[i];
-    }
-    
-    return res;
+    return max;
 };
 
 //Your input
-[1,3,5,4,7]
+"abcde"
+"ace"
+//Output
+3
+//Expected
+3
+```
+
+### 583. Delete Operation for Two Strings
+
+Given two strings *word1* and *word2*, return the minimum number of *steps* required to make *word1* and *word2* the same.
+
+In one step, you can delete exactly one character in either string.
+
+Example 1:
+
+Input: word1 = "sea", word2 = "eat"
+
+Output: 2
+
+Explanation: You need one step to make "sea" to "ea" and another step to make "eat" to "ea".
+
+Example 2:
+
+Input: word1 = "leetcode", word2 = "etco"
+
+Output: 4
+
+Constraints:
+
+* 1 <= word1.length, word2.length <= 500
+* word1 and word2 consist of only lowercase English letters.
+
+#### Answer 39
+
+```javascript
+var minDistance = function(W1, W2) {
+    let m = W1.length, n = W2.length
+    if (m < n) [W1, W2, m, n] = [W2, W1, n, m]
+    let WA1 = W1.split(""), WA2 = W2.split(""),
+        dpLast = new Uint16Array(n + 1),
+        dpCurr = new Uint16Array(n + 1)
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) 
+            dpCurr[j+1] = WA1[i] === WA2[j]
+                ? dpLast[j] + 1
+                : Math.max(dpCurr[j], dpLast[j+1]);
+        [dpLast, dpCurr] = [dpCurr, dpLast]
+    }
+    return m + n - 2 * dpLast[n] 
+};
+
+//Your input
+"sea"
+"eat"
 //Output
 2
 //Expected
 2
+
+/*
+Idea:
+This problem is basically asking us to identify the longest common subsequence (LCS) between the two words (W1, W2). The answer will then be the combined difference between the length of the words and the length of the LCS.
+
+For a typical LCS solution, we would use a bottom-up dynamic programming (DP) approach and use nested loops to compare each letter of each word against each other (W1[i], W2[j]). This would normally call for a DP array of size (m + 1) * (n + 1), where m = W1.length and n = W2.length. Since the LCS process references the previous row and column for the target cell, we'll need the extra buffer of 0-filled cells. Each cell in the DP array at dp[i][j] will represent the longest subsequence found between W1.substr(0,i) and W2.susbtr(0,j). Our final answer will then be dp[m][n].
+
+Since the DP array is being built iteratively, in order, we can reduce the normal space complexity from O(N * M) by only keeping the current and last rows (dpCurr, dpLast) as we iterate through. This will drop the space complexity to O(N). Doing this, we can also ensure that the shorter word is used for N by swapping the two words if necessary.
+
+Time Complexity: O(N * M) where N and M are the lengths of the two words
+Space Complexity: O(N) where N is the length of the smaller of the two words
+Implementation:
+Javascript and Java will find it easier to iterate repeatedly through an array rather than a string, so we can initially split() or toCharArray() the two words (WA1, WA2).
+*/
 ```

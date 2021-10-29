@@ -2979,3 +2979,155 @@ dp[i] will be true if :
 (2) dp[i - L] === true, where L is the length of the matching word from (1)
 */
 ```
+
+### 300. Longest Increasing Subsequence
+
+Given an integer array *nums*, return the length of the longest strictly increasing subsequence.
+
+A *subsequence* is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+
+Example 1:
+
+Input: nums = [10,9,2,5,3,7,101,18]
+
+Output: 4
+
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+Example 2:
+
+Input: nums = [0,1,0,3,2,3]
+
+Output: 4
+
+Example 3:
+
+Input: nums = [7,7,7,7,7,7,7]
+
+Output: 1
+
+Constraints:
+
+* 1 <= nums.length <= 2500
+* -104 <= nums[i] <= 10^4
+
+Follow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?
+
+#### Answer 36
+
+```javascript
+var lengthOfLIS = nums => {
+  return nums.reduce((sequence, num) => {
+    if (num > sequence[sequence.length - 1]) sequence.push(num);
+    else sequence[sequence.findIndex(val => val >= num)] = num;
+    return sequence;
+  }, [nums[0]]).length
+};
+
+//Your input
+[10,9,2,5,3,7,101,18]
+//Output
+4
+//Expected
+4
+```
+
+### 673. Number of Longest Increasing Subsequence
+
+Given an integer array *nums*, return the number of longest increasing subsequences.
+
+*Notice* that the sequence has to be *strictly* increasing.
+
+Example 1:
+
+Input: nums = [1,3,5,4,7]
+
+Output: 2
+
+Explanation: The two longest increasing subsequences are [1, 3, 4, 7] and [1, 3, 5, 7].
+
+Example 2:
+
+Input: nums = [2,2,2,2,2]
+
+Output: 5
+
+Explanation: The length of longest continuous increasing subsequence is 1, and there are 5 subsequences' length is 1, so output 5.
+
+Constraints:
+
+1 <= nums.length <= 2000
+-106 <= nums[i] <= 10^6
+
+#### Answer 37
+
+```javascript
+var findNumberOfLIS = function(nums) {
+    // We initialize an array named "tracker" to track the longest increasing subsequence ending at each
+    // index and initialize all positions with 1 as each item in nums can be considered as subsequence in
+    // itself.
+    let tracker = new Array(nums.length).fill(1);
+    
+    
+    // While tracking, we will realize that at times there is more than one set of preceding items in nums
+    // that can make the longest increasing subsequence that end at the index we are currently processing.
+    // The best way to track this is in a seperate array called frequency. Each element will here is
+    // initialized to 1. This signifies that initially, there can only be a single longest
+    // subsequence ending at any index.
+    let frequency = new Array(nums.length).fill(1);
+    
+    // Now let's start processing from left to right, starting with the second element at index 1
+    // Skipping first element as we cannot find a subsequence longer than 1 that can end at index 0.
+    for(let i = 0; i < nums.length; i++){
+        // Now let's compare it with every element before it
+        for(let j = 0; j < i; j++){
+
+            // VERIFY: Quick verification that j can be a part of a strictly increasing subsequence ending
+            // at i
+            if(nums[j] < nums[i]){
+
+                // CASE 1: Is Connecting i to the subsequence ending at j makes a subsequence larger that
+                // any other subsequence that has ended at i. This increases the subsequence ending at j
+                // by just 1 hence the addition.
+                if(tracker[i] < tracker[j]+1){
+                    // we update longest subsequence ending at i
+                    tracker[i] = tracker[j]  + 1;
+                    
+                    // The new longest subsequence length is created by any and every path that could have
+                    // ended at the jth index. Hence we set i's frequency same as j.
+                    frequency[i] = frequency[j];
+                } else if(tracker[i] === tracker[j]  + 1){
+
+                    // CASE 2: This means this is not the first time we found a j that helps make the
+                    // longest subsequence ending at i. Since length of subsequence itself didn't change,
+                    // no updates have to be made to the tracker array.
+                    
+                    // But this still needs to be tracked in our frequency array. So we add frequency of
+                    // all longest subsequences that end at j to our frequency tracker for i.
+                    frequency[i] += frequency[j];
+                }
+            }
+        }
+    }
+    
+    // FINALLY: 
+    // 1. We find the longest path we ever saw using our tracker array
+    const longestPath = Math.max(...tracker);
+    
+    // 2. For each index/element that had the longest path end at it, we add it's frequency to our 
+    // overall result
+    let result = 0;
+    for(let k = 0; k < nums.length; k++){
+        if(tracker[k] === longestPath) result += frequency[k];
+    }
+    
+    return result;
+};
+
+
+//Your input
+[1,3,5,4,7]
+//Output
+2
+//Expected
+2
+```

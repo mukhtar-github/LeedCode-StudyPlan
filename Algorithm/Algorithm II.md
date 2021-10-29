@@ -3786,3 +3786,101 @@ true
 //Expected
 true
 ```
+
+### 149. Max Points on a Line
+
+Given an array of *points* where *points[i] = [xi, yi]* represents a point on the *X-Y* plane, return the maximum number of points that lie on the same straight line.
+
+Example 1:
+
+![plane1](https://assets.leetcode.com/uploads/2021/02/25/plane1.jpg)
+
+Input: points = [[1,1],[2,2],[3,3]]
+
+Output: 3
+
+Example 2:
+
+![plane2](https://assets.leetcode.com/uploads/2021/02/25/plane2.jpg)
+
+Input: points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+
+Output: 4
+
+Constraints:
+
+* 1 <= points.length <= 300
+* points[i].length == 2
+* -10^4 <= xi, yi <= 10^4
+* All the points are unique.
+
+#### Answer 46
+
+```java
+class Solution {
+    
+    final private Map<Double, Integer> counts = new HashMap<>();
+    final private static BiFunction<Integer, Integer, Integer> merger = (o, n) -> o + 1;
+    
+    public int maxPoints(int[][] points) {
+        if (points.length == 1)
+            return 1;
+        int i, j, max = 0;
+        double slope;
+        for (i = 0; i < points.length - 1; i++) {
+            counts.clear();
+            for (j = i + 1; j < points.length; j++) {
+                slope = getSlope(points[i], points[j]);
+                max = Math.max(max, counts.merge(slope, 2, merger));
+            }
+        }
+        return max;
+    }
+    
+    private double getSlope(int[] p1, int[] p2) {
+        double ret = ((p2[1] - p1[1]) * 1.0) / (p2[0] - p1[0]);
+        if (ret == -0.0)
+            return 0.0;
+        if (ret == Double.NEGATIVE_INFINITY)
+            return Double.POSITIVE_INFINITY;
+        return ret;
+    }
+}
+
+//Your input
+[[1,1],[2,2],[3,3]]
+//Output
+3
+//Expected
+3
+
+/*
+When I first read the question, the idea of "hough transform" pops out. I wrote my solution using this idea, but I get a TLE. As you may see, the complexity of Hough transform is only O(180N), which is much lower than those O(N^2) solutions in this discussion board.
+
+I expected to see a "wrong answer" error, because "hough transform" has the parameter theta ( in polar coordinates ): you may have to sample the entire theta space and thus get an approximate result instead of an accurate one. Anyway, I guess some of you might be interested in knowing this classic pattern recognition algorithm.
+*/
+
+#define computeRho( pt, T ) ( ( pt.x * cos( T ) ) + ( pt.y * sin( T ) ) ) 
+
+class Solution {
+public:
+    int maxPoints(vector<Point> &points) {
+        if ( points.size() <= 2 ) {
+            return points.size();
+        }
+        int max_points = 0;
+        for ( int i = 0; i < 180; i++ ) {
+            double theta = double( i ) / 180.0 * 3.141592657;
+            map<int,int> accumulator;
+            for ( int j = 0; j < points.size(); j++ ) {
+                int rho = round( computeRho( points[j], theta ) );
+                accumulator[ rho ]++;
+                if ( accumulator[ rho ] > max_points ) {
+                    max_points = accumulator[ rho ];
+                }
+            }
+        }
+        return max_points;
+    }
+};
+```

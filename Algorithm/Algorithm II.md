@@ -2820,3 +2820,83 @@ Constraints:
 
 * 1 <= s.length <= 100
 * s contains only digits and may contain leading zero(s).
+
+#### Answer 34
+
+```javascript
+// JavaScript DP Memoization Recursive Solution
+var numDecodings = function(s) {
+    const memo = new Map();
+    
+    function permute(idx) {
+        if(idx === s.length) return 1;
+        if(idx > s.length) return  0;
+        if(memo.has(idx)) return memo.get(idx);
+        let count = 0;
+        
+        const oneChar = s.slice(idx, idx+1);
+        const twoChar = s.slice(idx, idx+2)
+        
+        if(oneChar !== '0') count += permute(idx+1);
+        if(twoChar[0] !== '0' && +twoChar <= 26) count += permute(idx+2);
+        memo.set(idx, count);
+        return count
+    }
+    return permute(0);
+};
+
+//Your input
+"12"
+//Output
+2
+//Expected
+2
+
+function numDecodings(s) {
+  if (s == null || s.length === 0) return 0;
+  if (s[0] === '0') return 0;
+
+  const dp = new Array(s.length + 1).fill(0);
+
+  dp[0] = 1;
+  dp[1] = 1;
+
+  for (let i = 2; i <= s.length; i++) {
+    const a = Number(s.slice(i - 1, i));  // last one digit
+    if (a >= 1 && a <= 9) {
+      dp[i] += dp[i - 1];
+    }
+
+    const b = Number(s.slice(i - 2, i));  // last two digits
+    if (b >= 10 && b <= 26) {
+      dp[i] += dp[i - 2];
+    }
+  }
+
+  return dp[s.length];
+}
+
+// e.g. '226'
+// dp =
+// [1, 1, 0, 0]
+// [1, 1, 2, 0]
+// [1, 1, 2, 3]
+//
+// e.g. '236'
+// dp =
+// [1, 1, 0, 0]
+// [1, 1, 2, 0]
+// [1, 1, 2, 2]
+//
+// e.g. '101'
+// dp =
+// [1, 1, 0, 0]
+// [1, 1, 1, 0]
+// [1, 1, 1, 1]
+//
+// e.g. '110'
+// dp =
+// [1, 1, 0, 0]
+// [1, 1, 2, 0]
+// [1, 1, 2, 1]
+```

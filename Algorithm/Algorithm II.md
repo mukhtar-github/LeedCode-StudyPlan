@@ -3157,3 +3157,77 @@ var findNumberOfLIS = function(nums) {
 //Expected
 2
 ```
+
+### 1143. Longest Common Subsequence
+
+Given two strings *text1* and *text2*, return the length of their longest *common subsequence*. If there is no *common subsequence*, return 0.
+
+A *subsequence* of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+
+* For example, *"ace"* is a subsequence of *"abcde"*.
+A *common subsequence* of two strings is a subsequence that is common to both strings.
+
+Example 1:
+
+Input: text1 = "abcde", text2 = "ace"
+
+Output: 3
+
+Explanation: The longest common subsequence is "ace" and its length is 3.
+
+Example 2:
+
+Input: text1 = "abc", text2 = "abc"
+
+Output: 3
+
+Explanation: The longest common subsequence is "abc" and its length is 3.
+
+Example 3:
+
+Input: text1 = "abc", text2 = "def"
+
+Output: 0
+
+Explanation: There is no such common subsequence, so the result is 0.
+
+Constraints:
+
+* 1 <= text1.length, text2.length <= 1000
+* text1 and text2 consist of only lowercase English characters.
+
+#### Answer 38
+
+```javascript
+var findNumberOfLIS = function(nums) {
+    let dp = Array(nums.length).fill(1);
+    let count = Array(nums.length).fill(1);
+    
+    let maxLen = 0;
+    for(let i = 0; i < nums.length; i++) { // current one
+        for(let j = 0; j < i; j++) { // compare to previous ones
+            if(nums[j] < nums[i] && dp[j]+1 > dp[i]) {
+                dp[i] = dp[j]+1;
+                count[i] = count[j];
+            } else if(nums[j] < nums[i] && dp[j]+1 === dp[i]) {
+                count[i] += count[j];
+            } 
+        }
+        maxLen = Math.max(dp[i], maxLen);
+    }
+    
+    let res = 0;
+    for(let i = 0; i < count.length; i++) {
+        if(dp[i] === maxLen) res += count[i];
+    }
+    
+    return res;
+};
+
+//Your input
+[1,3,5,4,7]
+//Output
+2
+//Expected
+2
+```

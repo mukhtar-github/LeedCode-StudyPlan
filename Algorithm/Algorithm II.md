@@ -2569,3 +2569,72 @@ var uniquePaths = function(m, n) {
 //Expected
 28
 ```
+
+### 5. Longest Palindromic Substring
+
+Given a string *s*, return the longest palindromic substring in *s*.
+
+Input: s = "babad"
+
+Output: "bab"
+
+Note: "aba" is also a valid answer.
+
+Example 2:
+
+Input: s = "cbbd"
+
+Output: "bb"
+
+Example 3:
+
+Input: s = "a"
+
+Output: "a"
+
+Example 4:
+
+Input: s = "ac"
+
+Output: "a"
+
+Constraints:
+
+* 1 <= s.length <= 1000
+* s consist of only digits and English letters.
+
+#### Answer 31
+
+```javascript
+var uniquePaths = function(m, n) {
+    // big idea: the number of ways to reach a cell c[i][j]
+    // is equal to the number of ways to reach the cell above c[i-1][j]
+    // plus the number of ways to make the cell left c[i][j-i], because you
+    // can only reach c[i][j] via either of those two cells
+
+    if(m === 0 || n === 0) return 0;
+    if(m === 1 || n === 1) return 1;
+    
+    // initialise DP with base cases
+    const dp = Array(m ).fill(
+        Array(n).fill(1)
+    );
+    
+    for(let i = 1; i < m; i++) {
+        for(let j = 1; j < n; j++) {
+            dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        }
+    }
+    
+    // return value for bottom right
+    return dp[m-1][n-1];
+};
+
+//Your input
+3
+7
+//Output
+28
+//Expected
+28
+```

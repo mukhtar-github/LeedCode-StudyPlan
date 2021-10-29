@@ -3380,3 +3380,95 @@ var minDistance = function(word1, word2) {
 //Expected
 3
 ```
+
+### 322. Coin Change
+
+You are given an integer array coins representing *coins* of different denominations and an integer *amount* representing a total amount of money.
+
+Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return *-1*.
+
+You may assume that you have an infinite number of each kind of coin.
+
+Example 1:
+
+Input: coins = [1,2,5], amount = 11
+
+Output: 3
+
+Explanation: 11 = 5 + 5 + 1
+
+Example 2:
+
+Input: coins = [2], amount = 3
+
+Output: -1
+
+Example 3:
+
+Input: coins = [1], amount = 0
+
+Output: 0
+
+Example 4:
+
+Input: coins = [1], amount = 1
+
+Output: 1
+
+Example 5:
+
+Input: coins = [1], amount = 2
+
+Output: 2
+
+Constraints:
+
+* 1 <= coins.length <= 12
+* 1 <= coins[i] <= 2^31 - 1
+* 0 <= amount <= 10^4
+
+#### Answer 41
+
+```javascript
+var coinChange = function(coins, amount) {
+    const upperLimit = amount + 1;
+// create an array for caching the min coins for each price (<= price <= amount)
+    const dp = Array(upperLimit).fill(upperLimit);
+    dp[0] = 0;
+    
+// starting from each coin, determine the min coins required to get amount sum
+    coins.forEach(coin => {
+        for(let idx = coin; idx < upperLimit; ++idx) {
+            dp[idx] = Math.min(dp[idx], dp[idx - coin] + 1);
+        }
+    })
+    return dp[amount] === upperLimit ? -1 : dp[amount];
+};
+
+const coinChange = (coins, amount) => {
+    if(!coins || coins.length === 0  ||amount <= 0) {
+        return 0;
+    }
+    const result = new Array(amount + 1).fill(amount + 1);
+    result[0] = 0;
+    for(let i = 1; i <= amount; i++) {
+        for(let j = 0; j < coins.length; j++) {
+            if(i - coins[j] >=0) {
+                result[i] = Math.min(result[i], result[i - coins[j]] + 1);
+            }
+        }
+    }
+    if(result[amount] === amount + 1) {
+        return -1;
+    }
+    return result[amount];
+};
+
+//Your input
+[1,2,5]
+11
+//Output
+3
+//Expected
+3
+```

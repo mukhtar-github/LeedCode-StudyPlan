@@ -2678,3 +2678,145 @@ const longestPalindrome = (s) => {
 //Expected
 "bab"
 ```
+
+### 413. Arithmetic Slices
+
+An integer array is called arithmetic if it consists of *at least three elements* and if the difference between any two consecutive elements is the same.
+
+* For example, [1,3,5,7,9], [7,7,7,7], and [3,-1,-5,-9] are arithmetic sequences.
+
+Given an integer array *nums*, return the number of arithmetic *subarrays* of *nums*.
+
+A *subarray* is a contiguous subsequence of the array.
+
+Example 1:
+
+Input: nums = [1,2,3,4]
+
+Output: 3
+
+Explanation: We have 3 arithmetic slices in nums: [1, 2, 3], [2, 3, 4] and [1,2,3,4] itself.
+
+Example 2:
+
+Input: nums = [1]
+
+Output: 0
+
+Constraints:
+
+* 1 <= nums.length <= 5000
+* -1000 <= nums[i] <= 1000
+
+#### Answer 33
+
+```javascript
+var numberOfArithmeticSlices = function(nums) {
+    const n = nums.length;
+    
+// at least 3 are required
+    if(n < 3) return 0;
+// initial diff
+    let diff = nums[1] - nums[0];
+    let ans = 0;
+// current size, as we are considering two elements to start with
+    let size = 2;
+    
+    for(let i=2; i< n; i++){
+// if third (starting case) or i'th  one is not consecutive
+        if(nums[i] -nums[i-1] !== diff){
+// now we have two again but with different diff
+            size = 2;
+            diff = nums[i] -nums[i-1]
+        }else if(nums[i] -nums[i-1] === diff){
+// yay, an element with diff match
+// previous size - 1
+        ans += size -1; 
+// current size
+            size++;
+        }
+    }
+    
+    return ans;
+       
+};
+
+//Your input
+[1,2,3,4]
+//Output
+3
+//Expected
+3
+
+/*
+If we have only 3 elements with same consecutive diff there is only one possibility. Now add one more to it (with same diff)
+[a,b,c] => [a,b,c,d]
+
+possibilities incresed to 3, one older a,b,c and two newb,c,d , a,b,c,d.
+
+Now add one more element possibilites will be 3(earlier possibilities) + 3 (previoiseSize -1).
+Why previoiseSize-1, if all statisfy the condition, then all can combine with the new one starting for 3 and adding 1 at a time.
+For example a,b,c,d,e => c,d,e, b,c,d,e, a,b,c,d,e and previously we had 3 possibilities for a,b,c,d so total is 3 + 3 => 6.
+
+This only applies when we have at least 3 as mentioned in the quesiton.
+*/
+```
+
+### 91. Decode Ways
+
+A message containing letters from A-Z can be encoded into numbers using the following mapping:
+
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+
+To *decode* an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, *"11106"* can be mapped into:
+
+* "AAJF" with the grouping (1 1 10 6)
+* "KJF" with the grouping (11 10 6)
+
+Note that the grouping *(1 11 06)* is invalid because *"06"* cannot be mapped into *'F'* since *"6"* is different from *"06"*.
+
+Given a string *s* containing only digits, return the *number* of ways to *decode* it.
+
+The answer is guaranteed to fit in a *32-bit* integer.
+
+Example 1:
+
+Input: s = "12"
+
+Output: 2
+
+Explanation: "12" could be decoded as "AB" (1 2) or "L" (12).
+
+Example 2:
+
+Input: s = "226"
+
+Output: 3
+
+Explanation: "226" could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+
+Example 3:
+
+Input: s = "0"
+
+Output: 0
+
+Explanation: There is no character that is mapped to a number starting with 0.
+The only valid mappings with 0 are 'J' -> "10" and 'T' -> "20", neither of which start with 0.
+Hence, there are no valid ways to decode this since all digits need to be mapped.
+
+Example 4:
+
+Input: s = "06"
+
+Output: 0
+
+Explanation: "06" cannot be mapped to "F" because of the leading zero ("6" is different from "06").
+
+Constraints:
+
+* 1 <= s.length <= 100
+* s contains only digits and may contain leading zero(s).

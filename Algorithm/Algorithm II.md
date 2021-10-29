@@ -2603,38 +2603,78 @@ Constraints:
 * 1 <= s.length <= 1000
 * s consist of only digits and English letters.
 
-#### Answer 31
+#### Answer 32
 
 ```javascript
-var uniquePaths = function(m, n) {
-    // big idea: the number of ways to reach a cell c[i][j]
-    // is equal to the number of ways to reach the cell above c[i-1][j]
-    // plus the number of ways to make the cell left c[i][j-i], because you
-    // can only reach c[i][j] via either of those two cells
-
-    if(m === 0 || n === 0) return 0;
-    if(m === 1 || n === 1) return 1;
+var longestPalindrome = function(s) {
+    let longest = '';
     
-    // initialise DP with base cases
-    const dp = Array(m ).fill(
-        Array(n).fill(1)
-    );
-    
-    for(let i = 1; i < m; i++) {
-        for(let j = 1; j < n; j++) {
-            dp[i][j] = dp[i-1][j] + dp[i][j-1];
+    const GetLongestPalindrome = (l,r) => {
+        while(l >=0 && r< s.length && s[l] === s[r]){
+            if(r-l+1 > longest.length){
+                longest = s.slice(l, r+1);
+            }
+            l--;
+            r++;
         }
     }
     
-    // return value for bottom right
-    return dp[m-1][n-1];
+    for(let i = 0; i < s.length; i++){
+        GetLongestPalindrome(i,i);
+        GetLongestPalindrome(i,i+1);
+    }
+    return longest;
+};
+
+var longestPalindrome = function(s) {
+    let longest = '';
+    
+    for (let i=0; i<s.length; i++){
+        expandCheck(i, i);
+        expandCheck(i, i+1);
+    }
+    
+    function expandCheck(l, r){
+        while (l>=0 && r<s.length && s[l]===s[r]){
+            if (r-l+1 > longest.length){
+                longest = s.slice(l, r+1);
+            }
+            l--;
+            r++;
+        }
+    }
+    
+    return longest;
+};
+
+const expandAroundCenter = (s, l, r) => {
+    while(l >= 0 && r < s.length && s[l] === s[r]){
+        l--
+        r++
+    }
+    return r - l - 1
+}
+
+const longestPalindrome = (s) => {
+    s = s.split('')
+    if(s === null || s.length < 1) return ""
+    let start = 0, end = 0
+    for(let i = 0; i < s.length; i++){
+        let len1 = expandAroundCenter(s, i, i)
+        let len2 = expandAroundCenter(s, i, i + 1)
+        let len = Math.max(len1, len2)
+        if(len > (end - start)){
+            start = i - (len - 2) / 2
+            end = i + len / 2
+        }
+    }
+    return s.splice(start, (end + 1 - start)).join('')
 };
 
 //Your input
-3
-7
+"babad"
 //Output
-28
+"bab"
 //Expected
-28
+"bab"
 ```

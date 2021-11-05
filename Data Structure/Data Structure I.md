@@ -352,6 +352,13 @@ Constraints:
 #### Answer 6
 
 ```javascript
+/*
+steps:
+1. Set minimum to first price
+2. Keep calculating different until ith price is less than minimum
+3. Maintain max diff and current diff
+*/
+
 var maxProfit = function(prices) {
     let min = prices[0];
     let diffCurrent = 0;

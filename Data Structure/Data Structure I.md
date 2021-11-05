@@ -105,3 +105,144 @@ var maxSubArray = function(nums) {
 //Expected
 6
 ```
+
+### 1. Two Sum
+
+Given an array of integers *nums* and an integer *target*, return indices of the two numbers such that they add up to *target*.
+
+You may assume that each input would have *exactly one solution*, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+Example 1:
+
+Input: nums = [2,7,11,15], target = 9
+
+Output: [0,1]
+
+Output: Because nums[0] + nums[1] == 9, we return [0, 1].
+
+Example 2:
+
+Input: nums = [3,2,4], target = 6
+
+Output: [1,2]
+
+Example 3:
+
+Input: nums = [3,3], target = 6
+
+Output: [0,1]
+
+Constraints:
+
+* 2 <= nums.length <= 10^4
+* -10^9 <= nums[i] <= 10^9
+* -10^9 <= target <= 10^9
+* Only one valid answer exists.
+
+Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
+
+#### Answer 3
+
+```javascript
+var twoSum = function(nums, target) {
+    // Define a hashmap to store values, indices
+    const map = new Map();
+    
+    for (let i = 0; i < nums.length; i++) {
+        // Define current number, current diff
+        const num = nums[i];
+        const diff = target - num;
+                
+        // If hashmap contains difference, return stored index and current index
+        if (map.has(diff)) return [map.get(diff), i];
+        
+        // Store (key: value => number: index) in hashmap
+        map.set(num, i);
+    }
+};
+
+//Your input
+[2,7,11,15]
+9
+//Output
+[0,1]
+//Expected
+[0,1]
+```
+
+### 88. Merge Sorted Array
+
+You are given two integer arrays *nums1* and *nums2*, sorted in *non-decreasing order*, and two integers *m* and *n*, representing the number of elements in *nums1* and *nums2* respectively.
+
+*Merge nums1 and nums2* into a single array sorted in *non-decreasing order*.
+
+The final sorted array should not be returned by the function, but instead be stored inside the array *nums1*. To accommodate this, *nums1* has a length of *m + n*, where the first *m* elements denote the elements that should be merged, and the last *n* elements are set to *0* and should be ignored. *nums2* has a length of *n*.
+
+Example 1:
+
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+
+Output: [1,2,2,3,5,6]
+
+Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+Example 2:
+
+Input: nums1 = [1], m = 1, nums2 = [], n = 0
+
+Output: [1]
+
+Explanation: The arrays we are merging are [1] and [].
+The result of the merge is [1].
+
+Example 3:
+
+Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+
+Output: [1]
+
+Explanation: The arrays we are merging are [] and [1].
+The result of the merge is [1].
+Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+
+Constraints:
+
+* nums1.length == m + n
+* nums2.length == n
+* 0 <= m, n <= 200
+* 1 <= m + n <= 200
+* -10^9 <= nums1[i], nums2[j] <= 10^9
+
+Follow up: Can you come up with an algorithm that runs in *O(m + n)* time?
+
+#### Answer 4
+
+```javascript
+var twoSum = function(nums, target) {
+    // Define a hashmap to store values, indices
+    const map = new Map();
+    
+    for (let i = 0; i < nums.length; i++) {
+        // Define current number, current diff
+        const num = nums[i];
+        const diff = target - num;
+                
+        // If hashmap contains difference, return stored index and current index
+        if (map.has(diff)) return [map.get(diff), i];
+        
+        // Store (key: value => number: index) in hashmap
+        map.set(num, i);
+    }
+};
+
+//Your input
+[2,7,11,15]
+9
+//Output
+[0,1]
+//Expected
+[0,1]
+```

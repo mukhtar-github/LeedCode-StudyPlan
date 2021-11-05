@@ -352,49 +352,37 @@ Constraints:
 #### Answer 6
 
 ```javascript
-var intersect = function(nums1, nums2) {
-  const res = [], n1 = {}, n2 = {};
-  for (let i = 0; i < Math.max(nums1.length, nums2.length); i++) {
-    let num1 = nums1[i], num2 = nums2[i];
-    n1[num1] = n1[num1] + 1 || 1, n2[num2] = n2[num2] + 1 || 1;
-    [num1, num2].forEach(num => {
-      if (n1[num] && n2[num]) {
-        n1[num]--, n2[num]--;
-        res.push(num);
-      }
-    })
-  }
-  return res;
-};
-
-var intersect = function(nums1, nums2) {
-    // sort the arrays
-    nums1.sort((a,b) => a-b), nums2.sort((a,b) => a-b);
-
-    let i = 0,
-        j = 0,
-        result = [];
+var maxProfit = function(prices) {
+    let min = prices[0];
+    let diffCurrent = 0;
+    let diffMax = 0;
     
-    while(i<nums1.length && j<nums2.length) {
-        if(nums1[i] < nums2[j]){
-            i++;
-        } else if(nums1[i] > nums2[j]) {
-            j++;
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] >= min) {
+            // current price is greater than or equal to minumum so far
+            // calculate diffCurrent and diffMax
+            
+            diffCurrent = prices[i] - min;
+            
+            if (diffCurrent > diffMax) {
+                diffMax = diffCurrent;
+            }
         } else {
-            result.push(nums1[i]);
-            i++;
-            j++;
+            // current price is less than previous minimum
+            // reset diffCurrent and minimum
+            
+            diffCurrent = 0;
+            min = prices[i];
         }
     }
     
-    return result;
+    return diffMax;
 };
 
 //Your input
-[1,2,2,1]
-[2,2]
+[7,1,5,3,6,4]
 //Output
-[2,2]
+5
 //Expected
-[2,2]
+5
 ```

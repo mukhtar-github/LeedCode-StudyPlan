@@ -427,3 +427,29 @@ Constraints:
 * 1 <= m, n <= 100
 * -1000 <= mat[i][j] <= 1000
 * 1 <= r, c <= 300
+
+#### Answer 7
+
+```javascript
+var matrixReshape = function(mat, r, c) {
+    const flat = mat.flat()
+    if (flat.length !== r*c) return mat;
+    return [...Array(r)].map(() => flat.splice(0,c)) 
+};
+
+var matrixReshape = function(mat, r, c) {
+  if (mat.length * mat[0].length / r !== c || mat.length === r) return mat;
+  const flat = mat.flat();
+  while (r-- !== 0) flat.unshift(flat.splice(-c));
+  return flat;
+};
+
+//Your input
+[[1,2],[3,4]]
+1
+4
+//Output
+[[1,2,3,4]]
+//Expected
+[[1,2,3,4]]
+```

@@ -221,28 +221,21 @@ Follow up: Can you come up with an algorithm that runs in *O(m + n)* time?
 #### Answer 4
 
 ```javascript
-var twoSum = function(nums, target) {
-    // Define a hashmap to store values, indices
-    const map = new Map();
-    
-    for (let i = 0; i < nums.length; i++) {
-        // Define current number, current diff
-        const num = nums[i];
-        const diff = target - num;
-                
-        // If hashmap contains difference, return stored index and current index
-        if (map.has(diff)) return [map.get(diff), i];
-        
-        // Store (key: value => number: index) in hashmap
-        map.set(num, i);
+var merge = function (nums1, m, nums2, n) {
+    nums1.splice(m); // removes all 0's
+    for (var i = 0; i < n; i++) {
+        nums1.unshift(nums2[i]); // inserts each number from nums2 to the beggining of nums1
     }
+    nums1.sort((a, b) => a - b); // sorts the array
 };
 
 //Your input
-[2,7,11,15]
-9
+[1,2,3,0,0,0]
+3
+[2,5,6]
+3
 //Output
-[0,1]
+[1,2,2,3,5,6]
 //Expected
-[0,1]
+[1,2,2,3,5,6]
 ```

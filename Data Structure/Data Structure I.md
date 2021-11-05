@@ -272,21 +272,129 @@ Follow up:
 #### Answer 5
 
 ```javascript
-var merge = function (nums1, m, nums2, n) {
-    nums1.splice(m); // removes all 0's
-    for (var i = 0; i < n; i++) {
-        nums1.unshift(nums2[i]); // inserts each number from nums2 to the beggining of nums1
+var intersect = function(nums1, nums2) {
+  const res = [], n1 = {}, n2 = {};
+  for (let i = 0; i < Math.max(nums1.length, nums2.length); i++) {
+    let num1 = nums1[i], num2 = nums2[i];
+    n1[num1] = n1[num1] + 1 || 1, n2[num2] = n2[num2] + 1 || 1;
+    [num1, num2].forEach(num => {
+      if (n1[num] && n2[num]) {
+        n1[num]--, n2[num]--;
+        res.push(num);
+      }
+    })
+  }
+  return res;
+};
+
+var intersect = function(nums1, nums2) {
+    // sort the arrays
+    nums1.sort((a,b) => a-b), nums2.sort((a,b) => a-b);
+
+    let i = 0,
+        j = 0,
+        result = [];
+    
+    while(i<nums1.length && j<nums2.length) {
+        if(nums1[i] < nums2[j]){
+            i++;
+        } else if(nums1[i] > nums2[j]) {
+            j++;
+        } else {
+            result.push(nums1[i]);
+            i++;
+            j++;
+        }
     }
-    nums1.sort((a, b) => a - b); // sorts the array
+    
+    return result;
 };
 
 //Your input
-[1,2,3,0,0,0]
-3
-[2,5,6]
-3
+[1,2,2,1]
+[2,2]
 //Output
-[1,2,2,3,5,6]
+[2,2]
 //Expected
-[1,2,2,3,5,6]
+[2,2]
+```
+
+### 121. Best Time to Buy and Sell Stock
+
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+
+Output: 5
+
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+
+Output: 0
+
+Explanation: In this case, no transactions are done and the max profit = 0.
+
+Constraints:
+
+* 1 <= prices.length <= 10^5
+* 0 <= prices[i] <= 10^4
+
+#### Answer 6
+
+```javascript
+var intersect = function(nums1, nums2) {
+  const res = [], n1 = {}, n2 = {};
+  for (let i = 0; i < Math.max(nums1.length, nums2.length); i++) {
+    let num1 = nums1[i], num2 = nums2[i];
+    n1[num1] = n1[num1] + 1 || 1, n2[num2] = n2[num2] + 1 || 1;
+    [num1, num2].forEach(num => {
+      if (n1[num] && n2[num]) {
+        n1[num]--, n2[num]--;
+        res.push(num);
+      }
+    })
+  }
+  return res;
+};
+
+var intersect = function(nums1, nums2) {
+    // sort the arrays
+    nums1.sort((a,b) => a-b), nums2.sort((a,b) => a-b);
+
+    let i = 0,
+        j = 0,
+        result = [];
+    
+    while(i<nums1.length && j<nums2.length) {
+        if(nums1[i] < nums2[j]){
+            i++;
+        } else if(nums1[i] > nums2[j]) {
+            j++;
+        } else {
+            result.push(nums1[i]);
+            i++;
+            j++;
+        }
+    }
+    
+    return result;
+};
+
+//Your input
+[1,2,2,1]
+[2,2]
+//Output
+[2,2]
+//Expected
+[2,2]
 ```

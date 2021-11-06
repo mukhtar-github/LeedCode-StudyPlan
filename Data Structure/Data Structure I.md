@@ -480,25 +480,57 @@ Constraints:
 #### Answer 8
 
 ```javascript
-var matrixReshape = function(mat, r, c) {
-    const flat = mat.flat()
-    if (flat.length !== r*c) return mat;
-    return [...Array(r)].map(() => flat.splice(0,c)) 
+var generate = function(numRows) {
+    const res = [];
+    let prevRow;
+    
+    for (let i = 1; i <= numRows; i++) {
+        const row = new Array(i).fill(1);
+
+        if (prevRow) {
+            for (let j = 1; j < prevRow.length; j++) {
+                const cs = prevRow[j] + prevRow[j - 1];
+                row[j] = cs;
+            }
+        }
+        
+        res.push(row);
+        prevRow = row;
+    }
+    
+    return res;
 };
 
-var matrixReshape = function(mat, r, c) {
-  if (mat.length * mat[0].length / r !== c || mat.length === r) return mat;
-  const flat = mat.flat();
-  while (r-- !== 0) flat.unshift(flat.splice(-c));
-  return flat;
+/*
+Idea:
+For this problem, we can do pretty much just as the instructions tell us. We'll iterate through the building of Pascal's triangle (ans), row by row. When we create each new row, we should initially fill it with 1s so that we don't have to worry about the logic of filling the edge cells that only have one number above.
+
+Then we can start on j = 1 for each row and repeat the process of summing up the value of the current cell until we reach the midpoint (mid). Since the triangle is symmetrical, we can actually fill both halves of the row at once, while we work inward.
+
+Once we reach the end of the last row, we can return ans.
+
+Time Complexity: O(N) where N is the numRowsth triangular number
+Space Complexity: O(1)
+*/
+
+var generate = function(numRows) {
+    let ans = new Array(numRows)
+    for (let i = 0; i < numRows; i++) {
+        let row = new Uint32Array(i+1).fill(1),
+            mid = i >> 1
+        for (let j = 1; j <= mid; j++) {
+            let val = ans[i-1][j-1] + ans[i-1][j]
+            row[j] = val, row[row.length-j-1] = val
+        }
+        ans[i] = row
+    }
+    return ans
 };
 
 //Your input
-[[1,2],[3,4]]
-1
-4
+5
 //Output
-[[1,2,3,4]]
+[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 //Expected
-[[1,2,3,4]]
+[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 ```

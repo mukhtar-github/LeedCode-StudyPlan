@@ -1304,3 +1304,87 @@ Constraints:
 * The number of nodes in the list is in the range [0, 300].
 * -100 <= Node.val <= 100
 * The list is guaranteed to be sorted in ascending order.
+
+#### Answer 18
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+
+input
+    linked list
+output
+    linked list
+constraints
+    The number of nodes in the list is in the range [0, 300].
+    Linked list is sorted (really helpful)
+edge
+    empty linked list given
+ */
+var deleteDuplicates = function(head) {
+// since our contraint says we can be given an empty linked list we have to do a conditional to check for it
+    if (!head) {
+      return head;
+    }
+  
+  let curr = head;
+  
+  /* 
+  since the list is sorted in ascending order we'll never have to worry 
+  about finding a lesser number later in the list after we've already passed that number
+  eg [1,2,3,1] => won't happen
+  so we are able to use 1 pointer here since we wont need to reference this val
+  after moving onto the next unique val
+  we'll always be referencing the current val with our one pointer until the val changes so we dont
+  need a second pointer
+  */
+  
+  while (curr && curr.next) {
+    if (curr.val === curr.next.val) {
+    // checks if next val is a duplicate compared to the current val
+    // if it is then we set the current val's next to the following vals next 
+    // eg [1,1,2] => [1, x, 2] => [1,2]
+      curr.next = curr.next.next;
+    } else {
+    // if the next val is not the same as the current val then we can 
+    // move our pointer to its current next val
+      curr = curr.next;
+    }
+  }
+  
+  return head;
+};
+
+
+var deleteDuplicates = function(head) {
+    let h = head;
+    while(h && h.next){
+       if(h.val === h.next.val){
+           let place = h.next;
+           h.next = place.next;
+       }else{
+        h = h.next;
+       }
+    }
+    return head;
+};
+
+//Your input
+[1,1,2]
+//Output
+[1,2]
+//Expected
+[1,2]
+```
+
+## Stack / Queue
+
+

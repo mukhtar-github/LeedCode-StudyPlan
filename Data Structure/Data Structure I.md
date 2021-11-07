@@ -748,13 +748,68 @@ Constraints:
 #### Answer 11
 
 ```javascript
-
+var firstUniqChar = function (s) {
+  const set = new Set();
+  for (let i = 0; i < s.length; ++i) {
+    if (s.indexOf(s[i], i + 1) === -1 && !set.has(s[i])) return i;
+    else set.add(s[i]);
+  }
+  return -1;
+};
 
 //Your input
-[[1,3,5,7],[10,11,16,20],[23,30,34,60]]
-3
+"leetcode"
 //Output
-true
+0
 //Expected
-true
+0
+```
+
+### 383. Ransom Note
+
+Given two stings *ransomNote* and *magazine*, return *true* if *ransomNote* can be constructed from *magazine* and *false* otherwise.
+
+Each letter in *magazine* can only be used once in *ransomNote*.
+
+Example 1:
+
+Input: ransomNote = "a", magazine = "b"
+
+Output: false
+
+Example 2:
+
+Input: ransomNote = "aa", magazine = "ab"
+
+Output: false
+
+Example 3:
+
+Input: ransomNote = "aa", magazine = "aab"
+
+Output: true
+
+Constraints:
+
+* 1 <= ransomNote.length, magazine.length <= 10^5
+* ransomNote and magazine consist of lowercase English letters.
+
+#### Answer 12
+
+```javascript
+var firstUniqChar = function (s) {
+  const set = new Set();
+  for (let i = 0; i < s.length; ++i) {
+    if (s.indexOf(s[i], i + 1) === -1 && !set.has(s[i])) return i;
+    else set.add(s[i]);
+  }
+  return -1;
+};
+
+//Your input
+"leetcode"
+//Output
+0
+//Expected
+0
 ```

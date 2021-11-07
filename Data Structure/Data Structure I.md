@@ -1248,3 +1248,33 @@ Constraints:
 
 * The number of nodes in the list is the range [0, 5000].
 * -5000 <= Node.val <= 5000
+
+Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+#### Answer 17
+
+```javascript
+// Recursive Approach
+var reverseList = function(head, prev = null) {
+    if(!head) return prev;
+    let next = head.next;
+    head.next = prev;
+    return reverseList(next, head);
+};
+
+// Iterative Approach
+var reverseList = function(head) {
+    let [prev, cur] = [null, head]
+    while(cur) {
+        [cur.next, prev, cur] = [prev, cur, cur.next]
+    }
+    return prev
+};
+
+//Your input
+[1,2,3,4,5]
+//Output
+[5,4,3,2,1]
+//Expected
+[5,4,3,2,1]
+```

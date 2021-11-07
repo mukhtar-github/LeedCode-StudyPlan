@@ -674,3 +674,44 @@ Constraints:
 * n == matrix[i].length
 * 1 <= m, n <= 100
 * -10^4 <= matrix[i][j], target <= 10^4
+
+#### Answer 10
+
+```javascript
+var searchMatrix = function(matrix, target) {
+    // initialize a new one dimensional array
+    const oneDMatrix = []
+    
+    // Iterate over the original two dimensional array and add each row to 
+    // the new one dimensional array
+    for (let i = 0; i < matrix.length; i++) {
+        oneDMatrix.push(...matrix[i]);
+    }
+
+    // binary search function
+    const binarySearch = (arr, target, left, right) => {
+        if (left > right) return false;
+
+        const mid = Math.ceil((left + right) / 2);
+        if (arr[mid] === target) return true;
+
+        if (target < arr[mid]) {
+            return binarySearch(arr, target, left, mid - 1);
+        } else if (target > arr[mid]) {
+            return binarySearch(arr, target, mid + 1, right);
+        }
+        return false;
+    }
+
+    // return binary search function on the one dimensional array
+    return binarySearch(oneDMatrix, target, 0, oneDMatrix.length - 1)
+};
+
+//Your input
+[[1,3,5,7],[10,11,16,20],[23,30,34,60]]
+3
+//Output
+true
+//Expected
+true
+```

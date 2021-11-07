@@ -797,19 +797,29 @@ Constraints:
 #### Answer 12
 
 ```javascript
-var firstUniqChar = function (s) {
-  const set = new Set();
-  for (let i = 0; i < s.length; ++i) {
-    if (s.indexOf(s[i], i + 1) === -1 && !set.has(s[i])) return i;
-    else set.add(s[i]);
-  }
-  return -1;
+var canConstruct = function(ransomNote, magazine) {
+    const magazineMap = new Map()
+    for (const ch of magazine) {
+        magazineMap.set(ch, (magazineMap.get(ch) ?? 0) + 1)
+    }
+    for (const ch of ransomNote) {
+        if (!magazineMap.get(ch))
+            return false
+        const left = magazineMap.get(ch) - 1
+        if (left === 0) 
+            magazineMap.delete(ch)
+        else
+            magazineMap.set(ch, left)
+    }
+        
+    return true
 };
 
 //Your input
-"leetcode"
+"a"
+"b"
 //Output
-0
+false
 //Expected
-0
+false
 ```

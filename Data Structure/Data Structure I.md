@@ -1099,3 +1099,121 @@ var mergeTwoLists = function(h1, h2) {
 //Expected
 [1,1,2,3,4,4]
 ```
+
+### 203. Remove Linked List Elements
+
+Given the *head* of a linked list and an integer *val*, remove all the nodes of the linked list that has *Node.val == val*, and return the new head.
+
+Example 1:
+
+![removelinked-list](https://assets.leetcode.com/uploads/2021/03/06/removelinked-list.jpg)
+
+Input: head = [1,2,6,3,4,5,6], val = 6
+
+Output: [1,2,3,4,5]
+
+Example 2:
+
+Input: head = [], val = 1
+
+Output: []
+
+Example 3:
+
+Input: head = [7,7,7,7], val = 7
+
+Output: []
+
+Constraints:
+
+* The number of nodes in the list is in the range [0, 10^4].
+* 1 <= Node.val <= 50
+* 0 <= val <= 50
+
+#### Answer 16
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+
+input 
+    head of linked list and int
+output 
+    linked list
+constraints
+    The number of nodes in the list is in the range [0, 104]. => we can be given an empty linked list/ head
+edges
+    empty linked list / head
+
+translate
+    return a linked list with nodes with input val removed
+example1
+    [1,2,3,4,5] val = 6 // [1,2,3,4,5]
+example2
+    [1,1,1,1,1] val = 1 // []
+example3
+    [1,2,1,2,1,2] val = 2 // [1,1,1]
+example4
+    [] val = 1 // []
+ */
+var removeElements = function(head, val) {
+// constraint stated: "The number of nodes in the list is in the range [0, 104]. "
+// so we have to have a conditional to check if we're given an empty head
+
+  if (!head) {
+    return head;
+  }
+  
+  let curr = head;
+  
+  // loop through curr up until 2nd to last node since our if statement checks the following node
+  // we would error out without && curr.next since it will try to do .val on the null node
+  while (curr && curr.next) {
+    if (curr.next.val === val) {
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
+  }
+  
+  // our loop never checked the head if it was the val to be removed so we use a ternary operator
+  // to return the head.next if the current head is to be removed 
+  // if not we can return head as is
+  return head.val === val ? head.next : head;
+};
+
+
+var removeElements = function(head, val) {
+  if(!head) return head
+  while(head && head.val == val) head = head.next
+  let node = head
+  let prv = null
+  while(node){
+    const next = node.next
+    if(node.val === val){
+      prv.next = next
+    }else{
+      prv = node 
+    }    
+    node = next
+  }
+  return head
+};
+
+//Your input
+[1,2,6,3,4,5,6]
+6
+//Output
+[1,2,3,4,5]
+//Expected
+[1,2,3,4,5]
+```

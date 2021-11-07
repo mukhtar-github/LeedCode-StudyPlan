@@ -823,3 +823,56 @@ false
 //Expected
 false
 ```
+
+### 242. Valid Anagram
+
+Given two strings *s* and *t*, return *true* if *t* is an anagram of *s*, and *false* otherwise.
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+
+Output: true
+
+Example 2:
+
+Input: s = "rat", t = "car"
+
+Output: false
+
+Constraints:
+
+* 1 <= s.length, t.length <= 5 * 10^4
+* s and t consist of lowercase English letters.
+
+Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
+
+#### Answer 13
+
+```javascript
+var canConstruct = function(ransomNote, magazine) {
+    const magazineMap = new Map()
+    for (const ch of magazine) {
+        magazineMap.set(ch, (magazineMap.get(ch) ?? 0) + 1)
+    }
+    for (const ch of ransomNote) {
+        if (!magazineMap.get(ch))
+            return false
+        const left = magazineMap.get(ch) - 1
+        if (left === 0) 
+            magazineMap.delete(ch)
+        else
+            magazineMap.set(ch, left)
+    }
+        
+    return true
+};
+
+//Your input
+"a"
+"b"
+//Output
+false
+//Expected
+false
+```

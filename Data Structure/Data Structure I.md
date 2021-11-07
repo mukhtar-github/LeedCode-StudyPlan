@@ -850,29 +850,38 @@ Follow up: What if the inputs contain Unicode characters? How would you adapt yo
 #### Answer 13
 
 ```javascript
-var canConstruct = function(ransomNote, magazine) {
-    const magazineMap = new Map()
-    for (const ch of magazine) {
-        magazineMap.set(ch, (magazineMap.get(ch) ?? 0) + 1)
-    }
-    for (const ch of ransomNote) {
-        if (!magazineMap.get(ch))
-            return false
-        const left = magazineMap.get(ch) - 1
-        if (left === 0) 
-            magazineMap.delete(ch)
-        else
-            magazineMap.set(ch, left)
-    }
-        
-    return true
+var isAnagram = function(s, t) {
+  let frequencyCounter1 = {},
+    frequencyCounter2 = {}
+  
+  if(s.length !== t.length) return false
+
+  for (let i of s) {
+    frequencyCounter1[i] = (frequencyCounter1[i] || 0) + 1
+  }
+
+  for (let i of t) {
+    frequencyCounter2[i] = (frequencyCounter2[i] || 0) + 1
+  }
+
+  for (let f1 in frequencyCounter1) {
+    if (frequencyCounter1[f1] !== frequencyCounter2[f1]) return false
+  }
+
+  return true
 };
 
+var isAnagram = function(s, t) {
+    s = s.split('').sort().join('');
+    t = t.split('').sort().join('');
+
+    return s === t;
+};
 //Your input
-"a"
-"b"
+"anagram"
+"nagaram"
 //Output
-false
+true
 //Expected
-false
+true
 ```

@@ -1007,6 +1007,71 @@ Constraints:
 #### Answer 15
 
 ```javascript
+/*
+UNDERSTAND:
+-input is given as two linked lists 
+-return a sorted list by splicing together the two nodes
+l1 = [0, 1, 2, 3]
+l2 = [2, 3, 4, 5]
+output = [0, 1, 2, 2, 3, 3, 4, 5]
+
+PLAN:
+create a helper function to traverse a linked list and push the values into a passed array
+sort the array
+create a helper function that takes in an array and returns a linked list
+return the linked list helper function
+*/
+
+function traverseList(list, array) {
+    let head = list
+    while(head != null) {
+        array.push(head.val)
+        head = head.next
+    }
+    
+    return array
+}
+
+// works backwards last # will be head node
+function createList(array) {
+    var list = null;
+  for (var i = array.length - 1; i >= 0; i--)
+    list = {val: array[i], next: list};
+  return list;
+}
+
+var mergeTwoLists = function(l1, l2) {
+    let holder = []
+    traverseList(l1, holder)
+    traverseList(l2, holder)
+    let sortedHolder = holder.sort(function(a, b){return a-b})
+    
+    return createList(sortedHolder)
+};
+
+var mergeTwoLists = function(l1, l2) {
+    let current = new ListNode();
+    let head = current;
+    let headPtr1 = l1, headPtr2 = l2;
+   //two head pointer
+    while(headPtr1 && headPtr2){
+    if(headPtr1.val > headPtr2.val){
+        current.next = headPtr2;
+        headPtr2 = headPtr2.next;
+        current = current.next;
+    }else{
+       current.next = headPtr1;
+        headPtr1 = headPtr1.next;
+        current = current.next; 
+    }
+    }
+    if(headPtr1)
+        current.next = headPtr1;
+    if(headPtr2)
+        current.next = headPtr2;
+    return head.next;
+};
+
 var mergeTwoLists = function(h1, h2) {
     
     if(!h1 && !h2){
@@ -1027,10 +1092,10 @@ var mergeTwoLists = function(h1, h2) {
 };
 
 //Your input
-[3,2,0,-4]
-1
+[1,2,4]
+[1,3,4]
 //Output
-true
+[1,1,2,3,4,4]
 //Expected
-true
+[1,1,2,3,4,4]
 ```

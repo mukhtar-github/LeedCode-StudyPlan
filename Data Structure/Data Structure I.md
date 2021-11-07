@@ -715,3 +715,46 @@ true
 //Expected
 true
 ```
+
+## String
+
+### 387. First Unique Character in a String
+
+Given a string *s*, find the first non-repeating character in it and return its index. If it does not exist, return *-1*.
+
+Example 1:
+
+Input: s = "leetcode"
+
+Output: 0
+
+Example 2:
+
+Input: s = "loveleetcode"
+
+Output: 2
+
+Example 3:
+
+Input: s = "aabb"
+
+Output: -1
+
+Constraints:
+
+* 1 <= s.length <= 10^5
+* s consists of only lowercase English letters.
+
+#### Answer 11
+
+```javascript
+
+
+//Your input
+[[1,3,5,7],[10,11,16,20],[23,30,34,60]]
+3
+//Output
+true
+//Expected
+true
+```

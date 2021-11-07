@@ -534,3 +534,143 @@ var generate = function(numRows) {
 //Expected
 [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 ```
+
+### 36. Valid Sudoku
+
+Determine if a *9 x 9* Sudoku board is valid. Only the filled cells need to be validated *according to the following rules*:
+
+1. Each row must contain the digits *1-9* without repetition.
+2. Each column must contain the digits *1-9* without repetition.
+3. Each of the nine *3 x 3* sub-boxes of the grid must contain the digits *1-9* without repetition.
+
+Note:
+
+* A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+* Only the filled cells need to be validated according to the mentioned rules.
+
+Example 1:
+
+![250px-Sudoku-by-L2G-20050714.svg](https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png)
+
+Input: board =
+
+[["5","3",".",".","7",".",".",".","."],
+
+["6",".",".","1","9","5",".",".","."],
+
+[".","9","8",".",".",".",".","6","."],
+
+["8",".",".",".","6",".",".",".","3"],
+
+["4",".",".","8",".","3",".",".","1"],
+
+["7",".",".",".","2",".",".",".","6"],
+
+[".","6",".",".",".",".","2","8","."],
+
+[".",".",".","4","1","9",".",".","5"],
+
+[".",".",".",".","8",".",".","7","9"]]
+
+Output: true
+
+Example 2:
+
+Input: board =
+[["8","3",".",".","7",".",".",".","."],
+
+["6",".",".","1","9","5",".",".","."],
+
+[".","9","8",".",".",".",".","6","."],
+
+["8",".",".",".","6",".",".",".","3"],
+
+["4",".",".","8",".","3",".",".","1"],
+
+["7",".",".",".","2",".",".",".","6"],
+
+[".","6",".",".",".",".","2","8","."],
+
+[".",".",".","4","1","9",".",".","5"],
+
+[".",".",".",".","8",".",".","7","9"]]
+
+Output: false
+
+Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
+
+Constraints:
+
+* board.length == 9
+* board[i].length == 9
+* board[i][j] is a digit 1-9 or '.'.
+
+#### Answer 9
+
+```javascript
+var isValidSudoku = function(board) {
+    const colObj = {}
+    const rowObj = {}
+    const areaArr = new Array(9)
+
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            const num = board[row][col]
+            if (num === ".") continue
+            // row checking
+            if (!rowObj[row]) rowObj[row] = new Set()
+            if (rowObj[row].has(num)) return false
+            else rowObj[row].add(num)
+
+            // col checking
+            if (!colObj[col]) colObj[col] = new Set()
+            if (colObj[col].has(num)) return false
+            else colObj[col].add(num)
+
+            // area checking
+            const index = Math.floor(row / 3) * 3 + Math.floor(col / 3)
+            if (!areaArr[index]) areaArr[index] = new Set()
+            if (areaArr[index].has(num)) return false
+            else areaArr[index].add(num)
+        }
+    }
+    return true
+};
+
+//Your input
+[["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+//Output
+true
+//Expected
+true
+```
+
+### 74. Search a 2D Matrix
+
+Write an efficient algorithm that searches for a value in an *m x n* matrix. This matrix has the following properties:
+
+* Integers in each row are sorted from left to right.
+* The first integer of each row is greater than the last integer of the previous row.
+
+Example 1:
+
+![mat](https://assets.leetcode.com/uploads/2020/10/05/mat.jpg)
+
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+
+Output: true
+
+Example 2:
+
+![mat2](https://assets.leetcode.com/uploads/2020/10/05/mat2.jpg)
+
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
+
+Output: false
+
+Constraints:
+
+* m == matrix.length
+* n == matrix[i].length
+* 1 <= m, n <= 100
+* -10^4 <= matrix[i][j], target <= 10^4

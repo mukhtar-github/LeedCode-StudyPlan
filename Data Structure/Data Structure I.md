@@ -931,3 +931,106 @@ Constraints:
 * pos is -1 or a valid index in the linked-list.
 
 Follow up: Can you solve it using O(1) (i.e. constant) memory?
+
+#### Answer 14
+
+```javascript
+var hasCycle = function (head) {
+    if (!head) return false;
+    let [slow_pointer, fast_pointer] = [head, head];
+   
+    while (fast_pointer !== null && fast_pointer.next !==null) {
+        slow_pointer = slow_pointer.next;
+        fast_pointer = fast_pointer.next.next;
+        if(slow_pointer === fast_pointer) return true;
+    }
+    return false
+};
+
+const hasCycle = (head) => {
+  if (!head) return false;
+
+  let slow = head;
+  let fast = head.next;
+
+  while (true) {
+    if (!fast || !fast.next) {
+      return false;
+    }
+    if (fast === slow || fast.next === slow) {
+      return true;
+    }
+
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+};
+//Your input
+[3,2,0,-4]
+1
+//Output
+true
+//Expected
+true
+```
+
+### 21. Merge Two Sorted Lists
+
+Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Example 1:
+
+![merge_ex1](https://assets.leetcode.com/uploads/2020/10/03/merge_ex1.jpg)
+
+Input: l1 = [1,2,4], l2 = [1,3,4]
+
+Output: [1,1,2,3,4,4]
+
+Example 2:
+
+Input: l1 = [], l2 = []
+
+Output: []
+
+Example 3:
+
+Input: l1 = [], l2 = [0]
+
+Output: [0]
+
+Constraints:
+
+* The number of nodes in both lists is in the range [0, 50].
+* -100 <= Node.val <= 100
+* Both l1 and l2 are sorted in non-decreasing order.
+
+#### Answer 15
+
+```javascript
+var mergeTwoLists = function(h1, h2) {
+    
+    if(!h1 && !h2){
+        return null;
+    }else if(!h1 && h2){
+        return h2;
+    }else if(h1 && !h2){
+        return h1;
+    }else if(h1.val < h2.val){
+        let cur = h1;
+        cur.next = mergeTwoLists(h1.next, h2);
+        return cur;
+    }else{
+        let cur = h2;
+        cur.next = mergeTwoLists(h1, h2.next);
+        return cur;
+    }
+};
+
+//Your input
+[3,2,0,-4]
+1
+//Output
+true
+//Expected
+true
+```

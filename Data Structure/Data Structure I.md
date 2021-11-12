@@ -1840,3 +1840,29 @@ Constraints:
 
 * The number of nodes in the tree is in the range [0, 2000].
 * -1000 <= Node.val <= 1000
+
+#### Answer 24
+
+```javascript
+var levelOrder = function(root) {
+    let q = [root], ans = []
+    while (q[0]) {
+        let qlen = q.length, row = []
+        for (let i = 0; i < qlen; i++) {
+            let curr = q.shift()
+            row.push(curr.val)
+            if (curr.left) q.push(curr.left)
+            if (curr.right) q.push(curr.right)
+        }
+        ans.push(row)            
+    }
+    return ans
+};
+
+//Your input
+[3,9,20,null,null,15,7]
+//Output
+[[3],[9,20],[15,7]]
+//Expected
+[[3],[9,20],[15,7]]
+```

@@ -1434,11 +1434,38 @@ Constraints:
 #### Answer 19
 
 ```javascript
+/*
+For loop the input string.
+
+1. if encounter Closing bracket && its corresponding open bracket is on the top of the stack. => stack.pop
+2. else cases => stack.push regardless.
+3. we return !stack.length
+*/
+var isValid = function(s) {
+    if (s.length % 2 !== 0 ) return false;
+    
+    var stack = [];
+    for (let c of s) {
+        if (c === ')' && stack[stack.length -1] === '('){
+            stack.pop()
+        } else if (c === '}' && stack[stack.length -1] === '{'){
+            stack.pop()
+        } else if (c === ']' && stack[stack.length -1] === '['){
+            stack.pop()
+        } else {
+            stack.push(c)
+        }
+        
+    }
+    
+    return !stack.length
+};
 
 
 //Your input
-[1,1,2]
+"()"
 //Output
-[1,2]
+true
 //Expected
-[1,2]
+true
+```

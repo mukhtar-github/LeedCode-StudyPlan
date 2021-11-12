@@ -1703,3 +1703,111 @@ Constraints:
 * -100 <= Node.val <= 100
 
 Follow up: Recursive solution is trivial, could you do it iteratively?
+
+#### Answer 22
+
+```javascript
+var inorderTraversal = function(root) {
+    if (!root) return []
+    return [...inorderTraversal(root.left), root.val, ...inorderTraversal(root.right)]
+}
+
+
+//Your input
+[1,null,2,3]
+//Output
+[1,3,2]
+//Expected
+[1,3,2]
+```
+
+### 145. Binary Tree Postorder Traversal
+
+Given the *root* of a binary tree, return the postorder traversal of its nodes' values.
+
+Example 1:
+
+![pre1](https://assets.leetcode.com/uploads/2020/08/28/pre1.jpg)
+
+Input: root = [1,null,2,3]
+
+Output: [3,2,1]
+
+Example 2:
+
+Input: root = []
+
+Output: []
+
+Example 3:
+
+Input: root = [1]
+
+Output: [1]
+
+Example 4:
+
+![pre3](https://assets.leetcode.com/uploads/2020/08/28/pre3.jpg)
+
+Input: root = [1,2]
+
+Output: [2,1]
+
+Example 5:
+
+![pre2](https://assets.leetcode.com/uploads/2020/08/28/pre2.jpg)
+
+Input: root = [1,null,2]
+
+Output: [2,1]
+
+Constraints:
+
+* The number of the nodes in the tree is in the range [0, 100].
+* -100 <= Node.val <= 100
+
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+#### Answer 23
+
+```javascript
+// Stack Solution
+
+var postorderTraversal = function(root) {
+    if(!root) return [];
+
+    const stack = [root];
+    const result = [];
+    while(stack.length > 0) {
+        const node = stack.pop();
+        result.push(node.val);
+        if(node.left) stack.push(node.left);
+        if(node.right) stack.push(node.right);
+    }
+    
+    return result.reverse();
+};
+
+// Recursive Solution
+
+var postorderTraversal = function(root) {
+    const result = [];
+    const recursive = (node) => {
+        if(!node) return;
+
+        if(node.left) recursive(node.left);
+        if(node.right) recursive(node.right);
+        result.push(node.val);
+    }
+
+    recursive(root);
+    return result;
+};
+
+//Your input
+[1,null,2,3]
+//Output
+[3,2,1]
+//Expected
+[3,2,1]
+```

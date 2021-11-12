@@ -2131,12 +2131,34 @@ Constraints:
 #### Answer 28
 
 ```javascript
+/*
+1. Use DFS to try all possible paths.
+2. Keep track of the sum of path during traversal. When leaf node is reached, check if
+the sum of path equals the target. If so, return true, else continue DFS traversal to
+try other paths.
+*/
+var hasPathSum = function(root, targetSum) {
+    return dfs(root, targetSum);
+    // T.C: O(N)
+    // S.C: O(H)
+};
 
+const dfs = (root, target) => {
+    if (!root) {
+        return false;
+    }
+    if (!root.left && !root.right) {
+        return target - root.val === 0;
+    }
+    return dfs(root.left, target - root.val) || 
+        dfs(root.right, target - root.val);
+};
 
 //Your input
-[4,2,7,1,3,6,9]
+[5,4,8,11,null,13,4,7,2,null,null,null,1]
+22
 //Output
-[4,7,2,9,6,3,1]
+true
 //Expected
-[4,7,2,9,6,3,1]
+true
 ```

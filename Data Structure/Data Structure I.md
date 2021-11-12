@@ -2476,13 +2476,33 @@ Constraints:
 #### Answer 33
 
 ```javascript
+// Recursive
+var lowestCommonAncestor = function(root, p, q) {
+    if(p.val > root.val && q.val > root.val) return lowestCommonAncestor(root.right, p, q);
+    
+    if(p.val < root.val && q.val < root.val) return lowestCommonAncestor(root.left, p , q);
+    
+    return root;
+};
 
+// Iterative:
+
+var lowestCommonAncestor = function(root, p, q) {
+    while(true){
+        if(p.val < root.val && q.val < root.val) root = root.left;
+
+        else if(p.val > root.val && q.val > root.val) root = root.right;
+
+        else return root;
+    }
+};
 
 //Your input
-[5,3,6,2,4,null,7]
-9
+[6,2,8,0,4,7,9,null,null,3,5]
+2
+8
 //Output
-true
+6
 //Expected
-true
+6
 ```

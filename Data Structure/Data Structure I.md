@@ -2255,13 +2255,234 @@ Constraints:
 #### Answer 30
 
 ```javascript
-
+var insertIntoBST = function(root, val) {
+   if(!root) return new TreeNode(val)
+   if(root.val < val){
+       if(!root.right){
+           let node = new TreeNode(val)
+           root.right = node
+           return root
+       }
+       insertIntoBST(root.right,val)
+   }else if(root.val > val){
+       if(!root.left){
+           let node = new TreeNode(val)
+           root.left = node
+           return root
+       }
+       insertIntoBST(root.left,val)
+   } 
+   return root 
+};
 
 //Your input
 [4,2,7,1,3]
-2
+5
 //Output
-[2,1,3]
+[4,2,7,1,3,5]
 //Expected
+[4,2,7,1,3,5]
+```
+
+### 98. Validate Binary Search Tree
+
+Given the *root* of a binary tree, determine if it is a valid binary search tree (BST).
+
+A *valid BST* is defined as follows:
+
+* The left subtree of a node contains only nodes with keys *less than* the node's key.
+* The right subtree of a node contains only nodes with keys *greater than* the node's key.
+* Both the left and right subtrees must also be binary search trees.
+
+Example 1:
+
+![tree1](https://assets.leetcode.com/uploads/2020/12/01/tree1.jpg)
+
+Input: root = [2,1,3]
+
+Output: true
+
+Example 2:
+
+![tree2](https://assets.leetcode.com/uploads/2020/12/01/tree2.jpg)
+
+Input: root = [5,1,4,null,null,3,6]
+
+Output: false
+
+Explanation: The root node's value is 5 but its right child's value is 4.
+
+Constraints:
+
+* The number of nodes in the tree is in the range [1, 10^4].
+* -2^31 <= Node.val <= 2^31 - 1
+
+
+#### Answer 31
+
+```javascript
+// TC = O(n); SC = O(n)
+var isValidBST = function(root) {
+    const inorderList = [];                         // O(n) 
+    inorder(root);                                  // O(n)
+    for(let i = 1; i < inorderList.length; ++i) {   // O(n)
+        if(inorderList[i] <= inorderList[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+    
+    function inorder(node) {    // O(n)
+        if(!node) {
+            return;
+        }
+        inorder(node.left);
+        inorderList.push(node.val);
+        inorder(node.right);
+    }
+};
+
+
+//Your input
 [2,1,3]
+//Output
+true
+//Expected
+true
+```
+
+### 653. Two Sum IV - Input is a BST
+
+Given the *root* of a Binary Search Tree and a target number *k*, return *true* if there exist two elements in the BST such that their sum is equal to the given target.
+
+Example 1:
+
+![sum_tree_1](https://assets.leetcode.com/uploads/2020/09/21/sum_tree_1.jpg)
+
+Input: root = [5,3,6,2,4,null,7], k = 9
+
+Output: true
+
+Example 2:
+
+![sum_tree_2](https://assets.leetcode.com/uploads/2020/09/21/sum_tree_2.jpg)
+
+Input: root = [5,3,6,2,4,null,7], k = 28
+
+Output: false
+
+Example 3:
+
+Input: root = [2,1,3], k = 4
+
+Output: true
+
+Example 4:
+
+Input: root = [2,1,3], k = 1
+
+Output: false
+
+Example 5:
+
+Input: root = [2,1,3], k = 3
+
+Output: true
+
+Constraints:
+
+* The number of nodes in the tree is in the range [1, 104].
+*-10^4 <= Node.val <= 10^4
+* root is guaranteed to be a valid binary search tree.
+* -10^5 <= k <= 10^5
+
+#### Answer 32
+
+```javascript
+var findTarget = function(root, k) {
+    let sortedArr=[],left,right;
+    inOrderTraversal(root);
+    function inOrderTraversal(node){
+        if(node===null){
+            return null;
+        }
+        inOrderTraversal(node.left);
+        sortedArr.push(node.val);
+        inOrderTraversal(node.right);
+    }
+    left = 0;
+    right = sortedArr.length-1;
+    while(left<right){
+        if(sortedArr[left]+sortedArr[right]=== k ){
+            return true;
+        }else if(sortedArr[left]+sortedArr[right] < k ){
+            left++;
+        }else{
+            right--;
+        }
+    }
+    return false;
+};
+
+//Your input
+[5,3,6,2,4,null,7]
+9
+//Output
+true
+//Expected
+true
+```
+
+### 235. Lowest Common Ancestor of a Binary Search Tree
+
+Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+
+According to the *definition of LCA on Wikipedia*: “The lowest common ancestor is defined between two nodes *p* and *q* as the lowest node in *T* that has both *p* and *q* as descendants (where we allow *a node to be a descendant of itself*).”
+
+Example 1:
+
+![binarysearchtree_improved](https://assets.leetcode.com/uploads/2018/12/14/binarysearchtree_improved.png)
+
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+
+Output: 6
+
+Explanation: The LCA of nodes 2 and 8 is 6.
+
+Example 2:
+
+![binarysearchtree_improved](https://assets.leetcode.com/uploads/2018/12/14/binarysearchtree_improved.png)
+
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
+
+Output: 2
+
+Explanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
+
+Example 3:
+
+Input: root = [2,1], p = 2, q = 1
+
+Output: 2
+
+Constraints:
+
+* The number of nodes in the tree is in the range [2, 105].
+* -109 <= Node.val <= 109
+* All Node.val are unique.
+* p != q
+* p and q will exist in the BST.
+
+#### Answer 33
+
+```javascript
+
+
+//Your input
+[5,3,6,2,4,null,7]
+9
+//Output
+true
+//Expected
+true
 ```

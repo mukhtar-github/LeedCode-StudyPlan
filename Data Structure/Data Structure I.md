@@ -1523,13 +1523,57 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 #### Answer 20
 
 ```javascript
+var MyQueue = function() {
+    this.stackOne = [];
+    this.stackTwo = [];
+    
+    this.migrateStack = (canditateStack, targetStack) => {
+        while(canditateStack.length) {
+            targetStack.push(canditateStack.pop());
+        }
+        
+        return [canditateStack, targetStack];
+    }
+};
 
+MyQueue.prototype.push = function(x) {
+    if(!this.stackTwo.length) {
+        this.stackOne.push(x);
+        return;
+    }
+    
+    this.migrateStack(this.stackTwo, this.stackOne);
+    this.stackOne.push(x);
+};
+
+MyQueue.prototype.pop = function() {
+    if(!this.stackOne.length) {
+        return this.stackTwo.pop();
+    }
+    
+    this.migrateStack(this.stackOne, this.stackTwo);
+    return this.stackTwo.pop();
+};
+
+MyQueue.prototype.peek = function() {
+    if(!this.stackOne.length) {
+        return this.stackTwo[this.stackTwo.length - 1];
+    }
+    
+    this.migrateStack(this.stackOne, this.stackTwo);
+    return this.stackTwo[this.stackTwo.length - 1];
+};
+
+MyQueue.prototype.empty = function() {
+    return !this.stackOne.length && !this.stackTwo.length;
+};
 
 
 //Your input
-"()"
+["MyQueue","push","push","peek","pop","empty"]
+[[],[1],[2],[],[],[]]
 //Output
-true
+[null,null,null,1,1,false]
 //Expected
-true
+[null,null,null,1,1,false]
 ```

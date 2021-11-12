@@ -2064,12 +2064,32 @@ Constraints:
 #### Answer 27
 
 ```javascript
+/*
+The strategy is not complicated, and the process of thinking is also directly. So, I'm not going to say too much about it. Just remember, the key point is to swap left child and right child for every node:
 
+* Traverse all nodes
+* Swap left child and right child
+
+About traversal, here are 2 common ways - BFS and DFS. Let's try them both.
+
+BFS
+The negative for this strategy is it's a little bit complicated to write. But the positive is there's no stack overflow risk.
+*/
+
+const invertTree = (node) => node ? ([node.left, node.right] = [invertTree(node.right), invertTree(node.left)], node) : null;
+
+const invertTree = (node) => {
+  if (!node) return null;
+  [node.left, node.right] = [node.right, node.left];
+  invertTree(node.left);
+  invertTree(node.right);
+  return node;
+};
 
 //Your input
-[1,2,2,3,4,4,3]
+[4,2,7,1,3,6,9]
 //Output
-true
+[4,7,2,9,6,3,1]
 //Expected
-true
+[4,7,2,9,6,3,1]
 ```

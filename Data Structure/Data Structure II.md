@@ -167,3 +167,144 @@ var threeSum = function(nums) {
 //Expected
 [[-1,-1,2],[-1,0,1]]
 ```
+
+### 75. Sort Colors
+
+Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+
+We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+You must solve this problem without using the library's sort function.
+
+Example 1:
+
+Input: nums = [2,0,2,1,1,0]
+
+Output: [0,0,1,1,2,2]
+
+Example 2:
+
+Input: nums = [2,0,1]
+
+Output: [0,1,2]
+
+Example 3:
+
+Input: nums = [0]
+
+Output: [0]
+
+Example 4:
+
+Input: nums = [1]
+
+Output: [1]
+
+Constraints:
+
+* n == nums.length
+* 1 <= n <= 300
+* nums[i] is 0, 1, or 2.
+
+Follow up: Could you come up with a one-pass algorithm using only constant extra space?
+
+#### Answer 4
+
+```javascript
+var sortColors = function(nums) {
+    let low= 0, high= nums.length- 1, mid= 0, temp= 0;
+    
+    while(mid <= high) {
+        if(nums[mid] === 0) {
+            // swap mid and low pointers values
+            temp= nums[low];
+            nums[low] = nums[mid];
+            nums[mid]= temp;
+            
+            low++;
+            mid++;
+        } else if(nums[mid] === 2) {
+            // swap mid and high pointers values
+            temp= nums[high];
+            nums[high]= nums[mid];
+            nums[mid]= temp;
+            
+            high--;
+        } else {
+            mid++
+        }
+    }
+    
+    return nums;
+};
+
+//Your input
+[2,0,2,1,1,0]
+//Output
+[0,0,1,1,2,2]
+//Expected
+[0,0,1,1,2,2]
+```
+
+### 56. Merge Intervals
+
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+
+Output: [[1,6],[8,10],[15,18]]
+
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+
+Example 2:
+
+Input: intervals = [[1,4],[4,5]]
+
+Output: [[1,5]]
+
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+Constraints:
+
+* 1 <= intervals.length <= 10^4
+* intervals[i].length == 2
+* 0 <= starti <= endi <= 10^4
+
+#### Answer 5
+
+```javascript
+var sortColors = function(nums) {
+    let low= 0, high= nums.length- 1, mid= 0, temp= 0;
+    
+    while(mid <= high) {
+        if(nums[mid] === 0) {
+            // swap mid and low pointers values
+            temp= nums[low];
+            nums[low] = nums[mid];
+            nums[mid]= temp;
+            
+            low++;
+            mid++;
+        } else if(nums[mid] === 2) {
+            // swap mid and high pointers values
+            temp= nums[high];
+            nums[high]= nums[mid];
+            nums[mid]= temp;
+            
+            high--;
+        } else {
+            mid++
+        }
+    }
+    
+    return nums;
+};
+
+//Your input
+[2,0,2,1,1,0]
+//Output
+[0,0,1,1,2,2]
+//Expected
+[0,0,1,1,2,2]
+```

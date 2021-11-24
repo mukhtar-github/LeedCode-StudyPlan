@@ -274,37 +274,41 @@ Constraints:
 #### Answer 5
 
 ```javascript
-var sortColors = function(nums) {
-    let low= 0, high= nums.length- 1, mid= 0, temp= 0;
+var merge = function(intervals) {
     
-    while(mid <= high) {
-        if(nums[mid] === 0) {
-            // swap mid and low pointers values
-            temp= nums[low];
-            nums[low] = nums[mid];
-            nums[mid]= temp;
-            
-            low++;
-            mid++;
-        } else if(nums[mid] === 2) {
-            // swap mid and high pointers values
-            temp= nums[high];
-            nums[high]= nums[mid];
-            nums[mid]= temp;
-            
-            high--;
-        } else {
-            mid++
-        }
+    if(intervals.length <2){
+        return intervals;
     }
     
-    return nums;
+    // sort intervals    
+    const sortedIntervals = intervals.sort((a,b) => {
+        return a[0]-b[0];
+    });
+    
+    
+    let stack = [];
+    stack.push(sortedIntervals[0]);
+    
+    for(let i=1;i<sortedIntervals.length;i++){
+        let currStartTime = sortedIntervals[i][0];
+        let currEndTime = sortedIntervals[i][1];
+        let prevStartTime = stack[stack.length-1][0];
+        let prevEndTime = stack[stack.length-1][1];
+        
+        if(currStartTime <= prevEndTime){
+            stack[stack.length-1] = [Math.min(currStartTime,prevStartTime),Math.max(prevEndTime,currEndTime)];
+        }
+        else {
+            stack.push(sortedIntervals[i]);
+        }
+    }
+    return stack;
 };
 
 //Your input
-[2,0,2,1,1,0]
+[[1,3],[2,6],[8,10],[15,18]]
 //Output
-[0,0,1,1,2,2]
+[[1,6],[8,10],[15,18]]
 //Expected
-[0,0,1,1,2,2]
+[[1,6],[8,10],[15,18]]
 ```

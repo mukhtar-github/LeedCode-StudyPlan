@@ -461,6 +461,8 @@ Given an integer *rowIndex*, return the *rowIndex^th* (*0-indexed*) row of the *
 
 In *Pascal's triangle*, each number is the sum of the two numbers directly above it as shown:
 
+![PascalTriangleAnimated2](https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif)
+
 Example 1:
 
 Input: rowIndex = 3
@@ -485,15 +487,111 @@ Constraints:
 
 Follow up: Could you optimize your algorithm to use only O(rowIndex) extra space?
 
-```javascript
+The other top answers are all mostly of O(N^2) time complexity. So, I thought to include my solution here which is Linear in time.
 
+As you see you can get any element of Pascal's Triangle in O(N) time and constant space complexity.
+for first row first column we have 1C1
+for second row first column we have 2C1
+for second row second column we have 2C2
+..... and so on
+Therefore we can infer, for ith row and jth column we have the number iCj
+
+And calculating this is pretty easy just in N time (factorial basically).
+
+==> nCr = n*(n-1)*(n-2)...(r terms) / 1*2*..........*(r-2)*(r-1)*r
+
+Now the question asks us to find the complete row.
+If we calculate all the elements in this manner it would be quadratic in time. But, since its formula is pretty sleek, we proceed as follows:
+
+suppose we have nCr and we have to find nC(r+1), like 5C3 and 5C4
+==> 5C3 = 5*4*3 / 1*2*3
+
+to get the next term we multiply numerator with its next term and denominator with its next term. As,
+==> 5C4 = 5*4*3*2 / 1*2*3*4
+
+We are following this simple maths logic to get the complete row in O(N) time.
+
+Note:- We didnt actually need the variable temp. But the test cases are such that multiplying in one case exceeds the int range, and since we cannot change return type we have to take the long data type variable as temporary.
+
+```javascript
+// rowIndex = r
+
+var getRow = function(r) {
+    var ans = new Array(r+1)
+    ans[0]=ans[r]=1
+    for(i=1,up=r;i<r;i++,up--)
+        ans[i] = ans[i-1]*up/i
+    return ans
+};
     
 
 //Your input
-["MyHashMap","put","put","get","get","put","get","remove","get"]
-[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]
+3
 //Output
-[null,null,null,1,-1,null,1,null,-1]
+[1,3,3,1]
 //Expected
-[null,null,null,1,-1,null,1,null,-1]
+[1,3,3,1]
+```
+
+### 48. Rotate Image
+
+You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+
+You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+Example 1:
+
+![mat1](https://assets.leetcode.com/uploads/2020/08/28/mat1.jpg)
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+
+Output: [[7,4,1],[8,5,2],[9,6,3]]
+
+Example 2:
+
+![mat2](https://assets.leetcode.com/uploads/2020/08/28/mat2.jpg)
+
+Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+
+Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+
+Example 3:
+
+Input: matrix = [[1]]
+
+Output: [[1]]
+
+Example 4:
+
+Input: matrix = [[1,2],[3,4]]
+
+Output: [[3,1],[4,2]]
+
+Constraints:
+
+* matrix.length == n
+* matrix[i].length == n
+* 1 <= n <= 20
+* -1000 <= matrix[i][j] <= 1000
+
+#### Answer 8
+
+```javascript
+// rowIndex = r
+
+var getRow = function(r) {
+    var ans = new Array(r+1)
+    ans[0]=ans[r]=1
+    for(i=1,up=r;i<r;i++,up--)
+        ans[i] = ans[i-1]*up/i
+    return ans
+};
+    
+
+//Your input
+3
+//Output
+[1,3,3,1]
+//Expected
+[1,3,3,1]
 ```

@@ -576,22 +576,69 @@ Constraints:
 
 #### Answer 8
 
-```javascript
-// rowIndex = r
+The idea behind this relies on some math but I'll try my best with an ELI5 answer.
 
-var getRow = function(r) {
-    var ans = new Array(r+1)
-    ans[0]=ans[r]=1
-    for(i=1,up=r;i<r;i++,up--)
-        ans[i] = ans[i-1]*up/i
-    return ans
+TLDR: Solve this by row reversing then transposing the matrix or transpose the matrix then reverse the columns
+
+When you perform a 90 degree rotation the "diagonal" swaps directions.
+
+[(X), 2, 3]          [7, 4, (X)]
+
+[4, (X), 6]    =>    [8, (X), 2]     90 degree rotation
+
+[7, 8, (X)]          [(X), 6, 3]
+
+So to swap the diagonal you must either reverse by row or by column. If you imagine the matrix as a physical paper, swapping the row or column would be like flipping the paper over. So the diagonal is now swapped but the paper is now flipped on its back. So to flip the paper back to the proper face, you must perform a transpose.
+
+To over simplify why you must transpose is because in 2D, a matrix transpose is like a form of geometric translation which is what a rotation is; however, a transpose is not enough to rotate a matrix as the values do not map to the correct positions. Reversing the row or column simply "corrects" the rotation.
+
+[(X), 2, 3]          [7, 8, (X)]
+
+[4, (X), 6]    =>    [4, (X), 6]     Reverse the rows to swap "diagonal" direction
+
+[7, 8, (X)]          [(X), 2, 3]
+
+[(X), 8, 9]          [7, 4, 1]
+
+[4, (X), 6]    =>    [8, 5, 2]  Transposing along the diagonal will complete the rotation (assuming you row reversed first)
+
+[1, 2, (X)]          [9, 6, 3]
+
+Finally, you must know that: MATRIX MULTIPLICATION IS NOT COMMUTATIVE!
+
+Order matters meaning,
+
+(row reverse) x (transpose) =/= (transpose) x (row reverse)
+
+But FYI, these two operations are the same
+
+(row reverse) x (transpose) == (transpose) x (column reverse)
+
+So you can solve this by first reversing rows then transposing or transposing then reverse columns. You can choose however you like.
+
+```javascript
+var rotate = function(matrix) {
+    let length = matrix.length
+    
+    matrix.reverse()
+    
+    // transpose
+    for (let i = 0; i < length; i++) {
+        for (let j = 0; j < i; j++) {
+            let temp = matrix[i][j]
+            matrix[i][j] = matrix[j][i]
+            matrix[j][i] = temp
+        }
+    }
+    
+    return matrix
 };
     
 
 //Your input
-3
+[[1,2,3],[4,5,6],[7,8,9]]
 //Output
-[1,3,3,1]
+[[7,4,1],[8,5,2],[9,6,3]]
 //Expected
-[1,3,3,1]
+[[7,4,1],[8,5,2],[9,6,3]]
 ```

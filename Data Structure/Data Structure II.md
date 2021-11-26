@@ -452,3 +452,48 @@ class MyHashMap {
 //Expected
 [null,null,null,1,-1,null,1,null,-1]
 ```
+
+### 119. Pascal's Triangle II
+
+#### Answer 7
+
+Given an integer *rowIndex*, return the *rowIndex^th* (*0-indexed*) row of the *Pascal's triangle*.
+
+In *Pascal's triangle*, each number is the sum of the two numbers directly above it as shown:
+
+Example 1:
+
+Input: rowIndex = 3
+
+Output: [1,3,3,1]
+
+Example 2:
+
+Input: rowIndex = 0
+
+Output: [1]
+
+Example 3:
+
+Input: rowIndex = 1
+
+Output: [1,1]
+
+Constraints:
+
+* 0 <= rowIndex <= 33
+
+Follow up: Could you optimize your algorithm to use only O(rowIndex) extra space?
+
+```javascript
+
+    
+
+//Your input
+["MyHashMap","put","put","get","get","put","get","remove","get"]
+[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]
+//Output
+[null,null,null,1,-1,null,1,null,-1]
+//Expected
+[null,null,null,1,-1,null,1,null,-1]
+```

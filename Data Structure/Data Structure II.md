@@ -642,3 +642,63 @@ var rotate = function(matrix) {
 //Expected
 [[7,4,1],[8,5,2],[9,6,3]]
 ```
+
+### 59. Spiral Matrix II
+
+Given a positive integer *n*, generate an *n x n matrix* filled with elements from *1* to *n^2* in spiral order.
+
+Example 1:
+
+![spiraln](https://assets.leetcode.com/uploads/2020/11/13/spiraln.jpg)
+
+Input: n = 3
+
+Output: [[1,2,3],[8,9,4],[7,6,5]]
+
+Example 2:
+
+Input: n = 1
+
+Output: [[1]]
+
+Constraints:
+
+* 1 <= n <= 20
+
+#### Answer 9
+
+```javascript
+var generateMatrix = function (n) {
+    let dr = [0, 1, 0, -1],
+        dc = [1, 0, -1, 0],
+        dir = 0,
+        board = [],
+        row = 0,
+        col = 0;
+    for (let i = 0; i < n; i++) {
+        board[i] = Array(n).fill(0)
+    }
+    for (i = 1; i <= n * n; i++) {
+        board[row][col] = i
+        let nRow = row + dr[dir % 4],
+            nCol = col + dc[dir % 4]
+        if (nRow >= 0 && nRow < n && nCol >= 0 && nCol < n && board[nRow] && board[nRow][nCol] == 0) {
+            row = nRow
+            col = nCol
+        } else {
+            dir++
+            row += dr[dir % 4]
+            col += dc[dir % 4]
+        }
+    }
+    return board
+};
+    
+
+//Your input
+3
+//Output
+[[1,2,3],[8,9,4],[7,6,5]]
+//Expected
+[[1,2,3],[8,9,4],[7,6,5]]
+```

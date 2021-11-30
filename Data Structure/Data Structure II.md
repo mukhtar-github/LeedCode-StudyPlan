@@ -1141,8 +1141,6 @@ Constraints:
 
 #### Answer 14
 
-```javascript
-/*
 The idea - Hash Map
 The key idea of how we can solve this problem in O(N) time using hashmap is to understand how we can correctly use the information from 1 iteration of calculating sums.
 
@@ -1150,9 +1148,8 @@ Something to understand first is, when Sum_i = #0 + #1 + #2 .... + #i = 6, and S
 So In order to find k we are basically trying to find a pair of Sum_i and Sum_k such that Sum_k - Sum_i = k. Since we are only iterating the array once and calculating the sum from left to right accumatively, we can keep a record of all the sums up to index i, that is Sum0, Sum1...Sumi. For each new sum, we can check if there is a previous Sum such that Sum_current - Sum_prev = k. In order to find what is the "old_index", we can just change the formula to Sum_curren - k = Sum_old and look up from our record to see if we find a matching pair. If we did, bingo, that means we found a valid subarray.
 
 ![image_1574125964](https://assets.leetcode.com/users/aminick/image_1574125964.png)
-*/
 
-
+```javascript
 // Hash Map
 var subarraySumHashMap = function(nums, k) {
     let map = new Map();

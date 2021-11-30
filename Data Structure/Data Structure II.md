@@ -1531,3 +1531,117 @@ var partitionLabels = function(s) {
 //Expected
 [9,7,8]
 ```
+
+### 49. Group Anagrams
+
+Given an array of strings *strs*, group *the anagrams* together. You can return the answer in any order.
+
+An *Anagram* is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+Example 2:
+
+Input: strs = [""]
+
+Output: [[""]]
+
+Example 3:
+
+Input: strs = ["a"]
+
+Output: [["a"]]
+
+Constraints:
+
+* 1 <= strs.length <= 104
+* 0 <= strs[i].length <= 100
+* strs[i] consists of lowercase English letters.
+
+#### Answer 19
+
+```javascript
+var groupAnagrams = function(strs) {
+    const anagrams = new Map();
+    
+    for(str of strs) {
+        const sortedLetters = str.split('').sort().join('');
+        
+        if(anagrams.has(sortedLetters)) anagrams.get(sortedLetters).push(str);
+        else anagrams.set(sortedLetters, [str]);
+    }
+    return Array.from(anagrams.values());
+};
+
+//Your input
+["eat","tea","tan","ate","nat","bat"]
+//Output
+[["eat","tea","ate"],["tan","nat"],["bat"]]
+//Expected
+[["eat","tea","ate"],["tan","nat"],["bat"]]
+```
+
+### 43. Multiply Strings
+
+Given two non-negative integers *num1 and num2* represented as strings, return the product of *num1 and num2*, also represented as a string.
+
+Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+Example 1:
+
+Input: num1 = "2", num2 = "3"
+
+Output: "6"
+
+Example 2:
+
+Input: num1 = "123", num2 = "456"
+
+Output: "56088"
+
+Constraints:
+
+* 1 <= num1.length, num2.length <= 200
+* num1 and num2 consist of digits only.
+* Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+
+#### Answer 20
+
+Start from right to left, perform multiplication on every pair of digits, and add them together. Let's draw the process! From the following draft, we can immediately conclude:
+
+num1[i] * num2[j] will be placed at indices [i + j, i + j + 1]
+
+![image_1591345827](https://assets.leetcode.com/users/murzabulatov/image_1591345827.png)
+
+```javascript
+var multiply = function(num1, num2) {
+    if (num1 === '0' || num2 === '0') return '0'
+    
+    const m = num1.length, n = num2.length, res = new Array(m+n).fill(0)
+    
+    for (let i=m-1; i>=0; i--) {
+        for (let j=n-1; j>=0; j--) {
+            const p1=i+j, p2=i+j+1
+            let sum = res[p2] + Number(num1[i]) * Number(num2[j])
+            res[p2] = sum%10
+            res[p1] += Math.floor(sum/10)
+        }
+    }
+    if (res[0] === 0) res.shift()
+    return res.join('')
+    
+};
+
+
+//Your input
+"2"
+"3"
+//Output
+"6"
+//Expected
+"6"
+```

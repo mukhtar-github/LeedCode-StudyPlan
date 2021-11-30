@@ -919,13 +919,118 @@ Follow up: Could you implement a solution that runs in O(n) time complexity and 
 #### Answer 12
 
 ```javascript
+/*
+Approach Summary:
+Constraints
+We are heavily constrained by O(1), O(n) space & time complexities, which means:
 
+No trees or arrays
+No nesting loops (unless the nested loop is constant size)
+A hint in the description
 
+There's a hint in the formal function definition:
 
+Return true if there exists i, j, k
+such that arr[i] < arr[j] < arr[k] given 0 ≤ i < j < k ≤ n-1 else return false.
+This can be reconfigured as arr[i] (currentNumber) > arr[j] (secondNumber) > arr[k] (firstNumber). Since we are already tracking currentNumber on each iteration, we only need to track two other numbers to get our (potential) triplet:
+
+var increasingTriplet = function(nums) {
+  let firstNumber = Infinity;
+  let secondNumber = Infinity;
+  
+  for (let currentNumber of nums) {
+We can start at Infinity for the two minimum numbers, since we'll want to grab the first two number we come accross.
+
+Success Condition
+We should be able to reach a state where currentNumber (set as arr[i] in our algorithm) is greater than the first and second-most minimum numbers.
+
+if (currentNumber > secondNumber && currentNumber > firstNumber) {
+  return true;
+}
+That is, if at any point in the loop, we find a number that is greater than our two stored numbers, then we automatically have a valid triplet. Thus, we can return true.
+
+Tracking Minimum Numbers
+We need to track two other numbers to make a subsequence with currentNumber.
+
+if (currentNumber > firstNumber) {
+  secondNumber = currentNumber;
+} else {
+  firstNumber = currentNumber;
+}
+Basically, this conditional ensures that we always have the lowest number in the array stored as firstNumber. Then, each time we encounter a number that's larger than firstNumber, we store that number and continue.
+
+The reason this works is that if we ever find another number that's larger than secondNumber, then we have our triplet and our first conditional triggers and returns true for us.
+
+By the end of all this, if we never find that third (or second!) increasing number, then it doesn't exist in our list and we return false.
+*/
+
+var increasingTriplet = function(nums) {
+  let firstNumber = Infinity;
+  let secondNumber = Infinity;
+  
+  for (let currentNumber of nums) {
+    if (currentNumber > secondNumber && currentNumber > firstNumber) {
+      return true;
+    }
+    if (currentNumber > firstNumber) {
+      secondNumber = currentNumber;
+    } else {
+      firstNumber = currentNumber;
+    }
+  }
+  return false;
+};
+
+/*
+This solution has already been posted by others, but I think it's easier to understand with some subtle changes. This particular logic greatly benefits from clear naming.
+
+Start min off at the first element so that secondMinUpdatedAfterMin is bigger, unlike the case where we start at Infinity. This makes it clear that min is the minimum thus far, and more importantly it's obvious that we are using the the two variables as our respective i and j elements since min < secondMinUpdatedAfterMin.
+
+Most importantly secondMinUpdatedAfterMin is a better name than bigger or even secondMin because these do not convey when the variable is updated. A name like secondMin is presumed to be the global second minimum so far, which is definitely not the case. For example, nums = [12,8,11,4,6,5,1,9,2,10] stores the following on each iteration:
+
+                          │    │    │    │  i │    │  j │    │  k │    │
+──────────────────────────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
+ nums                     │ 12 │  8 │ 11 │  4 │  6 │  5 │  1 │  9 │  2 │ 10
+──────────────────────────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
+ min                      │ 12 │  8 │  8 │  4 │  4 │  4 │  1 │  1 │  - │  -
+──────────────────────────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────
+ secondMinUpdatedAfterMin │  ∞ │  ∞ │ 11 │ 11 │  6 │  5 │  5 │  5 │  - │  -
+The 4th time around secondMinUpdatedAfterMin is 11 but the global second minimum so far is 8 which is the impression given by an ambiguous naming. The shorter secondMinAfterMin is better as well, but it is also ambiguous in that after isn't true in every sense--in the aforementioned iteration 11 comes before 4 in nums.
+*/
+var increasingTriplet = function(nums) {
+    let min = nums[0];
+    let secondMinUpdatedAfterMin = Infinity;
+    for (let val of nums) {
+        if (val <= min) {
+            min = val;
+        } else if (val <= secondMinUpdatedAfterMin) {
+            secondMinUpdatedAfterMin = val;
+        } else {  // min < secondMinUpdatedAfterMin < val
+            return true;
+        }
+    }
+    return false;
+};
+
+/*
+The Idea
+1. Keep track of the minimum for the 1st number(min1) and the 2nd number(min2)
+2. We found a triplet if num > min2
+3. Update min2 if num > min1, else update min1
+*/
+var increasingTriplet = function(nums) {
+    let min1 = nums[0], min2 = Number.MAX_VALUE;
+    for (let num of nums) {
+        if (num > min2) return true;
+        if (num > min1) min2 = num
+        else min1 = num;
+    }
+    return false;
+};
 //Your input
-[[1,2],[2,3],[3,4],[1,3]]
+[1,2,3,4,5]
 //Output
-1
+true
 //Expected
-1
+true
 ```

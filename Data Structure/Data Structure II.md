@@ -821,6 +821,43 @@ Constraints:
 
 ```javascript
 var eraseOverlapIntervals = function(intervals) {
+    // sort by earliest finish time
+    intervals.sort((a, b) => a[1] - b[1]);
+    let prev = intervals[0], remove = 0;
+    
+    for(let i = 1; i < intervals.length; i++) {
+        if(intervals[i][0] < prev[1]) remove++;
+        else prev = intervals[i];
+    }
+    return remove;
+};
+
+
+
+/*
+The idea is to sort the intervals by their start times and then traverse the array from behind. If the end time at interval[i-1] is greater than the start time at interval[i] we have found overlap. So we move to check interval[i] with interval[i-2] endtime and so on till we get to an interval j where the there is no overlap. Then we let i = j.
+
+Reasoning
+We traverse from the right of the list becuase whenever we meet an interval at j which doesn't overlap with our current interval i, there can be no more overlaping intervals beyond j and the overlaps between i and j is minimum.
+*/
+var eraseOverlapIntervals = function(intervals) {
+    intervals.sort((a,b) => a[0]-b[0])
+    let n = intervals.length
+    let res = 0
+    let i = n-1
+    while(i>0){
+        let j = i-1
+        while(j>=0 && intervals[j][1] > intervals[i][0]){
+            res++
+            j--
+        }
+        i = j
+    }
+    return res
+};
+
+
+var eraseOverlapIntervals = function(intervals) {
     intervals.sort((a,b)=>{
         return a[1] - b[1]
     })

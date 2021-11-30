@@ -1265,3 +1265,64 @@ var addStrings = function(num1, num2) {
 //Expected
 "134"
 ```
+
+### 409. Longest Palindrome
+
+Given a string *s* which consists of lowercase or uppercase letters, return the length of the *longest palindrome* that can be built with those letters.
+
+Letters are *case sensitive*, for example, *"Aa"* is not considered a palindrome here.
+
+Example 1:
+
+Input: s = "abccccdd"
+
+Output: 7
+
+Explanation:
+
+One longest palindrome that can be built is "dccaccd", whose length is 7.
+
+Example 2:
+
+Input: s = "a"
+
+Output: 1
+
+Example 3:
+
+Input: s = "bb"
+
+Output: 2
+
+Constraints:
+
+* 1 <= s.length <= 2000
+* s consists of lowercase and/or uppercase English letters only.
+
+#### Answer 16
+
+```javascript
+var longestPalindrome = function(s) {
+    const set = new Set();
+    let count = 0;
+    
+    for (const char of s) {
+        if (set.has(char)) {
+            count += 2;
+            set.delete(char);
+        } 
+        else {
+            set.add(char);
+        }
+    }
+
+    return count + (set.size > 0 ? 1 : 0);
+};
+
+//Your input
+"abccccdd"
+//Output
+7
+//Expected
+7
+```

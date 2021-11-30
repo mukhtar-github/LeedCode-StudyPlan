@@ -782,3 +782,8 @@ true
 //Expected
 true
 ```
+
+### 435. Non-overlapping Intervals
+
+Given an array of intervals *intervals* where *intervals[i] = [start<sub>i</sub>, end <sub>i</sub>]*, return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+

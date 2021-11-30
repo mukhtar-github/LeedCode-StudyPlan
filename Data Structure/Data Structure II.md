@@ -1433,3 +1433,101 @@ true
 //Expected
 true
 ```
+
+### 763. Partition Labels
+
+You are given a string *s*. We want to partition the string into as many parts as possible so that each letter appears in at most one part.
+
+Return a list of integers representing the size of these parts.
+
+Example 1:
+
+Input: s = "ababcbacadefegdehijhklij"
+
+Output: [9,7,8]
+
+Explanation:
+
+The partition is "ababcbaca", "defegde", "hijhklij".
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.
+Example 2:
+
+Input: s = "eccbbbbdec"
+
+Output: [10]
+
+Constraints:
+
+* 1 <= s.length <= 500
+* s consists of lowercase English letters.
+
+#### Answer 18
+
+```javascript
+/*
+This is basically the same as other JS solutions out there, but I broke out values into variables and gave everything semantic names for clarity.
+
+Iterate through the string to find the last index of each character.
+Create a variable start, which will be the start index (the smaller one) of a partition. Start should start at zero, and only change after a new partition has been created.
+Create a variable end, which will be the end index (the larger one) of a partition. End should start at zero, and should change depending on what character is being inspected.
+Iterate through the string. If the character at string[i] has an last index greater than the current end, update end to lastSeenIndices[char].
+If i === end, then we have found a partition, and need to store it in our partitions array. Update start, and continue iterating.
+Time complexity: O(n)
+Space complexity: O(1)—beacuse we will never have more keys in our lastSeenIndices then there are single characters in whatever alphabet(s) we're using, this is constant space. If our input string were 10,000,000 characters long and we only had lowercase English letters, we would never have more than 26 keys.
+*/
+
+const partitionLabels = string => {
+    const lastSeenIndices = {};
+    
+    for (let i = string.length - 1; i >= 0; i--) {
+        const char = string[i];
+        
+        if (!lastSeenIndices[char]) {
+            lastSeenIndices[char] = i;
+        }
+    }
+    
+    const partitions = [];
+    let start = 0;
+    let end = 0;
+    
+    for (let i = 0; i < string.length; i++) {
+        const char = string[i];
+        const lastCharIdx = lastSeenIndices[char];
+        
+        if (lastCharIdx > end) end = lastCharIdx;
+        
+        if (i === end) {
+            const partition = end - start + 1;
+            partitions.push(partition);
+            start = i + 1;
+        }
+    }
+    
+    return partitions;
+};
+
+
+var partitionLabels = function(s) {
+    let last=-1;
+    const res=[];
+    let left=0;
+    for(let i=0;i<s.length;i++){
+        last=Math.max(s.lastIndexOf(s[i]),last)
+        if(i===last){
+            res.push(i-left+1);
+            left=i+1
+        }
+    }
+    return res;
+};
+
+
+//Your input
+"ababcbacadefegdehijhklij"
+//Output
+[9,7,8]
+//Expected
+[9,7,8]
+```

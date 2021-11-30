@@ -1167,9 +1167,10 @@ var subarraySumHashMap = function(nums, k) {
 
 
 //Your input
-[1,2,3,4]
+[1,1,1]
+2
 //Output
-[24,12,8,6]
+2
 //Expected
-[24,12,8,6]
+2
 ```

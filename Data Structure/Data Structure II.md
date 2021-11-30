@@ -1066,11 +1066,88 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 #### Answer 13
 
 ```javascript
+var productExceptSelf = function (nums) {
+
+    let size = nums.length;
+    const multiplied = new Array(size).fill(1);
+
+    let product = 1;
+    for (let i = 1; i < size; i++) {
+        product *= nums[i - 1];
+        multiplied[i] = product;
+    }
+
+    product = 1;
+    for (let i = size - 2; i >= 0; i--) {
+        product *= nums[i + 1];
+        multiplied[i] *= product;
+    }
+
+    return multiplied;
+};
+
+
+var productExceptSelf = function(nums) {
+    let left = []
+    let right = []
+    let result = []
+
+    left[0] = 1;
+    for(let i = 1; i < nums.length; i++) {
+        left[i] = left[i - 1] * nums[i - 1];
+    }
+
+    right[nums.length - 1] = 1;
+    for(let i = nums.length - 2; i >= 0; i--) {
+        right[i] = right[i + 1] * nums[i + 1];
+    }
+
+    for(let i=0; i<nums.length; i++) {
+        result[i] = left[i] * right[i];
+    }
+    return result;
+};
+
 
 //Your input
-[1,2,3,4,5]
+[1,2,3,4]
 //Output
-true
+[24,12,8,6]
 //Expected
-true
+[24,12,8,6]
+```
+
+### 560. Subarray Sum Equals K
+
+Given an array of integers *nums* and an integer *k*, return the total number of continuous subarrays whose sum equals to *k*.
+
+Example 1:
+
+Input: nums = [1,1,1], k = 2
+
+Output: 2
+
+Example 2:
+
+Input: nums = [1,2,3], k = 3
+
+Output: 2
+
+Constraints:
+
+1 <= nums.length <= 2 * 10<sup>4</sup>
+-1000 <= nums[i] <= 1000
+-10<sup>7</sup> <= k <= 10<sup>7</sup>
+
+#### Answer 14
+
+```javascript
+
+
+//Your input
+[1,2,3,4]
+//Output
+[24,12,8,6]
+//Expected
+[24,12,8,6]
 ```

@@ -1142,6 +1142,7 @@ Constraints:
 #### Answer 14
 
 The idea - Hash Map
+
 The key idea of how we can solve this problem in O(N) time using hashmap is to understand how we can correctly use the information from 1 iteration of calculating sums.
 
 Something to understand first is, when Sum_i = #0 + #1 + #2 .... + #i = 6, and Sum_k #0 + #1 + #2 ... + #k = 10, its pretty obvious that between #i to #k is equal to 4, and we can write that mathmatically to Sum_k - Sum_i = Sumi_to_k

@@ -2081,3 +2081,70 @@ const deleteDuplicates = (head) => {
 //Expected
 [1,2,5]
 ```
+
+### 24. Swap Nodes in Pairs
+
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+Example 1:
+
+![swap_ex1](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
+
+Input: head = [1,2,3,4]
+
+Output: [2,1,4,3]
+
+Example 2:
+
+Input: head = []
+
+Output: []
+
+Example 3:
+
+Input: head = [1]
+
+Output: [1]
+
+Constraints:
+
+* The number of nodes in the list is in the range [0, 100].
+* 0 <= Node.val <= 100
+
+#### Answer 27
+
+```javascript
+var swapPairs = function(head) {
+//swap first two nodes head and head.next;
+//call swap(head.next.next);
+//attach the returned head of the sub-list in step 2
+//to the first two nodes
+
+//edge case: no pairs or no node (head===null or head.next ===null)
+if(!head||!head.next) {return head;} 
+
+//put first, second, third in chain in dummy nodes
+let first = head;
+let second = head.next; 
+let third = head.next.next;
+
+//swap first and second
+head = second;
+head.next = first;  
+//chain the pair to third
+if(third!==null && third.next!==null) { //if next block is still pair
+    head.next.next = swapPairs(third);
+} else { //if next block is single or null
+    head.next.next = third; 
+}
+
+return head;
+};
+
+//Your input
+[1,2,3,4]
+//Output
+[2,1,4,3]
+//Expected
+[2,1,4,3]
+```

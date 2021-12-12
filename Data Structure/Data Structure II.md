@@ -1697,3 +1697,63 @@ var findRepeatedDnaSequences = function(s) {
 //Expected
 ["AAAAACCCCC","CCCCCAAAAA"]
 ```
+
+### 5. Longest Palindromic Substring
+
+Given a string *s*, return the longest palindromic substring in *s*.
+
+Example 1:
+
+Input: s = "babad"
+
+Output: "bab"
+
+Note: "aba" is also a valid answer.
+
+Example 2:
+
+Input: s = "cbbd"
+
+Output: "bb"
+
+Example 3:
+
+Input: s = "a"
+
+Output: "a"
+
+Example 4:
+
+Input: s = "ac"
+
+Output: "a"
+
+Constraints:
+
+* 1 <= s.length <= 1000
+* s consist of only digits and English letters.
+
+#### Answer 22
+
+```javascript
+var findRepeatedDnaSequences = function(s) {
+    let curr = s.slice(0, 10);
+    const seen = new Set([curr]);
+    const res = new Set();
+    
+    for(let i = 10; i < s.length; i++) {
+        curr = curr.slice(1) + s[i];
+        if(seen.has(curr)) res.add(curr);
+        seen.add(curr);
+    }
+    return [...res];
+};
+
+
+//Your input
+"AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+//Output
+["AAAAACCCCC","CCCCCAAAAA"]
+//Expected
+["AAAAACCCCC","CCCCCAAAAA"]
+```

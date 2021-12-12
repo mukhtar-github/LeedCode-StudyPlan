@@ -1676,14 +1676,24 @@ Constraints:
 #### Answer 21
 
 ```javascript
-
+var findRepeatedDnaSequences = function(s) {
+    let curr = s.slice(0, 10);
+    const seen = new Set([curr]);
+    const res = new Set();
+    
+    for(let i = 10; i < s.length; i++) {
+        curr = curr.slice(1) + s[i];
+        if(seen.has(curr)) res.add(curr);
+        seen.add(curr);
+    }
+    return [...res];
+};
 
 
 //Your input
-"2"
-"3"
+"AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
 //Output
-"6"
+["AAAAACCCCC","CCCCCAAAAA"]
 //Expected
-"6"
+["AAAAACCCCC","CCCCCAAAAA"]
 ```

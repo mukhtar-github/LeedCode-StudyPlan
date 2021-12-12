@@ -2148,3 +2148,289 @@ return head;
 //Expected
 [2,1,4,3]
 ```
+
+### 707. Design Linked List
+
+Design your implementation of the linked list. You can choose to use a singly or doubly linked list.
+A node in a singly linked list should have two attributes: val and next. val is the value of the current node, and next is a pointer/reference to the next node.
+
+If you want to use the doubly linked list, you will need one more attribute prev to indicate the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.
+
+Implement the MyLinkedList class:
+
+* MyLinkedList() Initializes the MyLinkedList object.
+* int get(int index) Get the value of the index<sup>th</sup> node in the linked list. If the index is invalid, return -1.
+* void addAtHead(int val) Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+* void addAtTail(int val) Append a node of value val as the last element of the linked list.
+* void addAtIndex(int index, int val) Add a node of value val before the indexth node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.
+* void deleteAtIndex(int index) Delete the index<sup>th</sup> node in the linked list, if the index is valid.
+
+Example 1:
+
+["MyLinkedList", "addAtHead", "addAtTail", "addAtIndex", "get", "deleteAtIndex", "get"]
+
+[[], [1], [3], [1, 2], [1], [1], [1]]
+
+Output
+
+[null, null, null, null, 2, null, 3]
+
+Explanation
+
+MyLinkedList myLinkedList = new MyLinkedList();
+
+myLinkedList.addAtHead(1);
+
+myLinkedList.addAtTail(3);
+
+myLinkedList.addAtIndex(1, 2);    // linked list becomes 1->2->3
+
+myLinkedList.get(1);              // return 2
+
+myLinkedList.deleteAtIndex(1);    // now the linked list is 1->3
+
+myLinkedList.get(1);              // return 3
+
+Constraints:
+
+* 0 <= index, val <= 1000
+* Please do not use the built-in LinkedList library.
+* At most 2000 calls will be made to get, addAtHead, addAtTail, addAtIndex and deleteAtIndex
+
+#### Answer 28
+
+```javascript
+
+var Node = function(val) {
+    this.val = val;
+    this.next = null;
+};
+
+/**
+ * Initialize your data structure here.
+ */
+var MyLinkedList = function() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+};
+
+/**
+ * Get the value of the index-th node in the linked list. If the index is invalid, return -1. 
+ * @param {number} index
+ * @return {number}
+ */
+MyLinkedList.prototype.get = function(index) {
+    if (this.size === 0 || index > this.size - 1 || index < 0) return -1;
+    let cur = this.head;
+    
+    for (let i = 0; i < index; i++) {
+        cur = cur.next;
+    }
+    return cur.val;
+};
+
+/**
+ * Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtHead = function(val) {
+    const newNode = new Node(val);
+    
+    if (!this.head) {
+        this.head = newNode;
+        this.tail = newNode;
+    } else {
+        newNode.next = this.head;
+        this.head = newNode;
+    }
+    this.size++;
+    return this;
+};
+
+/**
+ * Append a node of value val to the last element of the linked list. 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtTail = function(val) {
+    const newNode = new Node(val);
+    
+    if (!this.head) {
+        this.head = newNode;
+        this.tail = newNode;
+    } else {
+        this.tail.next = newNode;
+        this.tail = newNode;
+    }
+    this.size++;
+    return this;
+};
+
+/**
+ * Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. 
+ * @param {number} index 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtIndex = function(index, val) {
+    const newNode = new Node(val);
+    if (index > this.size) return;
+    if (index <= 0) {
+      return this.addAtHead(val);
+    }
+    if (index === this.size) {
+      return this.addAtTail(val);
+    }
+  
+    let cur = this.head;  
+    for (let i = 0; i < index - 1; i++) {
+        cur = cur.next;
+    }
+    newNode.next = cur.next ? cur.next : null;
+    cur.next = newNode;
+    this.size++;
+    return this;
+};
+
+/**
+ * Delete the index-th node in the linked list, if the index is valid. 
+ * @param {number} index
+ * @return {void}
+ */
+MyLinkedList.prototype.deleteAtIndex = function(index) {
+    if (index >= this.size || index < 0) return;  
+    if (index === 0) {
+      this.head = this.head.next;
+      this.size--;
+      return this;
+    }
+  
+    let cur = this.head;  
+    for (let i = 0; i < index - 1; i++) {
+        cur = cur.next;
+    }
+    
+    cur.next = cur.next.next ? cur.next.next : null;
+    if(!cur.next) {
+      this.tail = cur;
+    }
+    this.size--;
+    return this;
+};
+
+/** 
+ * Your MyLinkedList object will be instantiated and called as such:
+ * var obj = new MyLinkedList()
+ * var param_1 = obj.get(index)
+ * obj.addAtHead(val)
+ * obj.addAtTail(val)
+ * obj.addAtIndex(index,val)
+ * obj.deleteAtIndex(index)
+ */
+//Your input
+["MyLinkedList","addAtHead","addAtTail","addAtIndex","get","deleteAtIndex","get"]
+[[],[1],[3],[1,2],[1],[1],[1]]
+//Output
+[null,null,null,null,2,null,3]
+//Expected
+[null,null,null,null,2,null,3]
+```
+
+### 25. Reverse Nodes in k-Group
+
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+
+You may not alter the values in the list's nodes, only nodes themselves may be changed.
+
+Example 1:
+
+![reverse_ex1](https://assets.leetcode.com/uploads/2020/10/03/reverse_ex1.jpg)
+
+Input: head = [1,2,3,4,5], k = 2
+
+Output: [2,1,4,3,5]
+
+Example 2:
+
+![reverse_ex2](https://assets.leetcode.com/uploads/2020/10/03/reverse_ex2.jpg)
+
+Input: head = [1,2,3,4,5], k = 3
+
+Output: [3,2,1,4,5]
+
+Example 3:
+
+Input: head = [1,2,3,4,5], k = 1
+
+Output: [1,2,3,4,5]
+
+Example 4:
+
+Input: head = [1], k = 1
+
+Output: [1]
+
+Constraints:
+
+* The number of nodes in the list is in the range sz.
+* 1 <= sz <= 5000
+* 0 <= Node.val <= 1000
+* 1 <= k <= sz
+
+Follow-up: Can you solve the problem in O(1) extra memory space?
+
+#### Answer 29
+
+```javascript
+var reverseKGroup = function(head, k) {
+    let arr = []
+    let count = 1
+    while(head != null){
+        arr.push(head.val)
+        head = head.next
+    }
+    
+    for(let i = 0; i < arr.length; i++){
+       if(count == k){
+           reverse(i-k+1,i)
+           count = 0
+       }
+        count++
+    }
+    
+    function reverse(a, b){
+        while(a < b){
+            let temp = arr[b]
+            arr[b] = arr[a]
+            arr[a] = temp
+            a++
+            b--
+        }
+    }
+    
+    let result, temp2
+    for(let i = arr.length-1; i>= 0; i--){
+        if(result == null){
+            result = new ListNode(arr[i])
+        }else{
+            temp2 = new ListNode(arr[i])
+            temp2.next = result
+            result = temp2
+        }
+    }
+    
+    return result
+};
+
+//Your input
+[1,2,3,4,5]
+2
+//Output
+[2,1,4,3,5]
+//Expected
+[2,1,4,3,5]
+```

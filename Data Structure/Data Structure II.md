@@ -1736,24 +1736,31 @@ Constraints:
 #### Answer 22
 
 ```javascript
-var findRepeatedDnaSequences = function(s) {
-    let curr = s.slice(0, 10);
-    const seen = new Set([curr]);
-    const res = new Set();
+var longestPalindrome = function(s) {
+    let longest = '';
     
-    for(let i = 10; i < s.length; i++) {
-        curr = curr.slice(1) + s[i];
-        if(seen.has(curr)) res.add(curr);
-        seen.add(curr);
+    const GetLongestPalindrome = (l,r) => {
+        while(l >=0 && r< s.length && s[l] === s[r]){
+            if(r-l+1 > longest.length){
+                longest = s.slice(l, r+1);
+            }
+            l--;
+            r++;
+        }
     }
-    return [...res];
+    
+    for(let i = 0; i < s.length; i++){
+        GetLongestPalindrome(i,i);
+        GetLongestPalindrome(i,i+1);
+    }
+    return longest;
 };
 
 
 //Your input
-"AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+"babad"
 //Output
-["AAAAACCCCC","CCCCCAAAAA"]
+"bab"
 //Expected
-["AAAAACCCCC","CCCCCAAAAA"]
+"bab"
 ```

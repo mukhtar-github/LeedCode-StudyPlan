@@ -1828,3 +1828,256 @@ var addTwoNumbers = function(l1, l2) {
 //Expected
 [7,0,8]
 ```
+
+### 142. Linked List Cycle II
+
+Given the *head* of a linked list, return the node where the cycle begins. If there is no cycle, return *null*.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the *next* pointer. Internally, *pos* is used to denote the index of the node that tail's *next* pointer is connected to *(0-indexed)*. It is *-1* if there is no cycle. Note that *pos* is not passed as a parameter.
+
+*Do not modify* the linked list.
+
+Example 1:
+
+![circularlinkedlist](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png)
+
+Input: head = [3,2,0,-4], pos = 1
+
+Output: tail connects to node index 1
+
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+Example 2:
+
+![circularlinkedlist_test2](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png)
+
+Input: head = [1,2], pos = 0
+
+Output: tail connects to node index 0
+
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+Example 3:
+
+![circularlinkedlist_test3](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png)
+
+Input: head = [1], pos = -1
+
+Output: no cycle
+
+Explanation: There is no cycle in the linked list.
+
+Constraints:
+
+* The number of the nodes in the list is in the range [0, 10<sup>4</sup>].
+* -10<sup>5</sup> <= Node.val <= 10<sup>5</sup>
+* pos is -1 or a valid index in the linked-list.
+
+#### Answer 24
+
+```javascript
+var detectCycle = function(head) {
+    if(!head) return head
+    let fast = head
+    let slow = head
+    
+    //detect intersection with fast and slow pointer 
+    while(slow){
+        slow = slow.next
+        fast = fast.next ? fast.next.next : fast.next
+        if(!fast || !slow) return null
+        if(fast == slow) break
+    }
+   
+   // find offset at which steps from head and intersection meet
+    while(head != slow){
+        head = head.next
+        slow = slow.next
+    }
+    return head
+};
+
+
+//Your input
+[3,2,0,-4]
+1
+//Output
+tail connects to node index 1
+//Expected
+tail connects to node index 1
+```
+
+### 160. Intersection of Two Linked Lists
+
+Given the heads of two singly linked-lists *headA* and *headB*, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return *null*.
+
+For example, the following two linked lists begin to intersect at node *c1*:
+
+![160_statement](https://assets.leetcode.com/uploads/2021/03/05/160_statement.png)
+
+The test cases are generated such that there are no cycles anywhere in the entire linked structure.
+
+Note that the linked lists must retain their original structure after the function returns.
+
+Custom Judge:
+
+The inputs to the *judge* are given as follows (your program is *not* given these inputs):
+
+* intersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.
+* listA - The first linked list.
+* listB - The second linked list.
+* skipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.
+* skipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.
+
+The judge will then create the linked structure based on these inputs and pass the two heads, *headA and headB* to your program. If you correctly return the intersected node, then your solution will be *accepted*.
+
+Example 1:
+
+![160_example_1_1](https://assets.leetcode.com/uploads/2021/03/05/160_example_1_1.png)
+
+Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+
+Output: Intersected at '8'
+
+Explanation: The intersected node's value is 8 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes before the intersected node in A; There are 3 nodes before the intersected node in B.
+
+Example 2:
+
+![160_example_2](https://assets.leetcode.com/uploads/2021/03/05/160_example_2.png)
+
+Input: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+
+Output: Intersected at '2'
+
+Explanation: The intersected node's value is 2 (note that this must not be 0 if the two lists intersect).
+From the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the intersected node in A; There are 1 node before the intersected node in B.
+
+Example 3:
+
+![160_example_3](https://assets.leetcode.com/uploads/2021/03/05/160_example_3.png)
+
+Input: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+
+Output: No intersection
+
+Explanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.
+Explanation: The two lists do not intersect, so return null.
+
+Constraints:
+
+* The number of nodes of listA is in the m.
+* The number of nodes of listB is in the n.
+* 1 <= m, n <= 3 * 104
+* 1 <= Node.val <= 105
+* 0 <= skipA < m
+* 0 <= skipB < n
+* intersectVal is 0 if listA and listB do not intersect.
+* intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect.
+
+Follow up: Could you write a solution that runs in O(m + n) time and use only O(1) memory?
+
+#### Answer 25
+
+```javascript
+/*
+dea:
+The naive approach here would be to store each node reference in a data structure until we saw the same one twice, but that would take O(N) extra space.
+
+In order to solve this problem with only O(1) extra space, we'll need to find another way to align the two linked lists. More importantly, we need to find a way to line up the ends of the two lists. And the easiest way to do that is to concatenate them in opposite orders, A+B and B+A. This way, the ends of the two original lists will align on the second half of each merged list.
+
+Then we just need to check if at some point the two merged lists are pointing to the same node. In fact, even if the two merged lists don't intersect, the value of a and b will be the same (null) when we come to the end of the merged lists, so we can use that as our exit condition.
+
+We just need to make sure to string headB onto a and vice versa if one (but not both) list ends.
+*/
+var getIntersectionNode = function(headA, headB) {
+    let a = headA, b = headB
+    while (a !== b) {
+        a = !a ? headB : a.next
+        b = !b ? headA : b.next
+    }
+    return a
+};
+
+
+//Your input
+8
+[4,1,8,4,5]
+[5,6,1,8,4,5]
+2
+3
+//Output
+Intersected at '8'
+//Expected
+Intersected at '8'
+```
+
+### 82. Remove Duplicates from Sorted List II
+
+Given the *head* of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list *sorted* as well.
+
+Example 1:
+
+![linkedlist1](https://assets.leetcode.com/uploads/2021/01/04/linkedlist1.jpg)
+
+Input: head = [1,2,3,3,4,4,5]
+
+Output: [1,2,5]
+
+Example 2:
+
+![linkedlist2](https://assets.leetcode.com/uploads/2021/01/04/linkedlist2.jpg)
+
+Input: head = [1,1,1,2,3]
+
+Output: [2,3]
+
+Constraints:
+
+* The number of nodes in the list is in the range [0, 300].
+* -100 <= Node.val <= 100
+* The list is guaranteed to be sorted in ascending order.
+
+#### Answer 26
+
+```javascript
+Solution
+
+1. We keep track of prev node and prevPrev node while we iterate through the list.
+2. While prev === cur, advance cur until prev != cur; set prevPrev point to cur node so that
+the list of duplicate nodes from prev to cur-1 is removed; if prevPrev is null, cur node is the new head
+*/
+const deleteDuplicates = (head) => {
+    const res = new ListNode(-1)
+    let last = res
+    let dupe = null
+    let curr = head
+    while (curr) {
+        const next = curr.next
+        if (!next) {
+            if (curr.val !== dupe) {
+                last.next = curr
+            }
+            break
+        }
+        if (curr.val === next.val || curr.val === dupe) {
+            dupe = curr.val
+            curr = curr.next
+        } else {
+            last.next = curr
+            last = curr
+            curr = curr.next
+            last.next = null
+        }
+    }
+    return res.next
+};
+
+
+//Your input
+[1,2,3,3,4,4,5]
+//Output
+[1,2,5]
+//Expected
+[1,2,5]
+```
